@@ -3,11 +3,16 @@ package base;
 import java.util.List;
 
 public abstract class AbstractIntSorter {
+	
 	String name;
 	boolean stable;
 	boolean inSitu;
 	
-	public abstract List<IntElement> solve(List<IntElement> list);
+	
+	public List<IntElement> solve(List<IntElement> list){
+		return null;
+	}
+	
 	public String description() {
 		return this.name;
 	}

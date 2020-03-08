@@ -5,6 +5,13 @@ public class FloatElement implements IElement {
 	String name;
 	float value;
 
+	
+	@Override
+	public String toString() {
+		return value + ", " + name ;
+	}
+
+	
 	public FloatElement(String name, float value) {
 		super();
 		this.name = name;

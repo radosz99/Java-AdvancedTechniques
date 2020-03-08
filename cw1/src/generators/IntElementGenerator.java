@@ -10,47 +10,16 @@ import java.util.Random;
 import java.util.Scanner;
 import base.*;
 
-public class IntElementGenerator {
-	@SuppressWarnings({ "resource", "null" })
-	public List<IntElement> getData (int quantity, int max ){
+public class IntElementGenerator extends FloatElementGenerator {
+
+	public List<IntElement> getIntData (int quantity, int max ){
 		List<IntElement> data = new ArrayList<IntElement>();
-		String word = null;
-		int number;
-		
-		RandomAccessFile raf = null;
-		try {
-			raf = new RandomAccessFile("words.txt", "r");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		for (int i=0; i<quantity; i++) {
-			 try {
-				raf.seek(intGenerator(10000));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
-			 try {
-				raf.readLine();
-				word = raf.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 
-			 data.add(new IntElement(word,intGenerator(max)));
+			 data.add(new IntElement(wordGenerator(),intGenerator(max)));
 		}
 		 
 		return data;
-	}
-	
-	public static int intGenerator(int range) {
-		Random generator = new Random();
-		
-		return generator.nextInt(range);
-	}
+	}	
 }
 	

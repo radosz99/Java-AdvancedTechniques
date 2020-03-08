@@ -4,5 +4,7 @@ import java.util.List;
 
 public abstract class AbstractFloatSorter extends AbstractIntSorter {
 	
-	public abstract List<IElement> solve2(List<IElement> list);
+	public List<FloatElement> solve2(List<FloatElement> list){
+		return null;
+	}
 }

@@ -11,6 +11,8 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	boolean stable = true;
 	boolean inSitu = false;
 	
+	
+	@Override
 	public List<IntElement> solve(List<IntElement> list) {
 		int min=(int) list.get(0).getValue(), max, range;
 		max = min;
@@ -41,7 +43,7 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	         
 	        }
 	    }
-	
+
 		return list;
-	};
+	}
 }

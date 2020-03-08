@@ -11,6 +11,7 @@ public class CountingSort extends AbstractIntSorter{
 	boolean stable = true;
 	boolean inSitu = false;
 	
+	@Override
 	public List<IntElement> solve(List<IntElement> list) {
 		int range = 10;
 		int[] holes = new int[range];
@@ -39,12 +40,6 @@ public class CountingSort extends AbstractIntSorter{
 	    }
 
 		return list;
-	};
-	
-	public static void showList(LinkedList<IntElement> list) {
-		for(IntElement i : list) {
-			System.out.println(i);
-		}
 	}
 	
 }
