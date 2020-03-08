@@ -3,16 +3,45 @@ package algs;
 import java.util.LinkedList;
 import java.util.List;
 
-import base.AbstractIntSorter;
-import base.IntElement;
+import base.*;
 
+/**
+ * Class which holds specific informations about Counting Sort algorithm and gives the generic sorting method to solve the problem
+ * @author Radoslaw Lis
+ */
 public class CountingSort extends AbstractIntSorter{
-	String name = "Counting Sort";
-	boolean stable = true;
-	boolean inSitu = false;
-	
+    /**
+     * @return algorithm's description - name  how and it works
+    */
 	@Override
-	public List<IntElement> solve(List<IntElement> list) {
+	public String description() {
+		return "Counting Sort";
+	}
+
+    /**
+     *  @return logical value which gives information whether algorithm is stable. In other words it means whether
+     *  two objects with the same values appear in the same order in output as they appear in input
+    */
+	@Override
+	public boolean isStable() {
+		return true;
+	}
+
+    /**
+     *  @return logical value which gives information whether algorithm work in situ. In other words it means whether
+     *  algorithm sorts the items without using additional temporary space to hold data (if yes it works in situ)
+    */
+	@Override
+	public boolean isInSitu() {
+		return false;
+	}
+	
+    /**
+     * h
+     * @return the finally sorted list
+    */
+	@Override
+	public <T extends IElement> List<T> solve(List<T> list) {
 		int range = 10;
 		int[] holes = new int[range];
 		
@@ -23,10 +52,10 @@ public class CountingSort extends AbstractIntSorter{
 	        holes[i] += holes[i - 1];
 	    }
 	    
-	    LinkedList<IntElement> output = new LinkedList<IntElement>(); 
+	    LinkedList<T> output = new LinkedList<T>(); 
 	    
 	    for(int i = 0; i < list.size(); i++) {
-	    	output.add(new IntElement("", 0));
+	    	output.add(list.get(i));
 	    }
 	    
 	  
@@ -41,5 +70,5 @@ public class CountingSort extends AbstractIntSorter{
 
 		return list;
 	}
-	
+
 }

@@ -2,24 +2,26 @@ package base;
 
 
 public class FloatElement implements IElement {
-	String name;
-	float value;
+	private String word;
+	private float value;
 
-	
+	/**
+	*@return the string giving all informations about the object - value and name
+	 */
 	@Override
 	public String toString() {
-		return value + ", " + name ;
+		return value + ", " + word ;
 	}
 
 	
-	public FloatElement(String name, float value) {
+	public FloatElement(String word, float value) {
 		super();
-		this.name = name;
+		this.word = word;
 		this.value = value;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getWord() {
+		return this.word;
 	}
 
 	public float getValue() {

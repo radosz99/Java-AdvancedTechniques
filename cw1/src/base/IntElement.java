@@ -2,22 +2,22 @@ package base;
 
 
 public class IntElement implements IElement {
-	String name;
-	int value;
+	private String word;
+	private float value;
 
 	@Override
 	public String toString() {
-		return value + ", " + name ;
+		return value + ", " + word ;
 	}
 
-	public IntElement(String name, int value) {
+	public IntElement(String word, int value) {
 		super();
-		this.name = name;
+		this.word = word;
 		this.value = value;
 	}	
 
-	public String getName() {
-		return this.name;
+	public String getWord() {
+		return this.word;
 	}
 
 	public float getValue() {

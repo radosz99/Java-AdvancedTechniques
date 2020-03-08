@@ -2,9 +2,10 @@ package base;
 
 import java.util.List;
 
+
 public abstract class AbstractFloatSorter extends AbstractIntSorter {
 	
-	public List<FloatElement> solve2(List<FloatElement> list){
-		return null;
-	}
+	@Override
+	public abstract <T extends IElement> List<T> solve(List<T> list);
+
 }
