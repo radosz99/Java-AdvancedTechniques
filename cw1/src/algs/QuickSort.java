@@ -6,6 +6,11 @@ import base.*;
 
 public class QuickSort extends AbstractFloatSorter {
 
+	String name = "Quick Sort";
+	boolean stable = true;
+	boolean inSitu = true;
+	
+	
 	@Override
 	public List<FloatElement> solve2(List<FloatElement> list) {
 		qs(list, 0, list.size()-1);

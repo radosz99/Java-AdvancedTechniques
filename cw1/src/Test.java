@@ -13,14 +13,15 @@ public class Test {
 		List<IntElement> list = new ArrayList<>();
 		List<FloatElement> list2 = new ArrayList<>();
 		
-		list = data.getIntData(10,10);		//liczba elementow i zakre (0-x)
-		list2 = data2.getFloatData(10, 1); 	//liczba elementow i zakre (0-x)
+		list = data.getIntData(10,10);		//liczba elementow i zakres (0-x)
+		list2 = data2.getFloatData(10, 1); 	//liczba elementow i zakres (0-x)
 		
 		PigeonHoleSort problem = new PigeonHoleSort();
 		CountingSort problem2 = new CountingSort();
 		QuickSort problem3 = new QuickSort();
-
-		problem3.solve2(list2);
+		InsertSort problem4 = new InsertSort();
+		
+		problem4.solve2(list2);
 		//problem.solve(list);
 		showList(list2);
 	}
