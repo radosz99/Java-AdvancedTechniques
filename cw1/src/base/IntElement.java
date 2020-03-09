@@ -3,7 +3,7 @@ package base;
 
 public class IntElement implements IElement {
 	private String word;
-	private float value;
+	private int value;
 
 	@Override
 	public String toString() {

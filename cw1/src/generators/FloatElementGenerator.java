@@ -34,6 +34,8 @@ public class FloatElementGenerator {
 		return data;
 	}
 	
+    /**
+    */
 	public static float floatGenerator(int range) {
 		Random generator = new Random();
 		float random = generator.nextFloat() * (range);

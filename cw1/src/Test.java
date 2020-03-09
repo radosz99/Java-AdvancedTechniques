@@ -21,10 +21,10 @@ public class Test {
 		floatList = data2.getFloatData(500, 1); 	//liczba elementow i zakres (0-x)
 		
 		
-		showList(intList);
-		problem3.solve(intList);
+		showList(floatList);
+		problem2.solve(floatList);
 		System.out.println("\n");
-		showList(intList);
+		showList(floatList);
 	}
 	
 	public static <T> void showList(List<T> list) {
