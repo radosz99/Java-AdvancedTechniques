@@ -8,23 +8,25 @@ import base.*;
 public class Test {
 
 	public static void main(String[] args) {
+		
+		int range = 5;
+		int size = 10;
 		IntElementGenerator data = new IntElementGenerator();
 		FloatElementGenerator data2 = new FloatElementGenerator();
 		List<IntElement> intList = new ArrayList<>();
 		List<FloatElement> floatList = new ArrayList<>();
-		PigeonHoleSort problem = new PigeonHoleSort();
-		CountingSort problem2 = new CountingSort();
-		QuickSort problem3 = new QuickSort();
-		InsertSort problem4 = new InsertSort();
+		PigeonHoleSort ps = new PigeonHoleSort();
+		CountingSort cs = new CountingSort();
+		QuickSort qs = new QuickSort();
+		InsertSort is = new InsertSort();
 		
-		intList = data.getIntData(20,10);		//liczba elementow i zakres (0-x)
-		floatList = data2.getFloatData(500, 1); 	//liczba elementow i zakres (0-x)
+		intList = data.getIntData(size,range);			//liczba elementow i zakres (0-x)
+		floatList = data2.getFloatData(size,range); 	//liczba elementow i zakres (0-x)
 		
 		
-		showList(floatList);
-		problem2.solve(floatList);
+		showList(intList);
 		System.out.println("\n");
-		showList(floatList);
+		showList(ps.solve(intList));
 	}
 	
 	public static <T> void showList(List<T> list) {

@@ -8,7 +8,7 @@ import base.*;
  * Class which holds specific informations about QuickSort algorithm and gives the generic sorting method to solve the problem
  * @author Radoslaw Lis
  */
-public class QuickSort extends AbstractFloatSorter {
+public class QuickSort extends AbstractIntSorter {
     /**
      * @return algorithm's description - name  how and it works
     */

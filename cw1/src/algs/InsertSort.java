@@ -8,7 +8,7 @@ import base.*;
  * Class which holds specific informations about Insert Sort algorithm and gives the generic sorting method to solve the problem
  * @author Radoslaw Lis
  */
-public class InsertSort extends AbstractFloatSorter{
+public class InsertSort extends AbstractIntSorter{
     /**
      * @return algorithm's description - name  how and it works
     */

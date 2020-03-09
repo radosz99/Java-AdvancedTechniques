@@ -42,11 +42,22 @@ public class CountingSort extends AbstractIntSorter{
     */
 	@Override
 	public <T extends IElement> List<T> solve(List<T> list) {
-		int range = 10;
+		int min=(int) list.get(0).getValue(), max;
+		max = min;
+		
+		for (int i = 1; i < list.size(); i++) {
+			if(list.get(i).getValue() > max)
+				max = (int) list.get(i).getValue();
+			if(list.get(i).getValue() < min)
+				min = (int) list.get(i).getValue();
+		}
+		
+		int range = max - min + 1;
+		
 		int[] holes = new int[range];
 		
 	    for(int i = 0; i < list.size(); i++) {
-	        holes[(int) list.get(i).getValue()]++;
+	        holes[(int) list.get(i).getValue()-min]++;
 	    }
 	    for(int i = 1; i <range;++i) {
 	        holes[i] += holes[i - 1];

@@ -3,6 +3,7 @@ package generators;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,8 +41,15 @@ public class FloatElementGenerator {
 		Random generator = new Random();
 		float random = generator.nextFloat() * (range);
 		
-		return random;
+		return round(random,2);
 	}
+	
+	private static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        
+        return bd.floatValue();
+    }
 	
 	public static int intGenerator(int range) {
 		Random generator = new Random();

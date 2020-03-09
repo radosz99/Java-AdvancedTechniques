@@ -37,7 +37,13 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	}
 	
     /**
-     * h
+     * The method used to sort the list of T objects (objects from classes implementing IElement interface) by the value.
+     * <p>
+     * First, it finds maximum and minimum values in the list to generate a range. 
+     * Then 
+     * 
+     * @param list
+     * 	List of objects T (objects from classes implementing IElement interface) to sort
      * @return the finally sorted list
     */
 	@Override
@@ -64,6 +70,11 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	        holes[(int) (t.getValue()-min)].add(t);
 	    }
 	    
+	    for(int i=0; i<holes.length;i++) {
+	    	for (int j=0; j<holes[i].size();j++) {
+	    		System.out.println(holes[i].get(j));
+	    	}
+	    }
 	    int k = 0;
 	    for(int i = 0; i < range; i++) {
 	        for(int j=0; j< holes[i].size();j++,k++) {
