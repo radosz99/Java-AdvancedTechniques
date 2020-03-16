@@ -6,12 +6,12 @@ import java.util.List;
 import base.*;
 
 /**
- * Class which holds specific informations about Pigeonhole Sort algorithm and gives the generic sorting method to solve the problem
+ * Class which holds specific informations about Pigeonhole Sort algorithm and gives the generic sorting method to solve the problem.
  * @author Radoslaw Lis
  */
-public class PigeonHoleSort extends AbstractIntSorter{
+public class PigeonHoleSort extends AbstractSorter{
     /**
-     * @return algorithm's description - name  how and it works
+     * @return Algorithm's description - name  how and it works.
     */
 	@Override
 	public String description() {
@@ -19,8 +19,8 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	}
 
     /**
-     *  @return logical value which gives information whether algorithm is stable. In other words it means whether
-     *  two objects with the same values appear in the same order in output as they appear in input
+     *  @return Logical value which gives information whether algorithm is stable. In other words it means whether
+     *  two objects with the same values appear in the same order in output as they appear in input.
     */
 	@Override
 	public boolean isStable() {
@@ -28,8 +28,8 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	}
 
     /**
-     *  @return logical value which gives information whether algorithm work in situ. In other words it means whether
-     *  algorithm sorts the items without using additional temporary space to hold data (if yes it works in situ)
+     *  @return Logical value which gives information whether algorithm work in situ. In other words it means whether
+     *  algorithm sorts the items without using additional temporary space to hold data (if yes it works in situ).
     */
 	@Override
 	public boolean isInSitu() {
@@ -40,11 +40,12 @@ public class PigeonHoleSort extends AbstractIntSorter{
      * The method used to sort the list of T objects (objects from classes implementing IElement interface) by the value.
      * <p>
      * First, it finds maximum and minimum values in the list to generate a range. 
-     * Then 
+     * Then it creates pigeonholes and adds objects to the right holes. Objects are adding at the end so the algorithm is stable.
+     * Finally it copies objects from to the method parameter - list.
      * 
      * @param list
-     * 	List of objects T (objects from classes implementing IElement interface) to sort
-     * @return the finally sorted list
+     * 	List of objects T (objects from classes implementing IElement interface) to sort.
+     * @return The finally sorted list.
     */
 	@Override
 	public <T extends IElement> List<T> solve(List<T> list) {
@@ -70,11 +71,6 @@ public class PigeonHoleSort extends AbstractIntSorter{
 	        holes[(int) (t.getValue()-min)].add(t);
 	    }
 	    
-	    for(int i=0; i<holes.length;i++) {
-	    	for (int j=0; j<holes[i].size();j++) {
-	    		System.out.println(holes[i].get(j));
-	    	}
-	    }
 	    int k = 0;
 	    for(int i = 0; i < range; i++) {
 	        for(int j=0; j< holes[i].size();j++,k++) {

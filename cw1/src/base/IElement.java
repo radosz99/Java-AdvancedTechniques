@@ -2,21 +2,34 @@ package base;
 
 /**
  * 
- * Interface which offers some methods - getters - to get data from object of classes which implements the interface
+ * Interface which offers some methods - getters - to get data from object of classes which implements the interface.
  * 
  * @author Radoslaw Lis
  */
 
 public interface IElement {
+    /**
+     * Variable of String type assigned to the value.
+     *  key by which list is sorted.
+     */
+	public static final String word = "";
+	
+    /**
+     * Variable of float type - the key by which list is sorted.
+     */
+	public static final float value = 0;
 	
 	/**
-	*@return string which is connected with the value
+	*@return String which is assigned to the value.
 	 */
-	public String getWord();
+	public default String getWord(){
+		return word;
+	}
 	
 	/**
-	*@return value of the object
+	*@return Value of the object - the key by which list is sorted.
 	 */
-	public float getValue();
-	
+	public default float getValue() {
+		return (float) value;
+	}	
 }

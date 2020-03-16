@@ -5,12 +5,12 @@ import java.util.List;
 import base.*;
 
 /**
- * Class which holds specific informations about QuickSort algorithm and gives the generic sorting method to solve the problem
+ * Class which holds specific informations about QuickSort algorithm and gives the generic sorting method to solve the problem.
  * @author Radoslaw Lis
  */
-public class QuickSort extends AbstractIntSorter {
+public class QuickSort extends AbstractSorter {
     /**
-     * @return algorithm's description - name  how and it works
+     * @return Algorithm's description - name  how and it works.
     */
 	@Override
 	public String description() {
@@ -18,26 +18,29 @@ public class QuickSort extends AbstractIntSorter {
 	}
 
     /**
-     *  @return logical value which gives information whether algorithm is stable. In other words it means whether
-     *  two objects with the same values appear in the same order in output as they appear in input
+     *  @return Logical value which gives information whether algorithm is stable. In other words it means whether
+     *  two objects with the same values appear in the same order in output as they appear in input.
     */
 	@Override
 	public boolean isStable() {
-		return true;
+		return false;
 	}
 
     /**
-     *  @return logical value which gives information whether algorithm work in situ. In other words it means whether
-     *  algorithm sorts the items without using additional temporary space to hold data (if yes it works in situ)
+     *  @return Logical value which gives information whether algorithm work in situ. In other words it means whether
+     *  algorithm sorts the items without using additional temporary space to hold data (if yes it works in situ).
     */
 	@Override
 	public boolean isInSitu() {
-		return false;
+		return true;
 	}
 	
     /**
-     *  starts the first quicksort process with call quicksort method with the parameters such as list and first and last index \\
-     *  @return the finally sorted list
+     * The method used to sort the list of T objects (objects from classes implementing IElement interface) by the value.
+     * <p>
+     *  Method starts the first Quicksort process with call quicksort method with the parameters such as list and first and last index to start first process of Quicksort.
+     *  
+     *  @return The finally sorted list.
     */
 	@Override
 	public <T extends IElement> List<T> solve(List<T> list) {
@@ -47,7 +50,10 @@ public class QuickSort extends AbstractIntSorter {
 	}
 
     /**
-     *  runs recursively itself to sort the list
+     * Method supports each of Quicksort elementary sorting called recursively with the given parameters.
+     * The pivot is chosen and the idea is to have smaller values to the left of the pivot and have bigger values to the right of the pivot.
+     * Using swaps we move values to the proper sides and next we call recursively two quicksort methods to sort the left and the right side.
+     * 
      * @param list
      *		List of objects T (objects from classes implementing IElement interface) to sort
      * @param left
@@ -57,21 +63,22 @@ public class QuickSort extends AbstractIntSorter {
     */
 	 private static  <T extends IElement> void quicksort(List<T> list, int left, int right) {
 	    int i, j;
-	    T x, y;
+	    T pivot, y;
 	    i = left; j = right;
-	    x = list.get((left + right)/2);
+	    pivot = list.get((left + right)/2);
 	    
 	    do {
-	      while((list.get(i).getValue() < x.getValue()) && (i < right)) 
+	      while((list.get(i).getValue() < pivot.getValue()) && (i < right)) 
 	    	  i++;
-	      while((x.getValue() < list.get(j).getValue()) && (j > left)) 
+	      while((pivot.getValue() < list.get(j).getValue()) && (j > left)) 
 	    	  j--;
 	      
 	      if (i <= j) {
 	        y = list.get(i);
 	        list.set(i,list.get(j));
 	        list.set(j,y);
-	        i++; j--;
+	        i++; 
+	        j--;
 	      }
 	    } while(i <= j);
 	    
