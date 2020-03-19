@@ -16,7 +16,14 @@ import base.*;
  * @author Radoslaw Lis
  */
 public class FloatElementGenerator {
-    /**
+	String path;
+	
+    public FloatElementGenerator(String path) {
+		super();
+		this.path = path;
+	}
+
+	/**
      * Generate some random data - FloatElement class objects - by using floatGenerator 
      * and wordGenerator which draws random String from words.txt file that stores all English words in random order.
      * @return List of FloatElement class random generate objects 
@@ -29,7 +36,7 @@ public class FloatElementGenerator {
 		List<IElement> data = new ArrayList<IElement>();
 		
 		for (int i=0; i<quantity; i++) {
-			 data.add(new FloatElement(wordGenerator("words.txt"),floatGenerator(min,max)));
+			 data.add(new FloatElement(wordGenerator(path+"words.txt"),floatGenerator(min,max)));
 		}
 		 
 		return data;

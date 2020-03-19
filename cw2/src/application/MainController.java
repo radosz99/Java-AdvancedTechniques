@@ -160,7 +160,7 @@ public class MainController implements Initializable {
 				    	 return;
 				    }
 				    
-					IntElementGenerator data = new IntElementGenerator();
+					IntElementGenerator data = new IntElementGenerator("src/txt/");
 					dataToSort = data.getIntData(quantity,minrange,range);	
 		    	}
 		    	else if(dataTypeCombo.getSelectionModel().getSelectedItem().toString().equals("float")){
@@ -172,7 +172,7 @@ public class MainController implements Initializable {
 				    	 return;
 				    }
 
-				    FloatElementGenerator data2 = new FloatElementGenerator();
+				    FloatElementGenerator data2 = new FloatElementGenerator("src/txt/");
 					dataToSort = data2.getFloatData(quantity,minrange,range);	
 		    	}
 		    }
@@ -304,7 +304,7 @@ public class MainController implements Initializable {
 	public void handleAlgComboBox () {
         if(algorithmTypeCombo.getSelectionModel().getSelectedItem()!=null) {
 	        if(algorithmTypeCombo.getSelectionModel().getSelectedItem().equals(qsort)) {
-	            Image i = new Image(new File("gifs/qs.gif").toURI().toString());
+	            Image i = new Image(new File("src/gifs/qs.gif").toURI().toString());
 	            //https://commons.wikimedia.org/wiki/File:Quicksort-example.gif
 	            imageview.setImage(i);
 	         	QuickSort qs = new QuickSort();
@@ -312,7 +312,7 @@ public class MainController implements Initializable {
 	           	descText.setText(qs.description());
 	        }
 	        else if(algorithmTypeCombo.getSelectionModel().getSelectedItem().equals(isort)) {
-	            Image i = new Image(new File("gifs/is.gif").toURI().toString());
+	            Image i = new Image(new File("src/gifs/is.gif").toURI().toString());
 	            //https://commons.wikimedia.org/wiki/File:Insertion-sort-example.gif
 	            imageview.setImage(i);
 	            InsertSort qs = new InsertSort();
@@ -320,7 +320,7 @@ public class MainController implements Initializable {
 	            descText.setText(qs.description());
 	        }
 	        else if(algorithmTypeCombo.getSelectionModel().getSelectedItem().equals(csort)) {
-	            Image i = new Image(new File("gifs/cs.gif").toURI().toString());
+	            Image i = new Image(new File("src/gifs/cs.gif").toURI().toString());
 	            //https://github.com/Lugriz/typescript-algorithms/tree/master/src/algorithms/sorting/counting-sort
 	            imageview.setImage(i);
 	          	CountingSort qs = new CountingSort();
@@ -483,7 +483,7 @@ public class MainController implements Initializable {
         }), new KeyFrame(Duration.seconds(1)));
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
-        Image i = new Image(new File("icons/"+Locale.getDefault().getCountry().toString()+ ".png").toURI().toString());
+        Image i = new Image(new File("src/icons/"+Locale.getDefault().getCountry().toString()+ ".png").toURI().toString());
         imageviewFlag.setImage(i);
         getInList.set(0, localizedBinding.getString("loadFile"));
         getInList.set(1, localizedBinding.getString("random"));
@@ -549,8 +549,7 @@ public class MainController implements Initializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-    	Main.getPrimaryStage().getIcons().add(new Image("file:icon.png"));
-    	
+		Main.getPrimaryStage().getIcons().add(new Image("file::en.png"));
         lang.getItems().addAll(new Locale("pl","PL"), 
         		new Locale("en","US"), 
         		new Locale("en","GB"), 
@@ -619,7 +618,7 @@ public class MainController implements Initializable {
 		                } else {
 		                    Image icon = null;
 		                    try {
-		                    	icon = new Image(new File("icons/"+item.getCountry().toString()+".png").toURI().toString());
+		                    	icon = new Image(new File("src/icons/"+item.getCountry().toString()+".png").toURI().toString());
 		                    } catch(NullPointerException ex) {
 		                    	System.out.println("brak ikony");
 		                    }

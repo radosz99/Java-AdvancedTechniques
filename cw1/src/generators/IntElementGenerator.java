@@ -9,6 +9,12 @@ import base.*;
  * @author Radoslaw Lis
  */
 public class IntElementGenerator extends FloatElementGenerator {
+	public IntElementGenerator(String path) {
+		super(path);
+		// TODO Auto-generated constructor stub
+	}
+
+
     /**
      * Generates some random data - IntElement class objects - by using intGenerator 
      * and wordGenerator which draws random String from words.txt file that stores all English words in random order.
@@ -22,7 +28,7 @@ public class IntElementGenerator extends FloatElementGenerator {
 		List<IElement> data = new ArrayList<IElement>();
 		
 		for (int i=0; i<quantity; i++) {
-			 data.add(new IntElement(wordGenerator("words.txt"),intGenerator(min,max)));
+			 data.add(new IntElement(wordGenerator(path + "words.txt"),intGenerator(min,max)));
 		}
 		 
 		return data;

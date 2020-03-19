@@ -40,7 +40,7 @@ public class Main extends Application{
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setResizable(false);
-			primaryStage.getIcons().add(new Image("file:icon.png"));
+			stage.getIcons().add(new Image("/icons/icon.png"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
