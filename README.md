@@ -46,7 +46,8 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
-
+### Description
+<img src="https://i.imgur.com/Y0g066j.png" width="555" height="456" />
 
 <a name="conf"></a>
 # Configurations
