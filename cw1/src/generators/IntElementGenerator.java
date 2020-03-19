@@ -18,11 +18,11 @@ public class IntElementGenerator extends FloatElementGenerator {
      * @param max
      * 		Defines the range (from 0 to max) in which numbers will be drawn.
     */
-	public List<IntElement> getIntData (int quantity, int max ){
-		List<IntElement> data = new ArrayList<IntElement>();
+	public List<IElement> getIntData (int quantity, int min, int max ){
+		List<IElement> data = new ArrayList<IElement>();
 		
 		for (int i=0; i<quantity; i++) {
-			 data.add(new IntElement(wordGenerator("words.txt"),intGenerator(max)));
+			 data.add(new IntElement(wordGenerator("words.txt"),intGenerator(min,max)));
 		}
 		 
 		return data;

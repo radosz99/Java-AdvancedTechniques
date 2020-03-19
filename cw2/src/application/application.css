@@ -1,0 +1,271 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root {
+	-fx-background-color : rgba(10, 10, 10, .89);
+}
+
+#table{
+	-fx-blend-mode : difference;
+}
+
+.table-row-cell:selected {
+   -fx-background-color: steelblue; 
+}
+.table-row-cell:selected .text {
+       -fx-fill: rgba(255,240,229);	
+
+}
+
+#descText{
+	-fx-background-color : rgba(35,35,35);
+	-fx-text-fill: rgba(255,240,229);	
+	-fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+}
+
+#sortBtn{
+	-fx-border-radius:30 30 30 30;
+  	-fx-background-radius:30 30 30 30;
+	-fx-background-color : rgba(35,35,35);	
+    -fx-font-size: 14;
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+    
+}
+
+#sortBtn:pressed {
+    -fx-background-color: #bdbbb0	;
+    -fx-background-radius: 50;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#getDataBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+    -fx-font-size: 14;
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#fileBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+    -fx-font-size: 14;
+    -fx-font-weight: bolder;
+    -fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#clrBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#fileBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#getDataBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#reverseBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#shuffleBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#clrElBtn:pressed {
+    -fx-background-color: #353535	;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+}
+
+#clrBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+	-fx-effect: dropshadow(gaussian, white  , 7.0, 0.3, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+.clrBtn:focused{
+    -fx-background-color: gray;
+    }
+
+#clrElBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+	-fx-effect: dropshadow(gaussian, white  , 7.0, 0.3, 0.0, 0.0);
+   -fx-text-fill: rgba(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+#shuffleBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+	-fx-effect: dropshadow(gaussian, white  , 7.0, 0.3, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+#reverseBtn{
+	-fx-border-radius: 10 10 10 10;
+  	-fx-background-radius: 10 10 10 10;
+	-fx-background-color : rgba(35,35,35);	
+	-fx-effect: dropshadow(gaussian, white  , 7.0, 0.3, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+    -fx-font-weight: bolder;
+}
+	
+#mainLbl{
+	-fx-font-family: sans-serif; 
+	-fx-font-weight: bold;
+	-fx-font-size: 30;
+	-fx-text-fill: rgba(255,240,229);
+}
+
+#dataTypeCombo{
+	-fx-effect: dropshadow(gaussian, lightslategray, 8.0, 0.5, 0.0, 0.0); 
+}
+
+#menu{
+	-fx-background-color : rgba(240,240,240);
+}
+
+#getInTypeCombo{
+	-fx-effect: dropshadow(gaussian, lightslategray , 8.0, 0.5, 0.0, 0.0);
+}
+
+#algorithmTypeCombo{
+	-fx-effect: dropshadow(gaussian, lightslategray , 8.0, 0.5, 0.0, 0.0);
+}
+
+#value{
+	-fx-font-family: monospace; 
+	-fx-font-size: 12;
+	-fx-text-fill: rgba(35,35,35);
+	-fx-font-weight: bolder;
+}
+
+#word{
+	-fx-font-family: monospace; 
+	-fx-font-size: 12;
+	-fx-text-fill: rgba(35,35,35);
+}
+
+#table{
+	-fx-background-color : rgba(100,100,100);
+	-fx-font-size: 11;
+	-fx-text-fill: rgba(255,240,255);
+}
+
+
+#quantText{
+	-fx-text-fill: blue;
+	-fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+}
+
+#rangeText{
+	-fx-text-fill: blue;
+	-fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+}
+
+#minrangeText{
+	-fx-text-fill: blue;
+	-fx-effect: dropshadow(gaussian, lightslategray  , 10.0, 0.5, 0.0, 0.0);
+}
+
+#dataTypeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#separatorInfoLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#separatorLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#rangeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#timeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#quantLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#minrangeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#getInTypeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#algorithmTypeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#descLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#stabil{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#situ{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#executionTimeLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#timeExLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#numberQuantityInfoLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#numbersQuantityLbl{
+    -fx-text-fill: rgba(255,240,229);
+}
+
+#numbersQuantityLbl{
+    -fx-text-fill: rgba(255,240,229);
+        -fx-font-size: 13;
+}
+
+

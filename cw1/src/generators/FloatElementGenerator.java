@@ -25,11 +25,11 @@ public class FloatElementGenerator {
      * @param max
      * 		Defines the range (from 0 to max) in which numbers will be drawn.
     */
-	public List<FloatElement> getFloatData (int quantity, int max ){
-		List<FloatElement> data = new ArrayList<FloatElement>();
+	public List<IElement> getFloatData (int quantity, int min, int max ){
+		List<IElement> data = new ArrayList<IElement>();
 		
 		for (int i=0; i<quantity; i++) {
-			 data.add(new FloatElement(wordGenerator("words.txt"),floatGenerator(max)));
+			 data.add(new FloatElement(wordGenerator("words.txt"),floatGenerator(min,max)));
 		}
 		 
 		return data;
@@ -39,13 +39,14 @@ public class FloatElementGenerator {
      * Method draws a random float number from a given range.
      * 
      * @return Float number round to four decimal places.
-     * @param range
-     * 	Defines the range (from 0 to range) in which numbers will be drawn.
+     * @param min
+     * @param max
+     * 	Defines the range (from min to max) in which numbers will be drawn.
      * 		
     */
-	public static float floatGenerator(int range) {
+	public static float floatGenerator(int min, int max) {
 		Random generator = new Random();
-		float random = generator.nextFloat() * (range);
+		float random = generator.nextFloat() * (max-min)+min;
 		
 		return round(random,4);
 	}
@@ -60,6 +61,7 @@ public class FloatElementGenerator {
      * 	Number of decimal places after rounding.
      * 		
     */
+	@SuppressWarnings("deprecation")
 	private static float round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
@@ -71,14 +73,15 @@ public class FloatElementGenerator {
      * Method draws a random integer number from a given range.
      * 
      * @return The drawn number
-     * @param range
-     * 	Defines the range (from 0 to range) in which numbers will be drawn.
+     * @param min
+     * @param max
+     * 	Defines the range (from minrange to maxrange) in which numbers will be drawn.
      * 		
     */
-	public static int intGenerator(int range) {
+	public static int intGenerator(int min, int max) {
 		Random generator = new Random();
 		
-		return generator.nextInt(range);
+		return generator.nextInt(max-min+1)+min;
 	}
 	
     /**
@@ -103,7 +106,7 @@ public class FloatElementGenerator {
 		}
 		
 		 try {
-			raf.seek(intGenerator(10000));
+			raf.seek(intGenerator(0,100000));
 			raf.readLine();
 			word = raf.readLine();
 		} catch (IOException e) {
