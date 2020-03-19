@@ -1,5 +1,6 @@
 **<p align="center"> Programming in Java - advanced techniques </p>**
 _________________________________
+**<p align="center"> Wrocław University of Science and Technology </p>**
 **<p align="center"> Computer Science, Faculty of Electronics, 6 semester </p>**
 <p align="center"> Radosław Lis, 241385 </p>
 
