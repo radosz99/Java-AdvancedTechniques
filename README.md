@@ -1,14 +1,14 @@
-**<p align="center"> # Programming in Java - advanced techniques </p>**
+**<p align="center"> Programming in Java - advanced techniques </p>**
 **<p align="center"> Computer Science, Faculty of Electronics, 6 semester </p>**
 <p align="center"> Radosław Lis, 241385 </p>
 
 - [General info](#desc)
 - [Prerequisites](#pre)
 - [Info about programs](#inf)
-  *  [cw1](#pre)
-  *  [cw2](#fxc)
+  *  [cw1](#cw1)
+  *  [cw2](#cw2)
 - [Configurations](#conf)
-  *  [JavaFX](#pre)
+  *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
   *  [Scene Builder](#scene)
   *  [UTF-8 Encoding](#utf)
@@ -34,7 +34,6 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 
 <a name="tech1"></a>
 ### Technologies 
-- Java 11  (JDK 11.0.6)
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
  <a name="cw2"></a>
@@ -42,7 +41,6 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 
 <a name="tech2"></a>
 ### Technologies 
-- Java 11  (JDK 11.0.6)
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
 
