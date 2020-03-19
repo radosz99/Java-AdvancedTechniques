@@ -57,14 +57,25 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 1. Go **Window** -> **Preferences** -> **Java** -> **Build Path** -> **User Libraries** -> **New** and write JAVAFX\_11. Then left click on JAVAFX_11, click Add External JARs... 
 and add all JARs from *...\javafx-sdk-11.0.2\lib*.
 2. Right click on the project and go **Build Path** -> **Configure Build Path** -> **Add Library** -> **User Library** -> **Next** and choose JAVAFX_11.
-3. Go **Run** -> **Run Configurations** -> **Arguments** and in VM arguments field write *--module-path "**xyz**\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml*
+3. Go **Run** -> **Run Configurations** -> **Arguments** and in VM arguments field write:
+```
+--module-path "**xyz**\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml
+```
 (**xyz** to your path to javafx-sdk). Then **Apply** -> **Close**.
 
 ___________________________________
 <a name="fxc"></a>
 ## e(fx)clipse
-1. Go **Help** -> **Install New Software**, click Add and in *Location* field paste *https://download.eclipse.org/efxclipse/runtime-nightly/site/*, install all
-2. Go **Help** -> **Install New Software**, click Add and in *Location* field paste *https://download.eclipse.org/efxclipse/updates-nightly/site/*, install all
+1. Go **Help** -> **Install New Software**, click Add and in *Location* field paste 
+```
+https://download.eclipse.org/efxclipse/runtime-nightly/site/
+```
+Install all
+2. Go **Help** -> **Install New Software**, click Add and in *Location* field paste 
+```
+https://download.eclipse.org/efxclipse/updates-nightly/site/
+```
+Install all
 3. Restart IDE
 ___________________________________
 <a name="scene"></a>
