@@ -691,7 +691,7 @@ public class MainController implements Initializable {
     	shuffleBtn.textProperty().bind(localizedBinding.createStringBinding("shuffleBtn"));
     	getInTypeLbl.textProperty().bind(localizedBinding.createStringBinding("getInTypeCombo"));
     	fileSave.textProperty().bind(localizedBinding.createStringBinding("save"));
-    	Main.getPrimaryStage().titleProperty().bind(localizedBinding.createStringBinding("mainLbl"));
+    	Main.getPrimaryStage().titleProperty().bind(localizedBinding.createStringBinding("mainLbl2"));
     	numberQuantityInfoLbl.textProperty().bind(localizedBinding.createStringBinding("numberQuantityInfoLbl"));
 
     }
