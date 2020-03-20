@@ -46,6 +46,12 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
+### Running
+1. Use cw2. jar file and in command line (**xyz** is your path to javafx-sdk):
+```
+java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,javafx.fxml cw2.jar
+```
+2. Import all files into the project and [configure build path](#jav)
 ### Description
 <img src="https://i.imgur.com/Y0g066j.png" width="555" height="456" />
 
@@ -59,7 +65,7 @@ and add all JARs from *...\javafx-sdk-11.0.2\lib*.
 2. Right click on the project and go **Build Path** -> **Configure Build Path** -> **Add Library** -> **User Library** -> **Next** and choose JAVAFX_11.
 3. Go **Run** -> **Run Configurations** -> **Arguments** and in VM arguments field write:
 ```
---module-path "**xyz**\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml
+--module-path "xyz\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml
 ```
 (**xyz** to your path to javafx-sdk). Then **Apply** -> **Close**.
 
