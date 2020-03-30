@@ -76,12 +76,10 @@ ___________________________________
 ```
 https://download.eclipse.org/efxclipse/runtime-nightly/site/
 ```
-Install all
 2. Go **Help** -> **Install New Software**, click Add and in *Location* field paste 
 ```
 https://download.eclipse.org/efxclipse/updates-nightly/site/
 ```
-Install all
 3. Restart IDE
 ___________________________________
 <a name="scene"></a>
