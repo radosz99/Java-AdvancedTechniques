@@ -235,7 +235,7 @@ extends <a href="../base/AbstractSorter.html" title="class in base">AbstractSort
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../base/AbstractSorter.html#description--">description</a></code>&nbsp;in class&nbsp;<code><a href="../base/AbstractSorter.html" title="class in base">AbstractSorter</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Algorithm's description - name  how and it works.</dd>
+<dd>Algorithm's description name  how and it works.</dd>
 </dl>
 </li>
 </ul>
@@ -286,15 +286,15 @@ extends <a href="../base/AbstractSorter.html" title="class in base">AbstractSort
 <pre>public&nbsp;&lt;T extends <a href="../base/IElement.html" title="interface in base">IElement</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;solve(java.util.List&lt;T&gt;&nbsp;list)</pre>
 <div class="block">The method used to sort the list of T objects (objects from classes implementing IElement interface) by the value.
  <p>
- The algorithm sorts the subarrays from 1- to n-elements - subarray of size 1 is always sorted.
+ The algorithm sorts the subarrays from 1- to n-elements subarray of size 1 is always sorted.
  If value in a cell after sorted subarray is smaller than the last element is subarray we have to insert a value from that cell to the index of last element.
  Then we have subarray of size-1 and still we have to compare with last element until the last element is smaller.
- Stop condition is the end of the list - the biggest subarrays of size n - our list - is sorted.</div>
+ Stop condition is the end of the list the biggest subarrays of size n our list is sorted.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../base/AbstractSorter.html#solve-java.util.List-">solve</a></code>&nbsp;in class&nbsp;<code><a href="../base/AbstractSorter.html" title="class in base">AbstractSorter</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>list</code> - List of objects T (objects from classes implementing IElement interface) to sort.</dd>
+<dd><code>list</code> List of objects T (objects from classes implementing IElement interface) to sort.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The finally sorted list.</dd>
 </dl>

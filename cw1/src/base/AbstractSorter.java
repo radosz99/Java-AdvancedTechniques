@@ -19,7 +19,7 @@ public abstract class AbstractSorter {
     /**
      * Unimplemented abstract method to get description of the algorithm.
      * <p>
-     * @return Algorithm's description - name  how and it works.
+     * @return Algorithm's description name  how and it works.
     */
 	public abstract String description();
 	

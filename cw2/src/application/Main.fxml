@@ -99,8 +99,9 @@
             <Font size="18.0" />
          </font></Label>
       <Label fx:id="numberQuantityInfoLbl" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="659.0" prefHeight="17.0" prefWidth="201.0" />
-      <Label fx:id="numbersQuantityLbl" layoutX="231.0" layoutY="658.0" prefHeight="17.0" prefWidth="99.0" />
+      <Label fx:id="numbersQuantityLbl" layoutX="231.0" layoutY="658.0" prefHeight="17.0" prefWidth="149.0" />
       <Label fx:id="rangeLbl" layoutX="429.0" layoutY="270.0" prefHeight="17.0" prefWidth="62.0" textFill="WHITE" />
       <Label fx:id="mainLbl" alignment="CENTER" layoutX="354.0" layoutY="33.0" prefHeight="100.0" prefWidth="529.0" />
+      <Label fx:id="noData" layoutX="107.0" layoutY="125.0" prefHeight="17.0" prefWidth="56.0" />
    </children>
 </AnchorPane>

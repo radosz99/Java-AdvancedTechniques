@@ -11,7 +11,7 @@ import base.*;
  */
 public class CountingSort extends AbstractSorter{
     /**
-     * @return Algorithm's description - name  how and it works.
+     * @return Algorithm's description name  how and it works.
     */
 	@Override
 	public String description() {
@@ -66,10 +66,10 @@ public class CountingSort extends AbstractSorter{
 		int[] holes = new int[range];
 		
 	    for(T t : list) {
-	        holes[(int) t.getValue() - min]++;
+	        holes[(int) t.getValue() -min]++;
 	    }
 	    for(int i = 1; i < range; ++i) {
-	        holes[i] += holes[i - 1];
+	        holes[i] += holes[i- 1];
 	    }
 	    
 	    LinkedList<T> output = new LinkedList<T>(); 
@@ -77,7 +77,7 @@ public class CountingSort extends AbstractSorter{
 	    for(T t : list)
 	    	output.add(t);
 	    
-	    for(int i = list.size() - 1; i >= 0; i--) {
+	    for(int i = list.size() -1; i >= 0; i--) {
 	    	output.set(holes[(int) list.get(i).getValue()]-1,list.get(i));
 	    	--holes[(int) list.get(i).getValue()];
 	    }

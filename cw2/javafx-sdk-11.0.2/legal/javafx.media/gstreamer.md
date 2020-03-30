@@ -9,9 +9,9 @@ licensed under the following license, separately from the Oracle programs
 you receive. If you do not wish to install this library, you may delete
 this library:
 
-   - On Linux systems: delete $(JAVA_HOME)/lib/libgstreamer-lite.so
-   - On Mac OS X systems: delete $(JAVA_HOME)/lib/libgstreamer-lite.dylib
-   - On Windows systems: delete $(JAVA_HOME)\bin\gstreamer-lite.dll
+   On Linux systems: delete $(JAVA_HOME)/lib/libgstreamer-lite.so
+   On Mac OS X systems: delete $(JAVA_HOME)/lib/libgstreamer-lite.dylib
+   On Windows systems: delete $(JAVA_HOME)\bin\gstreamer-lite.dll
 
 A copy of the Oracle modified GStreamer library source code is located
 in the following OpenJDK Mercurial repository:

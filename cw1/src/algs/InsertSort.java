@@ -10,7 +10,7 @@ import base.*;
  */
 public class InsertSort extends AbstractSorter{
     /**
-     * @return Algorithm's description - name  how and it works.
+     * @return Algorithm's description name  how and it works.
     */
 	@Override
 	public String description() {
@@ -38,10 +38,10 @@ public class InsertSort extends AbstractSorter{
     /**
      * The method used to sort the list of T objects (objects from classes implementing IElement interface) by the value.
      * <p>
-     * The algorithm sorts the subarrays from 1- to n-elements - subarray of size 1 is always sorted.
+     * The algorithm sorts the subarrays from 1- to n-elements subarray of size 1 is always sorted.
      * If value in a cell after sorted subarray is smaller than the last element is subarray we have to insert a value from that cell to the index of last element.
      * Then we have subarray of size-1 and still we have to compare with last element until the last element is smaller.
-     * Stop condition is the end of the list - the biggest subarrays of size n - our list - is sorted.
+     * Stop condition is the end of the list the biggest subarrays of size n our list is sorted.
      * 
      * @param list
      * 	List of objects T (objects from classes implementing IElement interface) to sort.
@@ -53,7 +53,7 @@ public class InsertSort extends AbstractSorter{
 		T key;
 	    for (int i = 1; i < list.size(); i++) { 
 	        key = list.get(i); 
-	        int j = i - 1; 
+	        int j = i- 1; 
 
 	        while (j >= 0 && list.get(j).getValue()> key.getValue()) { 
 	            list.set(j + 1,list.get(j)); 

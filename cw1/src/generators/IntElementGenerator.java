@@ -16,7 +16,7 @@ public class IntElementGenerator extends FloatElementGenerator {
 
 
     /**
-     * Generates some random data - IntElement class objects - by using intGenerator 
+     * Generates some random data IntElement class objects by using intGenerator 
      * and wordGenerator which draws random String from words.txt file that stores all English words in random order.
      * @return List of IntElement class random generate objects.
      * @param quantity

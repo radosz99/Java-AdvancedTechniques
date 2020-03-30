@@ -24,7 +24,7 @@ public class FloatElementGenerator {
 	}
 
 	/**
-     * Generate some random data - FloatElement class objects - by using floatGenerator 
+     * Generate some random data FloatElement class objects by using floatGenerator 
      * and wordGenerator which draws random String from words.txt file that stores all English words in random order.
      * @return List of FloatElement class random generate objects 
      * @param quantity

@@ -2,7 +2,7 @@ package base;
 
 /**
  * 
- * Interface which offers some methods - getters - to get data from object of classes which implements the interface.
+ * Interface which offers some methods getters to get data from object of classes which implements the interface.
  * 
  * @author Radoslaw Lis
  */
@@ -15,7 +15,7 @@ public interface IElement {
 	public static final String word = "";
 	
     /**
-     * Variable of float type - the key by which list is sorted.
+     * Variable of float type the key by which list is sorted.
      */
 	public static final float value = 0;
 	
@@ -27,7 +27,7 @@ public interface IElement {
 	}
 	
 	/**
-	*@return Value of the object - the key by which list is sorted.
+	*@return Value of the object the key by which list is sorted.
 	 */
 	public default float getValue() {
 		return (float) value;

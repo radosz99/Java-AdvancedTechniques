@@ -10,7 +10,7 @@ import base.*;
  */
 public class QuickSort extends AbstractSorter {
     /**
-     * @return Algorithm's description - name  how and it works.
+     * @return Algorithm's description name  how and it works.
     */
 	@Override
 	public String description() {

@@ -14,12 +14,12 @@ public class IntElement implements IElement {
 	String word;
 	
     /**
-     *  Private variable of float type - the key by which list is sorted.
+     *  Private variable of float type the key by which list is sorted.
      */
 	int value;
 
 	/**
-	*@return The string giving all informations about the object - value and name to show the list of objects in easy way.
+	*@return The string giving all informations about the object value and name to show the list of objects in easy way.
 	 */
 	@Override
 	public String toString() {
@@ -43,7 +43,7 @@ public class IntElement implements IElement {
 	}
 	
 	/**
-	*@return Value of the object - the key by which list is sorted.
+	*@return Value of the object the key by which list is sorted.
 	 */
 	public float getValue() {
 		return (float) value;

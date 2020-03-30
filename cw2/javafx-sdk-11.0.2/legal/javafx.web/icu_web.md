@@ -44,7 +44,7 @@ This section contains third-party software notices and/or additional
 terms for licensed third-party software components included within ICU
 libraries.
 
-1. ICU License - ICU 1.8.1 to ICU 57.1
+1. ICU License ICU 1.8.1 to ICU 57.1
 
 COPYRIGHT AND PERMISSION NOTICE
 
@@ -125,12 +125,12 @@ property of their respective owners.
  # corpora.
  #
  #  * Libtabe (Chinese)
- #    - https://sourceforge.net/project/?group_id=1519
- #    - Its license terms and conditions are shown below.
+ #    https://sourceforge.net/project/?group_id=1519
+ #    Its license terms and conditions are shown below.
  #
  #  * IPADIC (Japanese)
- #    - http://chasen.aist-nara.ac.jp/chasen/distribution.html
- #    - Its license terms and conditions are shown below.
+ #    http://chasen.aist-nara.ac.jp/chasen/distribution.html
+ #    Its license terms and conditions are shown below.
  #
  #  ---------COPYING.libtabe ---- BEGIN--------------------
  #

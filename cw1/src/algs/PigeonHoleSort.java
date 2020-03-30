@@ -11,7 +11,7 @@ import base.*;
  */
 public class PigeonHoleSort extends AbstractSorter{
     /**
-     * @return Algorithm's description - name  how and it works.
+     * @return Algorithm's description name  how and it works.
     */
 	@Override
 	public String description() {
@@ -41,7 +41,7 @@ public class PigeonHoleSort extends AbstractSorter{
      * <p>
      * First, it finds maximum and minimum values in the list to generate a range. 
      * Then it creates pigeonholes and adds objects to the right holes. Objects are adding at the end so the algorithm is stable.
-     * Finally it copies objects from to the method parameter - list.
+     * Finally it copies objects from to the method parameter list.
      * 
      * @param list
      * 	List of objects T (objects from classes implementing IElement interface) to sort.

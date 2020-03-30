@@ -9,9 +9,9 @@ licensed under the following license, separately from the Oracle programs
 you receive. If you do not wish to install this library, you may delete
 this library:
 
-   - On Linux systems: N/A (library is not present)
-   - On Mac OS X systems: delete $(JAVA_HOME)/lib/libglib-lite.dylib
-   - On Windows systems: delete $(JAVA_HOME)\bin\glib-lite.dll
+   On Linux systems: N/A (library is not present)
+   On Mac OS X systems: delete $(JAVA_HOME)/lib/libglib-lite.dylib
+   On Windows systems: delete $(JAVA_HOME)\bin\glib-lite.dll
 
 A copy of the Oracle modified GNU Glib library source code is located
 in the following OpenJDK Mercurial repository:

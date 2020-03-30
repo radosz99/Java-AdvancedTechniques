@@ -41,6 +41,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -95,6 +96,7 @@ public class MainController implements Initializable {
 	@FXML private Label executionTimeLbl;
 	@FXML private Label timeExLbl;
 	@FXML private Label mainLbl;
+	@FXML private Label noData;
 	@FXML private MenuBar menu;
 	@FXML private Menu file;
 	@FXML private Menu help;
@@ -131,6 +133,151 @@ public class MainController implements Initializable {
 	public ObservableList<String> algsList = FXCollections.observableArrayList();
 	public ObservableList<String> getInList = FXCollections.observableArrayList();
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		Main.getPrimaryStage().getIcons().add(new Image("file::en.png"));
+	    lang.getItems().addAll(new Locale("pl","PL"), 
+	    		new Locale("en","US"), 
+	    		new Locale("en","GB"), 
+	    		new Locale("de", "DE"),
+	    		new Locale("fr", "FR"),
+	    		new Locale("ja","JP"));
+	
+	    lang.setCellFactory(lv -> {
+	    	return createListCell();
+	    });
+	    lang.setButtonCell(createListCell());
+	
+	    localizedBinding = new LocalizedBinding("resources/bundles", Locale.getDefault());
+	    localizedBinding.localeProperty().bind(lang.valueProperty());
+	    
+	    setAllStrings();
+	    
+	    lang.getSelectionModel().select(Locale.getDefault());
+	    
+		sources = arg1;
+		choiceFormatter();
+	    lang.setOnAction(lv -> {
+	    	updateDateAndFlag();
+	    });
+	    
+	    dataTypeCombo.setOnAction(lv -> {
+	        handleDataTypeComboBox();
+	    });
+	    
+	    algorithmTypeCombo.setOnAction(lv -> {
+	    	handleAlgComboBox();
+	    });
+	    
+	    getInTypeCombo.setOnAction(lv -> {
+	    	handleGetInTypeComboBox();
+	    });
+	    
+	    updateDateAndFlag();
+		table.setItems(list);
+		
+		langSetLayout();
+		
+	}
+	
+	private ListCell<Locale> createListCell() {
+	    return new ListCell<Locale>() {
+	        @Override
+	        public void updateItem(Locale locale, boolean empty) {
+	            super.updateItem(locale, empty);
+	            if (empty) {
+	                setText("");
+	            } else {
+	                setText(locale.getDisplayCountry(locale));
+	            }
+	        }
+	    };
+	}
+	
+	private void langSetLayout() {
+		lang.setCellFactory(new Callback<ListView<Locale>, ListCell<Locale>>() {
+		    @Override
+		    public ListCell<Locale> call(ListView<Locale> p) {
+		        return new ListCell<Locale>() {
+		            @Override
+		            protected void updateItem(Locale item, boolean empty) {
+		                super.updateItem(item, empty);
+		                if (empty) {
+		                    setText("");
+		                } else {
+		                    setText(item.getDisplayCountry(item));
+		                }
+		                if (item == null || empty) {
+		                    setGraphic(null);
+		                } else {
+		                    Image icon = null;
+		                    try {
+		                    	icon = new Image(new File("src/icons/"+item.getCountry().toString()+".png").toURI().toString());
+		                    } catch(NullPointerException ex) {
+		                    	System.out.println("brak ikony");
+		                    }
+		                    ImageView iconImageView = new ImageView(icon);
+		                    iconImageView.setFitHeight(10);
+		                    iconImageView.setPreserveRatio(true);
+		                    setGraphic(iconImageView);
+		                }
+		            }
+		        };
+		    }
+		});
+	}
+	private void setAllStrings() {
+		getInTypeCombo.setItems(getInList);
+	    value.textProperty().bind(localizedBinding.createStringBinding("value"));
+	    word.textProperty().bind(localizedBinding.createStringBinding("word2"));
+	    getInList.addAll(localizedBinding.getString("loadFile"),localizedBinding.getString("random"), localizedBinding.getString("hand"));
+	    
+		algorithmTypeCombo.setItems(algsList);
+		value.setCellValueFactory(new PropertyValueFactory<IElement, Float >("value"));
+		word.setCellValueFactory(new PropertyValueFactory<IElement, String >("word"));
+		minrangeText.setVisible(false);
+		rangeText.setVisible(false);
+		algorithmTypeCombo.setDisable(true);
+		getInTypeCombo.setDisable(true);
+		quantText.setVisible(false);
+		rangeLbl.setVisible(false);
+		quantLbl.setVisible(false);
+		fileBtn.setVisible(false);
+		getDataBtn.setVisible(false);
+		separatorInfoLbl.setVisible(false);
+		separatorLbl.setVisible(false);
+		
+		sortBtn.textProperty().bind(localizedBinding.createStringBinding("sortBtn"));
+		algorithmTypeLbl.textProperty().bind(localizedBinding.createStringBinding("algorithmTypeLbl"));
+		clrBtn.textProperty().bind(localizedBinding.createStringBinding("clrBtn"));
+		clrElBtn.textProperty().bind(localizedBinding.createStringBinding("clrElBtn"));
+		algorithmTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("dataFirst"));
+		getInTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("dataFirst"));
+		dataTypeLbl.textProperty().bind(localizedBinding.createStringBinding("dataTypeLbl"));
+		descLbl.textProperty().bind(localizedBinding.createStringBinding("descLbl"));
+		helpDesc.textProperty().bind(localizedBinding.createStringBinding("descProgram"));
+		languageLbl.textProperty().bind(localizedBinding.createStringBinding("language"));
+		timeExLbl.textProperty().bind(localizedBinding.createStringBinding("executionTimeLbl"));
+		fileExit.textProperty().bind(localizedBinding.createStringBinding("exit"));
+		file.textProperty().bind(localizedBinding.createStringBinding("file"));
+		fileBtn.textProperty().bind(localizedBinding.createStringBinding("fileBtn"));
+		//getInTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("getInTypeCombo"));
+		help.textProperty().bind(localizedBinding.createStringBinding("help"));
+		helpInstruc.textProperty().bind(localizedBinding.createStringBinding("instr"));
+		mainLbl.textProperty().bind(localizedBinding.createStringBinding("mainLbl"));
+		separatorInfoLbl.textProperty().bind(localizedBinding.createStringBinding("infoSeparatorLbl"));
+		reverseBtn.textProperty().bind(localizedBinding.createStringBinding("reverseBtn"));
+		shuffleBtn.textProperty().bind(localizedBinding.createStringBinding("shuffleBtn"));
+		getInTypeLbl.textProperty().bind(localizedBinding.createStringBinding("getInTypeCombo"));
+		fileSave.textProperty().bind(localizedBinding.createStringBinding("save"));
+		Main.getPrimaryStage().titleProperty().bind(localizedBinding.createStringBinding("mainLbl2"));
+		numberQuantityInfoLbl.textProperty().bind(localizedBinding.createStringBinding("numberQuantityInfoLbl"));
+		noData.textProperty().bind(localizedBinding.createStringBinding("noData"));
+		noData.setPrefWidth(200);
+		noData.setAlignment(Pos.CENTER);
+	
+	}
 	public void castData() {
 		dataToSort2.clear();
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.getDefault());
@@ -259,7 +406,8 @@ public class MainController implements Initializable {
 			else if(algorithmTypeCombo.getSelectionModel().getSelectedItem().toString()==csort) {
 				cs.solve(dataToSort);
 			}
-			long elapsedTime = System.nanoTime() - start;
+			long elapsedTime = System.nanoTime();
+			elapsedTime = elapsedTime - start;
 			if (elapsedTime>1000000000) {
 				executionTimeLbl.setText(elapsedTime/1000000000 + " s");
 			}
@@ -301,8 +449,93 @@ public class MainController implements Initializable {
 			situ.textProperty().bind(localizedBinding.createStringBinding("notsitu"));
 	}
 
+	public void handleDataTypeComboBox(){
+       	algorithmTypeCombo.setDisable(false);
+       	getInTypeCombo.setDisable(false);
+    	algorithmTypeCombo.promptTextProperty().unbind();
+    	algorithmTypeCombo.promptTextProperty().set("");
+       	getInTypeCombo.promptTextProperty().unbind();
+       	getInTypeCombo.promptTextProperty().set("");
+       	
+        if(dataTypeCombo.getItems().get(dataTypeCombo.getSelectionModel().getSelectedIndex()).equals("integer")) {
+    		separatorInfoLbl.setVisible(false);
+    		separatorLbl.setVisible(false);
+       		list.clear();
+       		dataToSort.clear();
+       		table.setItems(list);
+       		updateView();
+       		if(algsList.size()==2)
+       			algsList.addAll(csort, psort);
+       		else if(algsList.size()==0)
+       			algsList.addAll(qsort, isort, csort, psort);
+         }
+        else if(dataTypeCombo.getItems().get(dataTypeCombo.getSelectionModel().getSelectedIndex()).equals("float")) {
+    		separatorInfoLbl.setVisible(true);
+    		separatorLbl.setVisible(true);
+       		if(algsList.size()==4 && algorithmTypeCombo.getSelectionModel().getSelectedIndex()<2) {
+       			algsList.remove(2);
+       			algsList.remove(2);
+       		}
+       		else if(algsList.size()==0)
+       			algsList.addAll(qsort, isort);
+       		else {
+       			algsList.clear();
+       			algsList.addAll(qsort, isort);
+       	       	descText.setText("");
+       	    	stabil.textProperty().unbind();
+       	    	stabil.textProperty().set("");
+       	    	situ.textProperty().unbind();
+       	    	situ.textProperty().set("");
+       	    	imageview.setImage(null);
+       		}
+       			
+        }
+           
+	}
+	
+	public void handleGetInTypeComboBox(){
+		rangeText.setText("");
+		minrangeText.setText("");
+		quantText.setText("");
+	    if(getInTypeCombo.getSelectionModel().getSelectedIndex()==0) {
+	      	rangeLbl.setVisible(false);
+	      	minrangeLbl.setVisible(false);
+	       	quantLbl.setVisible(false);
+	   		rangeText.setVisible(false);
+	   		minrangeText.setVisible(false);
+	   		quantText.setVisible(false);
+	   		getDataBtn.setVisible(false);
+	   		fileBtn.setVisible(true);
+	        fileBtn.setOnAction(f->{try {
+	        	if(dataTypeCombo.getValue()==null){
+	        		warning("warnType");
+	       		} else handleFile();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (FileFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					}});
+	    }     
+	    else if(getInTypeCombo.getSelectionModel().getSelectedIndex()==1) {
+	       	hideFileButton();
+	       	minrangeLbl.textProperty().bind(localizedBinding.createStringBinding("minrangeLbl"));
+	       	rangeLbl.textProperty().bind(localizedBinding.createStringBinding("rangeLbl"));
+	       	quantLbl.textProperty().bind(localizedBinding.createStringBinding("quantLbl"));
+	        getDataBtn.textProperty().bind(localizedBinding.createStringBinding("generate"));
+	    }        
+	    else if(getInTypeCombo.getSelectionModel().getSelectedIndex()==2) {
+	       	hideFileButton();
+	       	rangeLbl.setVisible(false);
+	       	rangeText.setVisible(false);
+	       	minrangeLbl.textProperty().bind(localizedBinding.createStringBinding("number"));
+	      	quantLbl.textProperty().bind(localizedBinding.createStringBinding("word"));
+	      	getDataBtn.textProperty().bind(localizedBinding.createStringBinding("newelement"));
+	    }
+	}
 	public void handleAlgComboBox () {
-        if(algorithmTypeCombo.getSelectionModel().getSelectedItem()!=null) {
+	    if(algorithmTypeCombo.getSelectionModel().getSelectedItem()!=null) {
 	        if(algorithmTypeCombo.getSelectionModel().getSelectedItem().equals(qsort)) {
 	            Image i = new Image(new File("src/gifs/qs.gif").toURI().toString());
 	            //https://commons.wikimedia.org/wiki/File:Quicksort-example.gif
@@ -333,53 +566,9 @@ public class MainController implements Initializable {
 	            setLabels(qs.isStable(), qs.isInSitu());
 	            descText.setText(qs.description());
 	        }
-        }
-            
+	    }
+	        
 	}
-	
-	public void handleDataTypeComboBox(){
-       	algorithmTypeCombo.setDisable(false);
-       	getInTypeCombo.setDisable(false);
-    	algorithmTypeCombo.promptTextProperty().unbind();
-    	algorithmTypeCombo.promptTextProperty().set("");
-       	getInTypeCombo.promptTextProperty().unbind();
-       	getInTypeCombo.promptTextProperty().set("");
-       	
-        if(dataTypeCombo.getItems().get(dataTypeCombo.getSelectionModel().getSelectedIndex()).equals("integer")) {
-    		separatorInfoLbl.setVisible(false);
-    		separatorLbl.setVisible(false);
-       		list.clear();
-       		dataToSort.clear();
-       		table.setItems(list);
-       		if(algsList.size()==2)
-       			algsList.addAll(csort, psort);
-       		else if(algsList.size()==0)
-       			algsList.addAll(qsort, isort, csort, psort);
-         }
-        else if(dataTypeCombo.getItems().get(dataTypeCombo.getSelectionModel().getSelectedIndex()).equals("float")) {
-    		separatorInfoLbl.setVisible(true);
-    		separatorLbl.setVisible(true);
-       		if(algsList.size()==4 && algorithmTypeCombo.getSelectionModel().getSelectedIndex()<2) {
-       			algsList.remove(2);
-       			algsList.remove(2);
-       		}
-       		else if(algsList.size()==0)
-       			algsList.addAll(qsort, isort);
-       		else {
-       			algsList.clear();
-       			algsList.addAll(qsort, isort);
-       	       	descText.setText("");
-       	    	stabil.textProperty().unbind();
-       	    	stabil.textProperty().set("");
-       	    	situ.textProperty().unbind();
-       	    	situ.textProperty().set("");
-       	    	imageview.setImage(null);
-       		}
-       			
-        }
-           
-	}
-	
 	public void saveToFile(ActionEvent event) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
 		for(Element i : dataToSort2) {
@@ -461,6 +650,8 @@ public class MainController implements Initializable {
 		numbersQuantityLbl.setText(String.valueOf(dataToSort2.size()));
 		choiceFormatter();
 		table.setItems(list2);
+        if(table.getItems().size()==0)
+        	table.setPlaceholder(noData);
 	}
 	
 	public void shuffleList(){
@@ -503,198 +694,6 @@ public class MainController implements Initializable {
     	getDataBtn.setVisible(true);
     	fileBtn.setVisible(false);
 	}
-	
-	public void handleGetInTypeComboBox(){
-		rangeText.setText("");
-		minrangeText.setText("");
-		quantText.setText("");
-        if(getInTypeCombo.getSelectionModel().getSelectedIndex()==0) {
-          	rangeLbl.setVisible(false);
-          	minrangeLbl.setVisible(false);
-           	quantLbl.setVisible(false);
-       		rangeText.setVisible(false);
-       		minrangeText.setVisible(false);
-       		quantText.setVisible(false);
-       		getDataBtn.setVisible(false);
-       		fileBtn.setVisible(true);
-            fileBtn.setOnAction(f->{try {
-            	if(dataTypeCombo.getValue()==null){
-            		warning("warnType");
-           		} else handleFile();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					}});
-        }     
-        else if(getInTypeCombo.getSelectionModel().getSelectedIndex()==1) {
-           	hideFileButton();
-           	minrangeLbl.textProperty().bind(localizedBinding.createStringBinding("minrangeLbl"));
-           	rangeLbl.textProperty().bind(localizedBinding.createStringBinding("rangeLbl"));
-           	quantLbl.textProperty().bind(localizedBinding.createStringBinding("quantLbl"));
-            getDataBtn.textProperty().bind(localizedBinding.createStringBinding("generate"));
-        }        
-        else if(getInTypeCombo.getSelectionModel().getSelectedIndex()==2) {
-           	hideFileButton();
-           	rangeLbl.setVisible(false);
-           	rangeText.setVisible(false);
-           	minrangeLbl.textProperty().bind(localizedBinding.createStringBinding("number"));
-          	quantLbl.textProperty().bind(localizedBinding.createStringBinding("word"));
-          	getDataBtn.textProperty().bind(localizedBinding.createStringBinding("newelement"));
-        }
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		Main.getPrimaryStage().getIcons().add(new Image("file::en.png"));
-        lang.getItems().addAll(new Locale("pl","PL"), 
-        		new Locale("en","US"), 
-        		new Locale("en","GB"), 
-        		new Locale("de", "DE"),
-        		new Locale("fr", "FR"),
-        		new Locale("ja","JP"));
-
-//		add all countries
-//		String count[] = Locale.getISOCountries();
-//		Locale locale;
-//		for(String s : count){	
-//			locale = new Locale(s);
-//			s = s + "-" + locale.getLanguage();
-//			locale = new Locale.Builder().setLanguageTag(s).build();
-//			lang.getItems().addAll(locale);
-//		}
-      
-        lang.setCellFactory(lv -> {
-        	return createListCell();
-        });
-        lang.setButtonCell(createListCell());
-
-        localizedBinding = new LocalizedBinding("resources/bundles", Locale.getDefault());
-        localizedBinding.localeProperty().bind(lang.valueProperty());
-        
-        setAllStrings();
-        
-        lang.getSelectionModel().select(Locale.getDefault());
-        
-		sources = arg1;
-		choiceFormatter();
-        lang.setOnAction(lv -> {
-        	updateDateAndFlag();
-        });
-        
-        dataTypeCombo.setOnAction(lv -> {
-            handleDataTypeComboBox();
-        });
-        
-        algorithmTypeCombo.setOnAction(lv -> {
-        	handleAlgComboBox();
-        });
-        
-        getInTypeCombo.setOnAction(lv -> {
-        	handleGetInTypeComboBox();
-        });
-        
-        updateDateAndFlag();
-		table.setItems(list);
-		
-		
-		lang.setCellFactory(new Callback<ListView<Locale>, ListCell<Locale>>() {
-		    @Override
-		    public ListCell<Locale> call(ListView<Locale> p) {
-		        return new ListCell<Locale>() {
-		            @Override
-		            protected void updateItem(Locale item, boolean empty) {
-		                super.updateItem(item, empty);
-		                if (empty) {
-		                    setText("");
-		                } else {
-		                    setText(item.getDisplayCountry(item));
-		                }
-		                if (item == null || empty) {
-		                    setGraphic(null);
-		                } else {
-		                    Image icon = null;
-		                    try {
-		                    	icon = new Image(new File("src/icons/"+item.getCountry().toString()+".png").toURI().toString());
-		                    } catch(NullPointerException ex) {
-		                    	System.out.println("brak ikony");
-		                    }
-		                    ImageView iconImageView = new ImageView(icon);
-		                    iconImageView.setFitHeight(10);
-		                    iconImageView.setPreserveRatio(true);
-		                    setGraphic(iconImageView);
-		                }
-		            }
-		        };
-		    }
-		});
-	}
-	
-    private ListCell<Locale> createListCell() {
-        return new ListCell<Locale>() {
-            @Override
-            public void updateItem(Locale locale, boolean empty) {
-                super.updateItem(locale, empty);
-                if (empty) {
-                    setText("");
-                } else {
-                    setText(locale.getDisplayCountry(locale));
-                }
-            }
-        };
-    }
-    
-    private void setAllStrings() {
-		getInTypeCombo.setItems(getInList);
-        value.textProperty().bind(localizedBinding.createStringBinding("value"));
-        word.textProperty().bind(localizedBinding.createStringBinding("word2"));
-        getInList.addAll(localizedBinding.getString("loadFile"),localizedBinding.getString("random"), localizedBinding.getString("hand"));
-        
-		algorithmTypeCombo.setItems(algsList);
-		value.setCellValueFactory(new PropertyValueFactory<IElement, Float >("value"));
-		word.setCellValueFactory(new PropertyValueFactory<IElement, String >("word"));
-		minrangeText.setVisible(false);
-		rangeText.setVisible(false);
-		algorithmTypeCombo.setDisable(true);
-		getInTypeCombo.setDisable(true);
-		quantText.setVisible(false);
-		rangeLbl.setVisible(false);
-		quantLbl.setVisible(false);
-		fileBtn.setVisible(false);
-		getDataBtn.setVisible(false);
-		separatorInfoLbl.setVisible(false);
-		separatorLbl.setVisible(false);
-		
-    	sortBtn.textProperty().bind(localizedBinding.createStringBinding("sortBtn"));
-    	algorithmTypeLbl.textProperty().bind(localizedBinding.createStringBinding("algorithmTypeLbl"));
-    	clrBtn.textProperty().bind(localizedBinding.createStringBinding("clrBtn"));
-    	clrElBtn.textProperty().bind(localizedBinding.createStringBinding("clrElBtn"));
-    	algorithmTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("dataFirst"));
-    	getInTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("dataFirst"));
-    	dataTypeLbl.textProperty().bind(localizedBinding.createStringBinding("dataTypeLbl"));
-    	descLbl.textProperty().bind(localizedBinding.createStringBinding("descLbl"));
-    	helpDesc.textProperty().bind(localizedBinding.createStringBinding("descProgram"));
-    	languageLbl.textProperty().bind(localizedBinding.createStringBinding("language"));
-    	timeExLbl.textProperty().bind(localizedBinding.createStringBinding("executionTimeLbl"));
-    	fileExit.textProperty().bind(localizedBinding.createStringBinding("exit"));
-    	file.textProperty().bind(localizedBinding.createStringBinding("file"));
-    	fileBtn.textProperty().bind(localizedBinding.createStringBinding("fileBtn"));
-    	//getInTypeCombo.promptTextProperty().bind(localizedBinding.createStringBinding("getInTypeCombo"));
-    	help.textProperty().bind(localizedBinding.createStringBinding("help"));
-    	helpInstruc.textProperty().bind(localizedBinding.createStringBinding("instr"));
-    	mainLbl.textProperty().bind(localizedBinding.createStringBinding("mainLbl"));
-    	separatorInfoLbl.textProperty().bind(localizedBinding.createStringBinding("infoSeparatorLbl"));
-    	reverseBtn.textProperty().bind(localizedBinding.createStringBinding("reverseBtn"));
-    	shuffleBtn.textProperty().bind(localizedBinding.createStringBinding("shuffleBtn"));
-    	getInTypeLbl.textProperty().bind(localizedBinding.createStringBinding("getInTypeCombo"));
-    	fileSave.textProperty().bind(localizedBinding.createStringBinding("save"));
-    	Main.getPrimaryStage().titleProperty().bind(localizedBinding.createStringBinding("mainLbl2"));
-    	numberQuantityInfoLbl.textProperty().bind(localizedBinding.createStringBinding("numberQuantityInfoLbl"));
-
-    }
 
     
 	

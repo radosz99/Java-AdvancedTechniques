@@ -9,9 +9,9 @@ licensed under the following license, separately from the Oracle programs
 you receive. If you do not wish to install this library, you may delete
 this library:
 
-   - On Linux systems: delete $(JAVA_HOME)/lib/libjfxwebkit.so
-   - On Mac OS X systems: delete $(JAVA_HOME)/lib/libjfxwebkit.dylib
-   - On Windows systems: delete $(JAVA_HOME)\bin\jfxwebkit.dll
+   On Linux systems: delete $(JAVA_HOME)/lib/libjfxwebkit.so
+   On Mac OS X systems: delete $(JAVA_HOME)/lib/libjfxwebkit.dylib
+   On Windows systems: delete $(JAVA_HOME)\bin\jfxwebkit.dll
 
 A copy of the Oracle modified WebKit library source code is located
 in the following OpenJDK Mercurial repository:
