@@ -2,20 +2,20 @@ package base;
 
 import pl.advanced.generator.IntGenerator;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+import org.apache.commons.collections4.map.ReferenceMap;
+import org.apache.commons.collections4.map.AbstractReferenceMap;
 
 public class SortSet {
-    public HashMap<Long, List<IElement>> sortMap= new HashMap<>();
+    public Map<Long, List<IElement>> sortMap = Collections.synchronizedMap(new ReferenceMap<Long, List<IElement>>
+            (AbstractReferenceMap.ReferenceStrength.HARD, AbstractReferenceMap.ReferenceStrength.HARD));
 
-    public List<IElement> getDataBySeed(long seed){
-        if (sortMap.containsKey(seed)){
-            System.out.println("Ziarno " + seed + " już posortowane!");
+    public List<IElement> getDataBySeed(long seed) {
+        if (sortMap.containsKey(seed)) {
             return null;
-        }
-        else {
-            System.out.println("Ziarno " + seed + " jeszcze nieposortowane!");
-            return IntGenerator.getIntData(10000, 0, 1000, seed);
+        } else {
+            return IntGenerator.getIntData(7500, 0, 1000, seed);
         }
     }
 }

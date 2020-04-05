@@ -1,6 +1,8 @@
 package pl.advanced.classloader;
 
 
+import pl.advanced.Main;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -30,32 +32,13 @@ public class JavaClassLoader extends ClassLoader {
             className = className.replace('/', '.');
             Class c = cl.loadClass(className);
 
-
             if (c.getSuperclass() != null) {
-                if (c.getSuperclass().equals(cl.loadClass("base.AbstractSorter"))) {
+                String superClassName = Main.getClassName(c.getSuperclass().getName());
+                if (superClassName.equals("AbstractSorter")) {
                     sortClasses.add(cl.loadClass(className));
                 }
             }
         }
         return sortClasses;
-    }
-
-    public <T extends base.IElement> List<T> solve(List<T> list) {
-
-        T key;
-        for (int i = 1; i < list.size(); i++) {
-            key = list.get(i);
-            int j = i- 1;
-
-            while (j >= 0 && list.get(j).getValue()> key.getValue()) {
-                list.set(j + 1,list.get(j));
-                j--;
-            }
-            list.set(j + 1,key);
-
-        }
-
-
-        return list;
     }
 }
