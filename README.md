@@ -10,6 +10,7 @@ _________________________________
 - [Info about programs](#inf)
   *  [cw1](#cw1)
   *  [cw2](#cw2)
+  *  [cw3](#cw3)
 - [Configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
@@ -26,7 +27,6 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 
 <a name="pre"></a>
 # Prerequisites
-- [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) 
 - IDE for Java (e.g. [Eclipse](https://www.eclipse.org/downloads/))
  
  <a name="inf"></a>
@@ -35,14 +35,24 @@ cw2 - Desktop sorting application using sorting methods from cw1.
  <a name="cw1"></a>
 ## cw1
 
-<a name="tech1"></a>
 ### Technologies 
-- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
+- Java
+
+### Running
+Create a list in *Test.java* and run by choose one of algorithm to sort it.
+### Description
+Program provides an interface for sort list of *IElement* objects (*FloatElement* or *IntElement*) consisting of key and value.
+Currently available algorithms:
+- **Quick Sort**,
+- **Counting Sort**,
+- **Pigeonhole Sort**,
+- **Insert Sort**.
+
+You can add some algorithm using the current convention (inheritance from *AbstractSorter* abstract class).
 
  <a name="cw2"></a>
 ## cw2
 
-<a name="tech2"></a>
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
@@ -53,7 +63,39 @@ java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,
 ```
 2. Import all files into the project and [configure build path](#jav)
 ### Description
-<img src="https://i.imgur.com/Y0g066j.png" width="555" height="456" />
+Desktop, JavaFX application using algorithms from [cw1](#cw1)
+
+<img src="https://i.imgur.com/Y0g066j.png" width="444" height="365" />
+
+ <a name="cw3"></a>
+## cw3
+
+### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
+
+### Running
+```
+$ git clone https://github.com/radosz99/Programming-in-Java-Advanced-Techniques.git
+$ cd Programming-in-Java-Advanced-Techniques
+$ cd cw3
+$ mvn install
+$ cd target
+$ java *A* *B* -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar *C* *D* *E* *F* *H*
+```
+VM options (not required)
+- A = minimum heap size for JVM in megabytes, e.g. *-Xms128m*,
+- B = maximum heap size for JVM in megabytes, e.g. *-Xmx256m*,
+
+Arguments (required):
+- C = number of seeds (lists to sort), e.g. *500*,
+- D = number of elements in seed, e.g. *800*,
+- E = number of sorting threads, e.g. *16*,
+- F = type of reference to store a key in the map (cache) - *SOFT*, *HARD* or *WEAK*,
+- H = type of reference to store a value in the map (cache) - *SOFT*, *HARD* or *WEAK*.
+2. Import all files into the project and [configure build path](#jav)
+### Description
+Progra
+<img src="https://i.imgur.com/Y0g066j.png" width="100" height="100" />
 
 <a name="conf"></a>
 # Configurations
