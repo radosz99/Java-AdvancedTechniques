@@ -40,8 +40,8 @@ public class Main {
 
     public static void settings(String[]args){
         if(args.length!=5){
-            safePrintln("Zła liczba argumentów");
-            safePrintln("LICZBA ZIAREN | LICZBA ELEMENTOW W ZIARNIE | LICZBA WATKOW | REFERENCJA KEY | REFERENCJA VALUE");
+            safePrintln("Wrong number of arguments!");
+            safePrintln("Number of seeds | Number of elements in seed | Number of threads | Key reference type | Value reference type");
             System. exit(0);
         }
         else{
@@ -162,13 +162,6 @@ public class Main {
         }
     }
 
-
-    public static void stopThreads() {
-        for (Thread t : threads) {
-            t.interrupt();
-        }
-    }
-
     public static boolean checkIfInUse(long seed) {
         synchronized (USE_LOCK) {
             for (Long l : currentSeedes) {
@@ -210,11 +203,11 @@ public class Main {
 
     public static void loadAlgorithmClasses() throws IOException, ClassNotFoundException, NoSuchMethodException, InterruptedException {
         List<Class> sortClasses;
-        safePrintln("ZA 5 SEKUND KLASY Z ALGORYTMAMI ZOSTANĄ WCZYTANE!");
+        safePrintln("In 5 seconds classes with sorting methods will be load");
         Thread.sleep(5000);
         sortClasses = JavaClassLoader.getSortClasses("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw3\\src\\main\\resources\\cw1.jar");
         loadMethods(sortClasses);
-        safePrintln("KLASY Z ALGORYTMAMI WCZYTANE!");
+        safePrintln("Classes had been loaded!");
     }
 
     public static void loadMethods(List<Class> sortClasses) throws NoSuchMethodException {
@@ -230,10 +223,10 @@ public class Main {
             if (g1 != 0 && g2 != 0) {
                 String missesSinceLast = DECIMAL_FORMAT.format((float) m2 / g2 * 100);
                 String misses = DECIMAL_FORMAT.format((float) m1 / g1 * 100);
-                safePrintln("\nUchybień ogólnie: " + misses + "%." +
-                                "\nUchybień od ostatniego raportu: " + missesSinceLast + "%." +
-                        "\nElementów w cache'u: " + cache.sortMap.size() + "/" + RANGE +
-                        "\nLącznie sortowań: " + SORT_COUNTER + "\n");
+                safePrintln("\nMisses overall: " + misses + "%." +
+                                "\nMisses since last raport: " + missesSinceLast + "%." +
+                        "\nCurrent number of elements in cache: " + cache.sortMap.size() + "/" + RANGE +
+                        "\nSorts overall: " + SORT_COUNTER + "\n");
                 m2 = 0;
                 g2 = 0;
             }
