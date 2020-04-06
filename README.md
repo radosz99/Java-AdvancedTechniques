@@ -7,7 +7,7 @@ _________________________________
 # Table of Contents
 - [General info](#desc)
 - [Prerequisites](#pre)
-- [Info about programs](#inf)
+- [Applications info](#inf)
   *  [cw1](#cw1)
   *  [cw2](#cw2)
   *  [cw3](#cw3)
@@ -20,17 +20,18 @@ _________________________________
 
 <a name="desc"></a>
 # General info
-Programs made for university course *Programming in Java - advanced techniques*.
+Applications made for university course *Programming in Java - advanced techniques*.
 ______________________________
-cw1 - Sorting algorithms,  
-cw2 - Desktop sorting application using sorting methods from cw1.
+[cw1](#cw1) - Sorting algorithms,  
+[cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1),  
+[cw3](#cw3) - Console application for JVM research, control heap size, garbage collector.  
 
 <a name="pre"></a>
 # Prerequisites
-- IDE for Java (e.g. [Eclipse](https://www.eclipse.org/downloads/))
+- IDE for Java (e.g. [Eclipse](https://www.eclipse.org/downloads/), [Intellij IDEA](https://www.jetbrains.com/idea/download/#section=windows))
  
  <a name="inf"></a>
-# Info about programs
+# Applications info
 
  <a name="cw1"></a>
 ## cw1
@@ -41,14 +42,14 @@ cw2 - Desktop sorting application using sorting methods from cw1.
 ### Running
 Create a list in *Test.java* and run by choose one of algorithm to sort it.
 ### Description
-Program provides an interface for sort list of *IElement* objects (*FloatElement* or *IntElement*) consisting of key and value.
+Application provides an interface for sort list of *IElement* objects (*FloatElement* or *IntElement*) consisting of key and value.
 Currently available algorithms:
 - **Quick Sort**,
 - **Counting Sort**,
 - **Pigeonhole Sort**,
 - **Insert Sort**.
 
-You can add some algorithm using the current convention (inheritance from *AbstractSorter* abstract class).
+You can simple add some algorithm by using the current convention (inheritance from *AbstractSorter* abstract class).
 
  <a name="cw2"></a>
 ## cw2
@@ -63,8 +64,17 @@ java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,
 ```
 2. Import all files into the project and [configure build path](#jav)
 ### Description
-Desktop, JavaFX application using algorithms from [cw1](#cw1)
+Desktop, internationalized JavaFX application using algorithms from [cw1](#cw1) for sorting lists. You can load data from a file (rules in *Menu* bar), add manually or generate using random methods. Depending on the region there are showed other decimal separators (e.g. '*,*' in Poland or '*.*' in USA), other format of current dates and obviously other strings by using *Resource Bundles*. You can choose:
+- **Poland** (by default),
+- **USA**,
+- **England**,
+- **France**,
+- **Germany**,
+- **Japan**.
 
+Application shows current number of elements and by using Choice Format class supports the right declension of words in all language versions. There is also a great feature for saving sorted lists to *.txt* files in a format readen by the app.
+
+### GUI
 <img src="https://i.imgur.com/Y0g066j.png" width="444" height="365" />
 
  <a name="cw3"></a>
@@ -92,10 +102,10 @@ Arguments (required):
 - E = number of sorting threads, e.g. *16*,
 - F = type of reference to store a key in the map (cache) - *SOFT*, *HARD* or *WEAK*,
 - H = type of reference to store a value in the map (cache) - *SOFT*, *HARD* or *WEAK*.
-2. Import all files into the project and [configure build path](#jav)
+
 ### Description
-Progra
-<img src="https://i.imgur.com/Y0g066j.png" width="100" height="100" />
+Console, multi-threaded application for testing JVM (ang. *Java virtual machine*) capabilities. Synchronized threads try to sort (with algorithms from [cw1](#cw1) selected (random generated) datasets identified by a *seed*. Sorted datasets are putting in *cache* (ReferenceMap) by using chosen references - *WEAK*, *SOFT* or *HARD*. By setting another parameters (mainly *B* - maximum heap size for JVM) can be observed other behaviours, such as segmentation faults (*OutOfMemoryError*) or 100% misses if the maximum size is low and references are *WEAK*. Application generates every 3 seconds a raport which gives information about cache misses and overall sorted datasets compared to stored datasets in the cache at this moment.
+
 
 <a name="conf"></a>
 # Configurations
