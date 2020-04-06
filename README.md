@@ -7,10 +7,11 @@ _________________________________
 # Table of Contents
 - [General info](#desc)
 - [Prerequisites](#pre)
-- [Info about programs](#inf)
+- [Applications info](#inf)
   *  [cw1](#cw1)
   *  [cw2](#cw2)
-- [Configurations](#conf)
+  *  [cw3](#cw3)
+- [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
   *  [Scene Builder](#scene)
@@ -19,30 +20,40 @@ _________________________________
 
 <a name="desc"></a>
 # General info
-Programs made for university course *Programming in Java - advanced techniques*.
+Applications made for university course *Programming in Java - advanced techniques*.
 ______________________________
-cw1 - Sorting algorithms,  
-cw2 - Desktop sorting application using sorting methods from cw1.
+[cw1](#cw1) - Sorting algorithms,  
+[cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1),  
+[cw3](#cw3) - Console application for JVM research, control heap size, garbage collector.  
 
 <a name="pre"></a>
 # Prerequisites
-- [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) 
-- IDE for Java (e.g. [Eclipse](https://www.eclipse.org/downloads/))
+- IDE for Java (e.g. [Eclipse](https://www.eclipse.org/downloads/), [Intellij IDEA](https://www.jetbrains.com/idea/download/#section=windows))
  
  <a name="inf"></a>
-# Info about programs
+# Applications info
 
  <a name="cw1"></a>
 ## cw1
 
-<a name="tech1"></a>
 ### Technologies 
-- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
+- Java
+
+### Running
+Create a list in *Test.java* and run by choose one of algorithm to sort it.
+### Description
+Application provides an interface for sort list of *IElement* objects (*FloatElement* or *IntElement*) consisting of key and value.
+Currently available algorithms:
+- **Quick Sort**,
+- **Counting Sort**,
+- **Pigeonhole Sort**,
+- **Insert Sort**.
+
+You can simple add some algorithm by using the current convention (inheritance from *AbstractSorter* abstract class).
 
  <a name="cw2"></a>
 ## cw2
 
-<a name="tech2"></a>
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
@@ -53,10 +64,56 @@ java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,
 ```
 2. Import all files into the project and [configure build path](#jav)
 ### Description
-<img src="https://i.imgur.com/Y0g066j.png" width="555" height="456" />
+Desktop, internationalized JavaFX application using algorithms from [cw1](#cw1) for sorting lists. You can load data from a file (rules in *Menu* bar), add manually or generate using random methods. Depending on the region there are showed other decimal separators (e.g. '*,*' in Poland or '*.*' in USA), other format of current dates and obviously other strings by using *Resource Bundles*. You can choose:
+- **Poland** (by default),
+- **USA**,
+- **England**,
+- **France**,
+- **Germany**,
+- **Japan**.
+
+Application shows current number of elements and by using Choice Format class supports the right declension of words in all language versions. There is also a great feature for saving sorted lists to *.txt* files in a format readen by the app.
+
+### GUI
+<img src="https://i.imgur.com/Y0g066j.png" width="444" height="365" />
+
+ <a name="cw3"></a>
+## cw3
+
+### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
+
+### Running
+```
+$ git clone https://github.com/radosz99/Programming-in-Java-Advanced-Techniques.git
+$ cd Programming-in-Java-Advanced-Techniques
+$ cd cw3
+$ mvn install
+$ cd target
+$ java *A* *B* -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar *C* *D* *E* *F* *H*
+```
+VM options (not required)
+- A = minimum heap size for JVM in megabytes, e.g. *-Xms128m*,
+- B = maximum heap size for JVM in megabytes, e.g. *-Xmx256m*,
+
+Arguments (required):
+- C = number of seeds (lists to sort), e.g. *500*,
+- D = number of elements in seed, e.g. *800*,
+- E = number of sorting threads, e.g. *16*,
+- F = type of reference to store a key (seed) in the map - cache - *SOFT*, *HARD* or *WEAK*,
+- H = type of reference to store a value (dataset) in the map - cache - *SOFT*, *HARD* or *WEAK*.
+
+### Description
+Console, multi-threaded application for testing JVM (ang. *Java virtual machine*) capabilities. Synchronized threads try to sort (with algorithms from [cw1](#cw1)) selected (random generated) datasets identified by a *seed*. Appropriate classes with sorting methods are dynamically loaded during the program execution from *cw1.jar* by using *ClassLoader* and *reflection mechanism*. Sorted datasets are putting in *cache* ([ReferenceMap](http://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/map/ReferenceMap.html)) by using chosen references - *WEAK*, *SOFT* or *HARD*, depending on which *Garbage Collector* may delete dataset from memory. By setting another parameters (mainly *B* - maximum heap size for JVM) many behaviours can be observed, such as segmentation faults (*OutOfMemoryError*) if references are *HARD* or nearly 100% misses if the maximum size is low and references are *WEAK*, and finally smooth, continuous running by using *SOFT* references. Application generates every 3 seconds a raport which gives information about cache misses and overall sorted datasets compared to stored datasets in the cache at this moment.
+
+By the following call you set maximum JVM memory to 256 megabytes and run 16 threads that are trying to sort 500 seeds with 8000 elements each and put it to the cache. Seed reference is *WEAK* and dataset references is *SOFT*. Below - in the console output - it can be observed that declared references provides constant number of datasets stored in the cache, despite the continuous sorts performed by the threads:
+```
+$ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar 500 8000 16 WEAK HARD
+```
+<img src="https://i.imgur.com/BHAE72Q.png" width="500" height="262" />
 
 <a name="conf"></a>
-# Configurations
+# Eclipse configurations
 
 <a name="jav"></a>
 ## JavaFX
