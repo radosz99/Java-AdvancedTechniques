@@ -11,7 +11,7 @@ _________________________________
   *  [cw1](#cw1)
   *  [cw2](#cw2)
   *  [cw3](#cw3)
-- [Configurations](#conf)
+- [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
   *  [Scene Builder](#scene)
@@ -113,7 +113,7 @@ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-d
 <img src="https://i.imgur.com/BHAE72Q.png" width="500" height="262" />
 
 <a name="conf"></a>
-# Configurations
+# Eclipse configurations
 
 <a name="jav"></a>
 ## JavaFX
