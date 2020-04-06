@@ -100,12 +100,17 @@ Arguments (required):
 - C = number of seeds (lists to sort), e.g. *500*,
 - D = number of elements in seed, e.g. *800*,
 - E = number of sorting threads, e.g. *16*,
-- F = type of reference to store a key in the map (cache) - *SOFT*, *HARD* or *WEAK*,
-- H = type of reference to store a value in the map (cache) - *SOFT*, *HARD* or *WEAK*.
+- F = type of reference to store a key (seed) in the map - cache - *SOFT*, *HARD* or *WEAK*,
+- H = type of reference to store a value (dataset) in the map - cache - *SOFT*, *HARD* or *WEAK*.
 
 ### Description
-Console, multi-threaded application for testing JVM (ang. *Java virtual machine*) capabilities. Synchronized threads try to sort (with algorithms from [cw1](#cw1) selected (random generated) datasets identified by a *seed*. Sorted datasets are putting in *cache* (ReferenceMap) by using chosen references - *WEAK*, *SOFT* or *HARD*. By setting another parameters (mainly *B* - maximum heap size for JVM) can be observed other behaviours, such as segmentation faults (*OutOfMemoryError*) or 100% misses if the maximum size is low and references are *WEAK*. Application generates every 3 seconds a raport which gives information about cache misses and overall sorted datasets compared to stored datasets in the cache at this moment.
+Console, multi-threaded application for testing JVM (ang. *Java virtual machine*) capabilities. Synchronized threads try to sort (with algorithms from [cw1](#cw1)) selected (random generated) datasets identified by a *seed*. Sorted datasets are putting in *cache* (ReferenceMap) by using chosen references - *WEAK*, *SOFT* or *HARD*, depending on which *Garbage Collector* may delete dataset from memory. By setting another parameters (mainly *B* - maximum heap size for JVM) many behaviours can be observed, such as segmentation faults (*OutOfMemoryError*) if references are *HARD* or nearly 100% misses if the maximum size is low and references are *WEAK*, and finally smooth running by using *SOFT* references. Application generates every 3 seconds a raport which gives information about cache misses and overall sorted datasets compared to stored datasets in the cache at this moment.
 
+By the following call you set maximum JVM memory to 256 megabytes and you run 16 threads that are trying to sort 500 seeds with 8000 elements each and put it to cache. Seed reference is *WEAK* and dataset references is *SOFT*. Below - in the console output - it can be observed that declared references provides constant number of datasets stored in cache, despite the continuous sorts performed by the threads:
+```
+java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar 500 8000 16 WEAK HARD
+```
+<img src="https://i.imgur.com/BHAE72Q.png" width="500" height="262" />
 
 <a name="conf"></a>
 # Configurations
