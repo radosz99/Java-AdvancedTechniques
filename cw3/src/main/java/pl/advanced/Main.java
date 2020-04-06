@@ -11,40 +11,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-// comment
 public class Main {
     public static List<Method> methods = new ArrayList<>();
-    private static final int RANGE = 1000;
-    private static final int THREADS_NUMBER = 16;
+    public static List<Thread> threads = new ArrayList<>();
+    private static int RANGE = 0;
+    private static int THREADS_NUMBER = 0;
     public static List<Long> currentSeedes;
-    public static SortSet cache = new SortSet();
-    public static final Object counterLock = new Object();
+    public static SortSet cache;
+    public static final Object COUNTER_LOCK = new Object();
+    public static final Object USE_LOCK = new Object();
+    public static final Object METHOD_LOCK = new Object();
     public static long g1 = 0;
     public static long g2 = 0;
     public static long m1 = 0;
     public static long m2 = 0;
-    public static List<Thread> threads = new ArrayList<>();
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
+    public static long SORT_COUNTER = 0;
 
     public static void main(String[] args) throws Exception {
+        settings(args);
         startThreads(THREADS_NUMBER);
         loadAlgorithmClasses();
         while (true) {
-            Thread.sleep(15000);
+            Thread.sleep(3000);
             missesRaport();
         }
     }
 
+    public static void settings(String[]args){
+        if(args.length!=5){
+            safePrintln("Zła liczba argumentów");
+            safePrintln("LICZBA ZIAREN | LICZBA ELEMENTOW W ZIARNIE | LICZBA WATKOW | REFERENCJA KEY | REFERENCJA VALUE");
+            System. exit(0);
+        }
+        else{
+            RANGE = Integer.parseInt(args[0]);
+            THREADS_NUMBER = Integer.parseInt(args[2]);
+            cache = new SortSet(args[3], args[4],args[1]);
+        }
+    }
     static class SortThread implements Runnable {
         private List<IElement> dataToSort;
         String executionTime;
         String algorithmName;
         private long currentSeed;
         private volatile boolean running = true;
-        public final int threadId;
+        public final int THREAD_ID;
 
         SortThread(int threadId) {
-            this.threadId = threadId;
+            this.THREAD_ID = threadId;
         }
 
         @Override
@@ -52,32 +67,29 @@ public class Main {
             while (!Thread.currentThread().isInterrupted() && running) {
                 try {
                     if (lifeThread()) {
-                        //System.out.println("Ziarno " + currentSeed + ", " + algorithmName + ", " + executionTime);
-                        System.out.println(currentSeed);
-                        cache.sortMap.put(currentSeed, dataToSort);
-                        Thread.sleep(100);
+                        //safePrintln("Ziarno " + currentSeed + ", " + algorithmName + ", " + executionTime);
+                        synchronized (COUNTER_LOCK) {
+                            synchronized (cache) {
+                                cache.sortMap.put(currentSeed, dataToSort);
+                            }
+                            SORT_COUNTER++;
+                        }
+                        Thread.sleep(1000);
                     } else {
                         Thread.sleep(0);
                     }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (IllegalAccessException | InterruptedException | InstantiationException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
         }
 
         public boolean lifeThread() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-            if (methods.size() != 0) {
-                Random rand = new Random();
-                currentSeed = rand.nextInt(RANGE);
-                if (!checkIfInUse(currentSeed)) {
-                    currentSeedes.set(threadId, currentSeed);
-                    dataToSort = cache.getDataBySeed(currentSeed);
+            if (methodsAlive()) {
+                if (!seedIsCurrentlySorted()) {
+                    synchronized (cache) {
+                        dataToSort = cache.getDataBySeed(currentSeed);
+                    }
                     if (dataToSort == null) {
                         //juz posortowane
                         incrementCounters(false);
@@ -95,18 +107,31 @@ public class Main {
                 //nie ma zadnych metod
                 return false;
             }
+
         }
 
         public void sort() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-            //synchronized (this) {
             Random rand = new Random();
-            Method algorithm = methods.get(rand.nextInt(methods.size()));
+            Method algorithm;
+            synchronized (METHOD_LOCK) {
+                algorithm = methods.get(rand.nextInt(methods.size()));
+            }
             long start = System.nanoTime();
             algorithm.invoke(algorithm.getDeclaringClass().newInstance(), dataToSort);
             long elapsedTime = System.nanoTime();
             executionTime = getTime(elapsedTime - start);
             algorithmName = getClassName(algorithm.getDeclaringClass().toString());
-            // }
+        }
+
+        public boolean seedIsCurrentlySorted() {
+            Random rand = new Random();
+            currentSeed = rand.nextInt(RANGE);
+            if (!checkIfInUse(currentSeed)) {
+                currentSeedes.set(THREAD_ID, currentSeed);
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
@@ -118,10 +143,22 @@ public class Main {
         }
     }
 
+    public static boolean methodsAlive() {
+        synchronized (METHOD_LOCK) {
+            if (methods.size() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public static void initializeThreadSeedesList(int threadAmount) {
-        currentSeedes = new ArrayList<>(threadAmount);
-        for (int i = 0; i < threadAmount; i++) {
-            currentSeedes.add((long) 0);
+        synchronized (USE_LOCK) {
+            currentSeedes = new ArrayList<>(threadAmount);
+            for (int i = 0; i < threadAmount; i++) {
+                currentSeedes.add((long) 0);
+            }
         }
     }
 
@@ -133,11 +170,13 @@ public class Main {
     }
 
     public static boolean checkIfInUse(long seed) {
-        for (Long l : currentSeedes) {
-            if (l == seed)
-                return true;
+        synchronized (USE_LOCK) {
+            for (Long l : currentSeedes) {
+                if (l == seed)
+                    return true;
+            }
+            return false;
         }
-        return false;
     }
 
     public static String getTime(long time) {
@@ -146,14 +185,14 @@ public class Main {
         } else if (time > 1000000) {
             return time / 1000000 + " ms";
         } else if (time > 1000) {
-            return time / 1000 + " μs";
+            return time / 1000 + " us";
         } else {
             return time + " ns";
         }
     }
 
     public static void incrementCounters(Boolean miss) {
-        synchronized (counterLock) {
+        synchronized (COUNTER_LOCK) {
             g1++;
             g2++;
             if (miss) {
@@ -165,33 +204,45 @@ public class Main {
 
     public static String getClassName(String fullClassName) {
         String[] parts;
-        fullClassName = fullClassName.replace('.', ';');
-        parts = fullClassName.split(";");
+        parts = fullClassName.split("\\.");
         return parts[parts.length - 1];
     }
 
     public static void loadAlgorithmClasses() throws IOException, ClassNotFoundException, NoSuchMethodException, InterruptedException {
         List<Class> sortClasses;
-        System.out.println("ZA 5 SEKUND KLASY Z ALGORYTMAMI ZOSTANĄ WCZYTANE!");
+        safePrintln("ZA 5 SEKUND KLASY Z ALGORYTMAMI ZOSTANĄ WCZYTANE!");
         Thread.sleep(5000);
         sortClasses = JavaClassLoader.getSortClasses("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw3\\src\\main\\resources\\cw1.jar");
-        for (Class cl : sortClasses) {
-            methods.add(cl.getMethod("solve", List.class));
+        loadMethods(sortClasses);
+        safePrintln("KLASY Z ALGORYTMAMI WCZYTANE!");
+    }
+
+    public static void loadMethods(List<Class> sortClasses) throws NoSuchMethodException {
+        synchronized (METHOD_LOCK) {
+            for (Class cl : sortClasses) {
+                methods.add(cl.getMethod("solve", List.class));
+            }
         }
-        System.out.println("KLASY Z ALGORYTMAMI WCZYTANE!");
     }
 
     public static void missesRaport() {
-        synchronized (counterLock) {
+        synchronized (COUNTER_LOCK) {
             if (g1 != 0 && g2 != 0) {
-                String missesSinceLast = df.format((float) m2 / g2 * 100);
-                String misses = df.format((float) m1 / g1 * 100);
-                System.out.println("Uchybień ogólnie: " + misses + "%.");
-                System.out.println("Uchybień od ostatniego raportu: " + missesSinceLast + "%.");
-                System.out.println("Elementów: " + cache.sortMap.size());
+                String missesSinceLast = DECIMAL_FORMAT.format((float) m2 / g2 * 100);
+                String misses = DECIMAL_FORMAT.format((float) m1 / g1 * 100);
+                safePrintln("\nUchybień ogólnie: " + misses + "%." +
+                                "\nUchybień od ostatniego raportu: " + missesSinceLast + "%." +
+                        "\nElementów w cache'u: " + cache.sortMap.size() + "/" + RANGE +
+                        "\nŁącznie sortowań: " + SORT_COUNTER + "\n");
                 m2 = 0;
                 g2 = 0;
             }
+        }
+    }
+
+    public static void safePrintln(String string) {
+        synchronized (System.out) {
+            System.out.println(string);
         }
     }
 }
