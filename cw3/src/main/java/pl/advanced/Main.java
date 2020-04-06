@@ -233,7 +233,7 @@ public class Main {
                 safePrintln("\nUchybień ogólnie: " + misses + "%." +
                                 "\nUchybień od ostatniego raportu: " + missesSinceLast + "%." +
                         "\nElementów w cache'u: " + cache.sortMap.size() + "/" + RANGE +
-                        "\nŁącznie sortowań: " + SORT_COUNTER + "\n");
+                        "\nLącznie sortowań: " + SORT_COUNTER + "\n");
                 m2 = 0;
                 g2 = 0;
             }
