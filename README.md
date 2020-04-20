@@ -78,7 +78,7 @@ Application shows current number of elements and by using Choice Format class su
 
 ### GUI
 <p align="center">
-<img src="https://i.imgur.com/Y0g066j.png" width="444" height="365" />
+<img src="https://i.imgur.com/Y0g066j.png" width=80%/>
 </p>
 
  <a name="cw3"></a>
@@ -115,7 +115,7 @@ By the following call you set maximum JVM memory to 256 megabytes and run 16 thr
 $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar 500 8000 16 WEAK HARD
 ```
 <p align="center">
-<img src="https://i.imgur.com/BHAE72Q.png" width="500" height="262" />
+<img src="https://i.imgur.com/BHAE72Q.png" width=80% />
 </p>
 
  <a name="cw4"></a>
@@ -127,7 +127,9 @@ $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with
 - [JFontChooser](https://osdn.net/projects/jfontchooser/)
 
 ### Running
-Add *MyBean.jar* from *cw4/Bean* to *cw4/BeanUsageExample* build path and have fun with such a great technology as Java Beans are! Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when a it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
+Add *MyBean.jar* from *cw4/Bean* to *cw4/BeanUsageExample* build path and have fun with such a great technology as Java Beans are!  
+
+Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
 <p align="center">
 <img src="https://i.imgur.com/A9kezF4.png" width=80% />
 </p>
