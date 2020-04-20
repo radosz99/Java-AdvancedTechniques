@@ -11,6 +11,7 @@ _________________________________
   *  [cw1](#cw1)
   *  [cw2](#cw2)
   *  [cw3](#cw3)
+  *  [cw4](#cw4)
 - [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
@@ -25,6 +26,7 @@ ______________________________
 [cw1](#cw1) - Sorting algorithms,  
 [cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1),  
 [cw3](#cw3) - Console application for JVM research, control heap size, garbage collector.  
+[cw4](#cw4) - Custom JavaBean component with all property types
 
 <a name="pre"></a>
 # Prerequisites
@@ -75,7 +77,9 @@ Desktop, internationalized JavaFX application using algorithms from [cw1](#cw1) 
 Application shows current number of elements and by using Choice Format class supports the right declension of words in all language versions. There is also a great feature for saving sorted lists to *.txt* files in a format readen by the app.
 
 ### GUI
+<p align="center">
 <img src="https://i.imgur.com/Y0g066j.png" width="444" height="365" />
+</p>
 
  <a name="cw3"></a>
 ## cw3
@@ -110,7 +114,23 @@ By the following call you set maximum JVM memory to 256 megabytes and run 16 thr
 ```
 $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar 500 8000 16 WEAK HARD
 ```
+<p align="center">
 <img src="https://i.imgur.com/BHAE72Q.png" width="500" height="262" />
+</p>
+
+ <a name="cw4"></a>
+## cw4
+
+### Technologies 
+- [JavaBeans](https://pl.wikipedia.org/wiki/JavaBeans)
+- [WindowBuilder](https://www.eclipse.org/windowbuilder/)
+- [JFontChooser](https://osdn.net/projects/jfontchooser/)
+
+### Running
+Add *MyBean.jar* from *cw4/Bean* to *cw4/BeanUsageExample* build path and have fun with such a great technology as Java Beans are! Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when a it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
+<p align="center">
+<img src="https://i.imgur.com/A9kezF4.png" width=80% />
+</p>
 
 <a name="conf"></a>
 # Eclipse configurations
