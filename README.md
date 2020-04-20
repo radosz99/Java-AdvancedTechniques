@@ -25,8 +25,8 @@ Applications made for university course *Programming in Java - advanced techniqu
 ______________________________
 [cw1](#cw1) - Sorting algorithms,  
 [cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1),  
-[cw3](#cw3) - Console application for JVM research, control heap size, garbage collector.  
-[cw4](#cw4) - Custom JavaBean component with all property types
+[cw3](#cw3) - Console application for JVM research (control heap size, garbage collector with all reference types) using ReflectionAPI,
+[cw4](#cw4) - Custom JavaBean component with all property types.
 
 <a name="pre"></a>
 # Prerequisites
