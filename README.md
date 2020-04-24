@@ -129,6 +129,13 @@ $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with
 ### Running
 Add *MyBean.jar* from *cw4/Bean* to *cw4/BeanUsageExample* build path and have fun with such a great technology as Java Beans are!  
 
+You can change bean properties by modifying *Bean*, *BeanInfo* and *Controller* in *cw4/bean* and then:
+```
+$ javac Bean.java BeanInfo.java Controller.java
+$ jar cf MyBean.jar Bean.class BeanInfo.class Controller.class
+```
+Originally made in Eclipse IDE. Each update of the bean properties implies the need to refresh the project.  
+
 Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
 <p align="center">
 <img src="https://i.imgur.com/A9kezF4.png" width=80% />
