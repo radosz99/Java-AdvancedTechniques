@@ -159,6 +159,8 @@ Exemplary screenshot with stack trace of an error caused of an attempt to change
 
 ### Technologies 
 - [Maven](https://maven.apache.org/download.cgi)
+- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
+- [RMI](https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html)
 
 ### Description
 Application simulates process of running distributed applications by using RMI.  
