@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
+import java.awt.Font;
 
 
 public class Test {
@@ -18,6 +19,19 @@ public class Test {
 		JTextField textField = new JTextField();
 		Controller control = new Controller();
 		Bean bean = new Bean();
+		bean.setBeanString("java");
+		try {
+			bean.setBeanFont(new Font("Copperplate Gothic Light", Font.BOLD | Font.ITALIC, 11));
+		} catch (PropertyVetoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			bean.setBeanVal(8);
+		} catch (PropertyVetoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		bean.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		bean.addVetoableChangeListener(control);
 		bean.addPropertyChangeListener(control);

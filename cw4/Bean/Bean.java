@@ -1,8 +1,6 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
@@ -12,19 +10,15 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
-import java.awt.Font;
 
 public class Bean extends JPanel implements Externalizable {
 
   private int beanVal;
-  private String text; 
+  private String beanString; 
   private Font beanFont;
   
   protected PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -36,7 +30,7 @@ public class Bean extends JPanel implements Externalizable {
 	
 	setBorder(BorderFactory.createEtchedBorder());
     beanVal = 0;
-    text = "Ziarenko ";
+    beanString = "Ziarenko ";
     beanFont = new Font("SanSerif", Font.BOLD | Font.ITALIC, 16);
     
   }
@@ -44,7 +38,7 @@ public class Bean extends JPanel implements Externalizable {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     g.setFont(beanFont);
-    g.drawString(text + " ma obecnie wartosc "+ beanVal, 30, 30);
+    g.drawString(beanString + " ma obecnie wartosc "+ beanVal, 30, 30);
     
   }
   
@@ -61,16 +55,15 @@ public void setBeanVal(int newValue) throws PropertyVetoException {
   
 
   public void setBeanString(String newString) {
-	  text = newString;
+	  beanString = newString;
   }
 
   public String getBeanString() {
-	  return text;
+	  return beanString;
   }
 
   public void setBeanFont(Font font) throws PropertyVetoException {
 	  Font oldFont = beanFont;
-	  fireVetoableChange("beanFont", oldFont, font);
 	  vetoSupport.fireVetoableChange("beanFont", oldFont, font);
 	  beanFont = font;
 	  changeSupport.firePropertyChange("beanFont", oldFont, font);
@@ -109,7 +102,7 @@ public void setBeanVal(int newValue) throws PropertyVetoException {
 	out.writeObject(beanFont);
 	out.writeObject(new Dimension(300, 300));
     out.writeInt(beanVal);
-    out.writeObject(text);
+    out.writeObject(beanString);
   }
 
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {

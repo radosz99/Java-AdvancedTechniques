@@ -9,7 +9,7 @@ public class BeanInfo extends SimpleBeanInfo  {
 
             return new PropertyDescriptor[] {
             		new PropertyDescriptor("beanFont", Bean.class, "getBeanFont", "setBeanFont"),
-                    new PropertyDescriptor("text", Bean.class, "getBeanString", "setBeanString"),
+                    new PropertyDescriptor("beanString", Bean.class, "getBeanString", "setBeanString"),
                     new PropertyDescriptor("beanVal", Bean.class, "getBeanValue", "setBeanValue"),
             };
         } catch (IntrospectionException e) {

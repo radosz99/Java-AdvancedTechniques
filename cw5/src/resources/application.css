@@ -1,0 +1,35 @@
+.root {
+    -fx-background-color : rgb(182, 178, 200);
+}
+
+.label {
+    -fx-text-fill: rgb(30, 30, 30);
+}
+
+
+
+.table-row-cell:selected {
+    -fx-background-color: rgb(230,230,230);
+}
+.table-row-cell:selected .text {
+    -fx-fill: rgb(66, 154, 255);
+
+}
+
+.button{
+
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-color : rgb(42, 43, 66);
+    -fx-effect: dropshadow(gaussian, white  , 7.0, 0.3, 0.0, 0.0);
+    -fx-text-fill: rgba(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+#tableViewNumbers .table-column{
+    -fx-alignment: CENTER;
+}
+
+#tableViewServers .table-column{
+    -fx-alignment: CENTER;
+}

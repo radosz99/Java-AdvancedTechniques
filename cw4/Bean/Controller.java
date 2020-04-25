@@ -17,7 +17,7 @@ public class Controller implements VetoableChangeListener,PropertyChangeListener
 		{
 			System.out.println("Change value to: " + evt.getNewValue());
 		}
-		else
+		else if(evt.getOldValue() instanceof Font)
 		{
 			System.out.println("Change font to: " + evt.getNewValue());
 		}
