@@ -1,12 +1,14 @@
 package rmi.algorithms;
 
+import java.io.Serializable;
+
 /**
  *
  * Class which implements IElement interface. Object of this class are needed in arrays to sort.
  *
  * @author Radoslaw Lis
  */
-public class FloatElement implements IElement {
+public class FloatElement implements IElement, Serializable {
     /**
      * Private variable of String type assigned to the value.
      *  key by which list is sorted.

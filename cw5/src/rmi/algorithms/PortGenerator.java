@@ -1,4 +1,4 @@
-package rmi;
+package rmi.algorithms;
 
 import java.io.IOException;
 import java.net.DatagramSocket;

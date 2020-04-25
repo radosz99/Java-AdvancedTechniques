@@ -1,4 +1,4 @@
-package rmi;
+package rmi.server;
 
 import java.io.Serializable;
 
@@ -23,6 +23,12 @@ public class SimpleServer implements Serializable {
         this.name = name;
         this.description = description;
         this.port =port;
+        if(description.equals("QuickSort") || description.equals("InsertSort")){
+            dataType="all";
+        }
+        else{
+            dataType="integer";
+        }
     }
 
     @Override
@@ -35,7 +41,29 @@ public class SimpleServer implements Serializable {
     }
 
     private String name;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleServer that = (SimpleServer) o;
+        return port == that.port &&
+                name.equals(that.name) &&
+                description.equals(that.description);
+    }
+
+
     private String description;
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
+    private String dataType;
 
     public int getPort() {
         return port;

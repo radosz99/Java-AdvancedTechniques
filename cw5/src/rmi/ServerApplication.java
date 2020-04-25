@@ -6,16 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ClientApplication extends Application {
+public class ServerApplication extends Application {
 
-    public ClientApplication(){
+    public ServerApplication(){
     }
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/ClientGUI.fxml"));
-        Scene scene = new Scene(root,700,500);
-        scene.getStylesheets().add(getClass().getResource("/resources/client.css").toExternalForm());
-        primaryStage.setTitle("Client");
+        Parent root = FXMLLoader.load(getClass().getResource("../resources/ServerGUI.fxml"));
+        Scene scene = new Scene(root,600,450);
+        scene.getStylesheets().add(getClass().getResource("/resources/server.css").toExternalForm());
+        primaryStage.setTitle("Sorting server");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

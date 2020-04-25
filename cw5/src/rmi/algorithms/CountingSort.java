@@ -76,14 +76,14 @@ public class CountingSort extends AbstractSorter{
             output.add(t);
 
         for(int i = list.size() -1; i >= 0; i--) {
-            output.set(holes[(int) list.get(i).getValue()]-1,list.get(i));
-            --holes[(int) list.get(i).getValue()];
+            output.set(holes[(int) list.get(i).getValue()-min]-1,list.get(i));
+            --holes[(int) list.get(i).getValue()-min];
         }
 
         for(int i = 0; i < list.size(); i++) {
             list.set(i, output.get(i));
         }
-
+        System.out.println(list);
         return list;
     }
 

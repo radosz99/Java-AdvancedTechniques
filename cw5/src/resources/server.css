@@ -1,0 +1,20 @@
+.root {
+    -fx-background-color : rgb(129, 200, 195);
+}
+
+.label {
+    -fx-text-fill: rgb(30, 30, 30);
+}
+
+.button{
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-color : rgb(42, 43, 66);
+    -fx-text-fill: rgb(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+
+.text-area {
+    -fx-background-color: rgb(230, 230, 230);
+}
