@@ -28,7 +28,7 @@ ______________________________
 [cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1)  
 [cw3](#cw3) - Console application for JVM research (different heap size, reference types) using ReflectionAPI  
 [cw4](#cw4) - Custom JavaBean component with all property types  
-[cw5](#cw5) - RMI  
+[cw5](#cw5) - RMI application - sorting servers and clients who want to sort their data  
 
 <a name="pre"></a>
 # Prerequisites
@@ -43,8 +43,6 @@ ______________________________
 ### Technologies 
 - Java
 
-### Running
-Create a list in *Test.java* and run by choose one of algorithm to sort it.
 ### Description
 Application provides an interface for sort list of *IElement* objects (*FloatElement* or *IntElement*) consisting of key and value.
 Currently available algorithms:
@@ -55,18 +53,15 @@ Currently available algorithms:
 
 You can simple add some algorithm by using the current convention (inheritance from *AbstractSorter* abstract class).
 
+### Running
+Create a list in *Test.java* and run by choose one of algorithm to sort it.
+
  <a name="cw2"></a>
 ## cw2
 
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
-### Running
-1. Use cw2. jar file and in command line (**xyz** is your path to javafx-sdk):
-```
-java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,javafx.fxml cw2.jar
-```
-2. Import all files into the project and [configure build path](#jav)
 ### Description
 Desktop, internationalized JavaFX application using algorithms from [cw1](#cw1) for sorting lists. You can load data from a file (rules in *Menu* bar), add manually or generate using random methods. Depending on the region there are showed other decimal separators (e.g. '*,*' in Poland or '*.*' in USA), other format of current dates and obviously other strings by using *Resource Bundles*. You can choose:
 - **Poland** (by default),
@@ -77,6 +72,13 @@ Desktop, internationalized JavaFX application using algorithms from [cw1](#cw1) 
 - **Japan**.
 
 Application shows current number of elements and by using Choice Format class supports the right declension of words in all language versions. There is also a great feature for saving sorted lists to *.txt* files in a format readen by the app.
+
+### Running
+1. Use cw2. jar file and in command line (**xyz** is your path to javafx-sdk):
+```
+java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,javafx.fxml cw2.jar
+```
+2. Import all files into the project and [configure build path](#jav)
 
 ### Screenshot
 <p align="center">
@@ -128,6 +130,13 @@ $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with
 - [WindowBuilder](https://www.eclipse.org/windowbuilder/)
 - [JFontChooser](https://osdn.net/projects/jfontchooser/)
 
+### Description
+
+JavaBean with three types of properties:
+- Simple Property - BeanString
+- Bound Property - BeanValue
+- Constrained Property - BeanFont
+
 ### Running
 Add *MyBean.jar* from *cw4/Bean* to *cw4/BeanUsageExample* build path and have fun with such a great technology as Java Beans are!  
 
@@ -138,6 +147,8 @@ $ jar cf MyBean.jar Bean.class BeanInfo.class Controller.class
 ```
 Originally made in Eclipse IDE. Each update of the bean properties implies the need to refresh the project.  
 
+
+### Screenshot
 Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
 <p align="center">
 <img src="https://i.imgur.com/A9kezF4.png" width=80% />
@@ -147,12 +158,23 @@ Exemplary screenshot with stack trace of an error caused of an attempt to change
 ## cw5
 
 ### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
 
-### Screenshots
-<p align="center">
-<img src="https://i.imgur.com/aM2rZhU.png" />
-</p>
+### Description
+Application simulates process of running distributed applications by using RMI.  
 
+Client applications (*ClientApplication.java*) allow you to generate random data and sort them using a server (*ServerApplication.java*) selected from the server list obtained thanks to the Central (*CentralApplication.java*).
+
+### Running
+To test distributed applications:
+1. Run exactly once *cw5/src/rmi/CentralApplication.java* - it is the Central (list of servers)
+2. Run *cw5/src/rmi/ClientApplication.java* as many as you want - it is the Client
+3. Choose algorithm and run *cw5/src/rmi/ServerApplication.java* as many as you want - it is the Server 
+4. Generate data, sort it by using one of registered servers, etc.
+
+The order in which clients and servers are started doesn't matter. If you want to run more than one instance of Client or Server you must choose *Allow run in parallel* in *Edit Configurations* in IntelliJ.
+
+### Screenshot
 
 <p align="center">
 <img src="https://i.imgur.com/5iEW1pW.png" />
