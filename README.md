@@ -167,10 +167,11 @@ Client applications (*ClientApplication.java*) allow you to generate random data
 
 ### Running
 To test distributed applications:
-1. Run exactly once *cw5/src/rmi/CentralApplication.java* - it is the Central (list of servers)
-2. Run *cw5/src/rmi/ClientApplication.java* as many as you want - it is the Client
-3. Choose algorithm and run *cw5/src/rmi/ServerApplication.java* as many as you want - it is the Server 
-4. Generate data, sort it by using one of registered servers, etc.
+1. Configure VM arguments as it is described [here](#jav) in 3rd point
+2. Run exactly once *cw5/src/rmi/CentralApplication.java* - it is the Central (list of servers)
+3. Run *cw5/src/rmi/ClientApplication.java* as many as you want - it is the Client
+4. Choose algorithm and run *cw5/src/rmi/ServerApplication.java* as many as you want - it is the Server 
+5. Generate data, sort it by using one of registered servers, whatever you want to do
 
 The order in which clients and servers are started doesn't matter. If you want to run more than one instance of Client or Server you must choose *Allow run in parallel* in *Edit Configurations* in IntelliJ.
 
