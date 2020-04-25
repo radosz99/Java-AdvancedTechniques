@@ -33,7 +33,7 @@
       <Label fx:id="maxLbl" layoutX="194.0" layoutY="63.0" text="Maximum:" />
       <Label fx:id="portLbl" alignment="CENTER" layoutX="304.0" layoutY="85.0" prefHeight="17.0" prefWidth="373.0" />
       <Label fx:id="dataTypeLbl" layoutX="32.0" layoutY="7.0" prefHeight="17.0" prefWidth="110.0" text="Data type:" />
-      <Label fx:id="serverLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="305.0" layoutY="128.0" prefHeight="30.0" prefWidth="373.0" text="Available servers list:">
+      <Label fx:id="serverLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="305.0" layoutY="128.0" prefHeight="30.0" prefWidth="373.0" text="Available servers:">
          <font>
             <Font name="Cambria" size="20.0" />
          </font>

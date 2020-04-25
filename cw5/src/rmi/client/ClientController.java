@@ -125,8 +125,13 @@ public class ClientController implements Initializable {
             return;
         }
 
-        if (dataType.getSelectionModel().getSelectedItem().equals("float") && (server.getDescription().equals("CountingSort") || server.getDescription().equals("PigeonHoleSort"))) {
-            badAlert("The server is unable to sort this type of data");
+        try {
+            if (dataType.getSelectionModel().getSelectedItem().equals("float") && (server.getDescription().equals("CountingSort") || server.getDescription().equals("PigeonHoleSort"))) {
+                badAlert("The server is unable to sort this type of data");
+                return;
+            }
+        } catch (NullPointerException x){
+            badAlert("There is no data");
             return;
         }
 
@@ -135,7 +140,7 @@ public class ClientController implements Initializable {
 
         new Thread(() -> {
             try {
-                numbers = FXCollections.observableArrayList(client.sort(new ArrayList<IElement>(numbers), server.getName()));
+                numbers = FXCollections.observableArrayList(client.sort(new ArrayList<>(numbers), server.getName()));
             } catch (RemoteException | NotBoundException | NullPointerException x) {
                 Thread.interrupted();
             }

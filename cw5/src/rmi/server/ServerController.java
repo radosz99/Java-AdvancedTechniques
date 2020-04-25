@@ -32,14 +32,11 @@ public class ServerController implements Initializable {
     @FXML private Button unregisterBtn;
     @FXML private TextArea logs;
     private static String logsString="";
-    ICentral central;
-    Registry registry;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            registry = LocateRegistry.getRegistry();
-            central = (ICentral) registry.lookup("Centrala");
+            ICentral central = (ICentral) LocateRegistry.getRegistry().lookup("Centrala");
             int port = PortGenerator.getPort();
             String bindingName = algorithmName+"#"+central.getServersQuantity(algorithmName);
             portLbl.setText("Port " + port);
@@ -47,8 +44,8 @@ public class ServerController implements Initializable {
             serv = new SimpleServer(bindingName, algorithmName, port);
             server = (IServer) UnicastRemoteObject.exportObject(new Server(this, algorithmName, bindingName, port), port);
             if(central.register(serv)) {
-                registry.bind(bindingName, server);
-                showLog("Server ready");
+                LocateRegistry.getRegistry().bind(bindingName, server);
+                showLog("Server is ready");
             }
             else{
                 badAlert("Server is not able to connect to Central");
@@ -66,6 +63,7 @@ public class ServerController implements Initializable {
     }
 
     public void registerServer() throws RemoteException, NotBoundException {
+        ICentral central = (ICentral) LocateRegistry.getRegistry().lookup("Centrala");
         central.register(serv);
         registerBtn.setDisable(true);
         unregisterBtn.setDisable(false);
@@ -75,6 +73,7 @@ public class ServerController implements Initializable {
 
     public void unregisterServer() throws RemoteException, NotBoundException {
         if(serv!=null) {
+            ICentral central = (ICentral) LocateRegistry.getRegistry().lookup("Centrala");
             central.unregister(serv);
             unregisterBtn.setDisable(true);
             registerBtn.setDisable(false);

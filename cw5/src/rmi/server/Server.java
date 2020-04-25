@@ -23,10 +23,10 @@ public class Server implements IServer {
     }
 
     @Override
-    public List<IElement> solve(List<IElement> list, String clientId) throws InterruptedException, RemoteException {
+    public synchronized List<IElement> solve(List<IElement> list, String clientId) throws InterruptedException, RemoteException {
         List<IElement> sorted;
         makeLogInCentral(name + " started sorting " + list.size() + " elements from " + clientId);
-        controller.showLog("Starting sorting " + list.size() + " elements from " + clientId);
+        controller.showLog("Start sorting " + list.size() + " elements from " + clientId);
         long start = System.nanoTime();
         switch(algorithmName){
             case("QuickSort"):
