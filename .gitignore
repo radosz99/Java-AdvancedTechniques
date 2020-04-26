@@ -34,7 +34,6 @@ buildNumber.properties
 bin/
 build/
 doc/
-.gradle
 .gradletasknamecache
 gradle-app.setting
 !gradle-wrapper.jar
