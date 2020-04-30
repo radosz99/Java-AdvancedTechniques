@@ -61,6 +61,7 @@ public class CentralController implements Initializable {
         servers.getColumns().addAll(column1, column3);
         servers.setPlaceholder(new Label("No servers"));
         clients.setPlaceholder(new Label("No clients"));
+        logs.setEditable(false);
     }
 
     public void addClient(String clientId, int port){

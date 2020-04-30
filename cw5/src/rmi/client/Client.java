@@ -36,7 +36,9 @@ public class Client implements IClient {
             list = server.solve(list, clientId);
             long elapsedTime = System.nanoTime();
             elapsedTime = elapsedTime - start;
-            central.makeLog(clientId+ " waited " + getTime(elapsedTime) + " for sorting");
+            if(list!=null) {
+                central.makeLog(clientId + " waited " + getTime(elapsedTime) + " for results");
+            }
             return list;
         } catch (NotBoundException | InterruptedException e) {
             System.err.println("Server does not exist");

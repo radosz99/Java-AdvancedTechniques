@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rmi.client.ClientController">
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rmi.client.ClientController">
    <children>
       <Button fx:id="sort" layoutX="150.0" layoutY="121.0" mnemonicParsing="false" onAction="#sort" prefHeight="37.0" prefWidth="118.0" />
       <TableView fx:id="tableViewServers" layoutX="306.0" layoutY="167.0" prefHeight="288.0" prefWidth="373.0">
@@ -31,7 +31,7 @@
       <Label fx:id="quantityLbl" layoutX="31.0" layoutY="63.0" prefHeight="17.0" prefWidth="57.0" text="Quantity:" />
       <Label fx:id="minLbl" layoutX="107.0" layoutY="63.0" text="Minimum:" />
       <Label fx:id="maxLbl" layoutX="194.0" layoutY="63.0" text="Maximum:" />
-      <Label fx:id="portLbl" alignment="CENTER" layoutX="304.0" layoutY="85.0" prefHeight="17.0" prefWidth="373.0" />
+      <Label fx:id="portLbl" alignment="CENTER" layoutX="296.0" layoutY="85.0" prefHeight="17.0" prefWidth="396.0" />
       <Label fx:id="dataTypeLbl" layoutX="32.0" layoutY="7.0" prefHeight="17.0" prefWidth="110.0" text="Data type:" />
       <Label fx:id="serverLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="305.0" layoutY="128.0" prefHeight="30.0" prefWidth="373.0" text="Available servers:">
          <font>

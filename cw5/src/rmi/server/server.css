@@ -1,5 +1,9 @@
 .root {
-    -fx-background-color : rgb(200, 174, 86);
+    -fx-background-color : rgb(90, 155, 200);
+}
+
+.label {
+    -fx-text-fill: rgb(30, 30, 30);
 }
 
 .button{
@@ -10,6 +14,7 @@
     -fx-font-weight: bolder;
 }
 
-.table-column{
-    -fx-alignment: CENTER;
+
+.text-area {
+    -fx-background-color: rgb(230, 230, 230);
 }

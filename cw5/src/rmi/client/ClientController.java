@@ -1,11 +1,17 @@
 package rmi.client;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import rmi.ClientApplication;
 import rmi.central.ICentral;
 import rmi.algorithms.PortGenerator;
 import rmi.server.SimpleServer;
@@ -50,6 +56,7 @@ public class ClientController implements Initializable {
     @FXML private TableColumn<IElement, Float> column5;
     @FXML private TableView<SimpleServer> tableViewServers = new TableView();
     @FXML private TableView<IElement> tableViewNumbers = new TableView();
+    @FXML private AnchorPane ap;
 
 
     @Override
@@ -107,13 +114,16 @@ public class ClientController implements Initializable {
     public void generateRandomData(){
         try {
             numbers = FXCollections.observableArrayList(IntGenerator.getIntData(Integer.parseInt(quantity.getText()), Integer.parseInt(min.getText()), Integer.parseInt(max.getText()), dataType.getSelectionModel().getSelectedItem()));
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException | NullPointerException e){
             badAlert("Wrong format!");
         }
         tableViewNumbers.setItems(numbers);
     }
     public void sort() throws RemoteException {
-
+        if(tableViewServers.getItems().size()==0){
+            badAlert("Currently no active servers!");
+            return;
+        }
         SimpleServer server = tableViewServers.getSelectionModel().getSelectedItem();
         if(server==null){
             if(tableViewServers.getItems()!=null) {
@@ -139,12 +149,16 @@ public class ClientController implements Initializable {
         generateRandom.setDisable(true);
 
         new Thread(() -> {
+            ObservableList<IElement> result = null;
             try {
-                numbers = FXCollections.observableArrayList(client.sort(new ArrayList<>(numbers), server.getName()));
+                result = FXCollections.observableArrayList(client.sort(new ArrayList<>(numbers), server.getName()));
             } catch (RemoteException | NotBoundException | NullPointerException x) {
                 Thread.interrupted();
             }
-            tableViewNumbers.setItems(numbers);
+            if(result!=null) {
+                numbers=result;
+                tableViewNumbers.setItems(numbers);
+            }
             sort.setDisable(false);
             generateRandom.setDisable(false);
         }).start();

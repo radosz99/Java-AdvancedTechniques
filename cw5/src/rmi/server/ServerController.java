@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class ServerController implements Initializable {
     private IServer server;
-    private String algorithmName = "QuickSort";
+    private String algorithmName = "InsertSort";
     private SimpleServer serv;
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     @FXML private Label portLbl;
@@ -44,7 +44,9 @@ public class ServerController implements Initializable {
             serv = new SimpleServer(bindingName, algorithmName, port);
             server = (IServer) UnicastRemoteObject.exportObject(new Server(this, algorithmName, bindingName, port), port);
             if(central.register(serv)) {
+
                 LocateRegistry.getRegistry().bind(bindingName, server);
+                server.setActive(true);
                 showLog("Server is ready");
             }
             else{
@@ -64,10 +66,12 @@ public class ServerController implements Initializable {
 
     public void registerServer() throws RemoteException, NotBoundException {
         ICentral central = (ICentral) LocateRegistry.getRegistry().lookup("Centrala");
-        central.register(serv);
-        registerBtn.setDisable(true);
-        unregisterBtn.setDisable(false);
-        showLog("Server registered");
+        if(central.register(serv)){
+            server.setActive(true);
+            registerBtn.setDisable(true);
+            unregisterBtn.setDisable(false);
+            showLog("Server registered");
+        }
     }
 
 
@@ -75,6 +79,7 @@ public class ServerController implements Initializable {
         if(serv!=null) {
             ICentral central = (ICentral) LocateRegistry.getRegistry().lookup("Centrala");
             central.unregister(serv);
+            server.setActive(false);
             unregisterBtn.setDisable(true);
             registerBtn.setDisable(false);
             showLog("Server unregistered");

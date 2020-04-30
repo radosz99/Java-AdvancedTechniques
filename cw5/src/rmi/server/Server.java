@@ -15,6 +15,13 @@ public class Server implements IServer {
     private String name;
     private ServerController controller;
 
+    @Override
+    public void setActive(boolean active) throws RemoteException {
+        this.active = active;
+    }
+
+    private boolean active;
+
     public Server(ServerController controller, String algorithmName, String name, int port) throws RemoteException {
         this.controller = controller;
         this.algorithmName = algorithmName;
@@ -23,7 +30,11 @@ public class Server implements IServer {
     }
 
     @Override
-    public synchronized List<IElement> solve(List<IElement> list, String clientId) throws InterruptedException, RemoteException {
+    public List<IElement> solve(List<IElement> list, String clientId) throws InterruptedException, RemoteException {
+        if(active==false){
+            makeLogInCentral("Connection with " + name + " was broken and sorting for " + clientId + " failed");
+            return null;
+        }
         List<IElement> sorted;
         makeLogInCentral(name + " started sorting " + list.size() + " elements from " + clientId);
         controller.showLog("Start sorting " + list.size() + " elements from " + clientId);
@@ -50,6 +61,10 @@ public class Server implements IServer {
         }
         long elapsedTime = System.nanoTime();
         elapsedTime = elapsedTime - start;
+        if(active==false){
+            makeLogInCentral("Connection with " + name + " was broken and sorting for " + clientId + " failed");
+            return null;
+        }
         makeLogInCentral(name + " sorted " + list.size() + " elements in " + Client.getTime(elapsedTime) + " for " + clientId);
         controller.showLog("Sorted " + list.size() + " elements in " + Client.getTime(elapsedTime) + " for " + clientId);
         return sorted;

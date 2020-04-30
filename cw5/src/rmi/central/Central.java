@@ -36,7 +36,6 @@ public class Central implements ICentral {
         return serversList;
     }
 
-    @Override
     public boolean addServer(SimpleServer server) throws RemoteException, NotBoundException {
         for(SimpleServer ser : serversList){
             if(ser.getPort()==server.getPort()){

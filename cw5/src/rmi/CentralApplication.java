@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 public class CentralApplication extends Application {
 
     public CentralApplication(){
-    }
+}
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../resources/CentralGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/rmi/central/CentralGUI.fxml"));
         Scene scene = new Scene(root,600,550);
-        scene.getStylesheets().add(getClass().getResource("/resources/central.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/rmi/central/central.css").toExternalForm());
         primaryStage.setTitle("Central");
         primaryStage.setScene(scene);
         primaryStage.show();
