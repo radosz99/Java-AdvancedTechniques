@@ -82,7 +82,7 @@ java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,
 
 ### Screenshot
 <p align="center">
-<img src="https://i.imgur.com/Y0g066j.png" width=80%/>
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw2/screen.png" width=80%/>
 </p>
 
  <a name="cw3"></a>
@@ -119,7 +119,7 @@ By the following call you set maximum JVM memory to 256 megabytes and run 16 thr
 $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with-dependencies.jar 500 8000 16 WEAK HARD
 ```
 <p align="center">
-<img src="https://i.imgur.com/BHAE72Q.png" width=80% />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw3/screen.png" width=80% />
 </p>
 
  <a name="cw4"></a>
@@ -151,7 +151,7 @@ Originally made in Eclipse IDE. Each update of the bean properties implies the n
 ### Screenshot
 Exemplary screenshot with stack trace of an error caused of an attempt to change *beanFont* property to a blacklisted font (fell on poor Cambria). That property is constrained and when it is about to change, the listeners are consulted about the change and they say that Cambria is not suitable:
 <p align="center">
-<img src="https://i.imgur.com/A9kezF4.png" width=80% />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw4/screen.png" width=80% />
 </p>
 
  <a name="cw5"></a>
@@ -180,7 +180,7 @@ The order in which clients and servers are started doesn't matter. If you want t
 ### Screenshot
 
 <p align="center">
-<img src="https://i.imgur.com/5iEW1pW.png" />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw5/screen.png" />
 </p>
 
 
