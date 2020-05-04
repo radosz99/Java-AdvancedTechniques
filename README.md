@@ -203,7 +203,7 @@ The order in which clients and servers are started doesn't matter. If you want t
 ### Screenshot
 
 <p align="center">
-<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw6/screen.png" />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw6/screen.png" width=70% />
 </p>
 
 <a name="conf"></a>
