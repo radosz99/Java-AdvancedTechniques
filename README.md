@@ -13,6 +13,7 @@ _________________________________
   *  [cw3](#cw3)
   *  [cw4](#cw4)
   *  [cw5](#cw5)
+  *  [cw6](#cw6)
 - [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
@@ -29,6 +30,7 @@ ______________________________
 [cw3](#cw3) - 4.5 - Console application for JVM research (different heap size, reference types) using ReflectionAPI  
 [cw4](#cw4) - 4.0 - Custom JavaBean component with all property types  
 [cw5](#cw5) - 4.25 - RMI application - clients who want to sort their data by available sorting servers  
+[cw6](#cw6) - 5.0 - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB 
 
 <a name="pre"></a>
 # Prerequisites
@@ -183,6 +185,26 @@ The order in which clients and servers are started doesn't matter. If you want t
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw5/screen.png" />
 </p>
 
+<a name="cw6"></a>
+## cw6
+
+### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
+- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
+- [MySQL](https://dev.mysql.com/downloads/)
+- [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html)
+- [JAXB](https://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding)
+
+### Description
+
+
+### Running
+
+### Screenshot
+
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw6/screen.png" />
+</p>
 
 <a name="conf"></a>
 # Eclipse configurations
