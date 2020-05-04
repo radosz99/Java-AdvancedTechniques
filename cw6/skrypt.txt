@@ -293,7 +293,6 @@ declare v_counter int unsigned default 1;
 
   start transaction;
   while v_counter < v_max do
-	SELECT * FROM trip WHERE id=v_counter;
     INSERT INTO participant (cyclist_id, trip_id) values ((SELECT author_id FROM trip where id=v_counter),v_counter);
     set v_counter=v_counter+1;
   end while;
