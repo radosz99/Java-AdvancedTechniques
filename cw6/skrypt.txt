@@ -1,0 +1,305 @@
+﻿DROP TABLE IF EXISTS participant;
+DROP TABLE IF EXISTS trip;
+DROP TABLE IF EXISTS cyclist;
+
+CREATE TABLE IF NOT EXISTS cyclist (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	surname VARCHAR(50) NOT NULL,
+	date_of_birth DATE,
+	INDEX ind_id (id),
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS trip (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	author_id INT NOT NULL,
+	date DATE NOT NULL,
+    FOREIGN KEY(author_id) REFERENCES cyclist(id),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS participant(
+	cyclist_id INT NOT NULL,
+    trip_id INT NOT NULL,
+    FOREIGN KEY(cyclist_id) REFERENCES cyclist(id),
+    FOREIGN KEY(trip_id) REFERENCES trip(id)
+);
+
+insert into cyclist (name, surname, date_of_birth) values ('Remington', 'Quick', '1986-12-16');
+insert into cyclist (name, surname, date_of_birth) values ('Tansy', 'Dmitrienko', '1961-04-22');
+insert into cyclist (name, surname, date_of_birth) values ('Gabbie', 'Semechik', '1959-05-07');
+insert into cyclist (name, surname, date_of_birth) values ('Bethena', 'Rispin', '1963-10-17');
+insert into cyclist (name, surname, date_of_birth) values ('Dione', 'Emney', '2004-11-06');
+insert into cyclist (name, surname, date_of_birth) values ('Karil', 'Double', '1996-11-22');
+insert into cyclist (name, surname, date_of_birth) values ('Shaine', 'Smickle', '1969-08-23');
+insert into cyclist (name, surname, date_of_birth) values ('Wesley', 'De Winton', '2001-01-07');
+insert into cyclist (name, surname, date_of_birth) values ('Aube', 'Colqueran', '1980-04-11');
+insert into cyclist (name, surname, date_of_birth) values ('Jenni', 'Petche', '1957-01-06');
+insert into cyclist (name, surname, date_of_birth) values ('Wilfred', 'Skirlin', '1990-08-16');
+insert into cyclist (name, surname, date_of_birth) values ('Roslyn', 'Vedenyakin', '1952-12-12');
+insert into cyclist (name, surname, date_of_birth) values ('Casper', 'Drage', '1975-11-09');
+insert into cyclist (name, surname, date_of_birth) values ('Beau', 'Horder', '1967-12-06');
+insert into cyclist (name, surname, date_of_birth) values ('Anne-corinne', 'MacHoste', '1979-06-18');
+insert into cyclist (name, surname, date_of_birth) values ('Shandee', 'Rash', '1994-12-30');
+insert into cyclist (name, surname, date_of_birth) values ('Annabal', 'Romagnosi', '1980-01-20');
+insert into cyclist (name, surname, date_of_birth) values ('Livvyy', 'Blackster', '2004-02-24');
+insert into cyclist (name, surname, date_of_birth) values ('Danette', 'Tithecott', '1961-11-11');
+insert into cyclist (name, surname, date_of_birth) values ('Shae', 'Deane', '2000-02-09');
+insert into cyclist (name, surname, date_of_birth) values ('Madelina', 'Goodfield', '1990-05-20');
+insert into cyclist (name, surname, date_of_birth) values ('Margarete', 'Cohen', '1976-11-23');
+insert into cyclist (name, surname, date_of_birth) values ('Darn', 'Butt', '1964-04-07');
+insert into cyclist (name, surname, date_of_birth) values ('Ximenez', 'Alishoner', '2002-05-03');
+insert into cyclist (name, surname, date_of_birth) values ('Chantal', 'Ribbens', '2008-12-17');
+insert into cyclist (name, surname, date_of_birth) values ('Auroora', 'Badsworth', '1988-08-23');
+insert into cyclist (name, surname, date_of_birth) values ('Chancey', 'Loody', '1979-03-02');
+insert into cyclist (name, surname, date_of_birth) values ('Dian', 'Feehery', '1958-10-01');
+insert into cyclist (name, surname, date_of_birth) values ('Fields', 'Juggins', '1981-10-07');
+insert into cyclist (name, surname, date_of_birth) values ('Kenneth', 'Whyborne', '1966-04-11');
+insert into cyclist (name, surname, date_of_birth) values ('Jerald', 'Yepiskov', '1976-07-22');
+insert into cyclist (name, surname, date_of_birth) values ('Tabby', 'Fidgeon', '1975-03-15');
+insert into cyclist (name, surname, date_of_birth) values ('Kikelia', 'Soppit', '1952-06-09');
+insert into cyclist (name, surname, date_of_birth) values ('Katti', 'Rubanenko', '1982-08-11');
+insert into cyclist (name, surname, date_of_birth) values ('Erv', 'Ewestace', '2000-02-21');
+insert into cyclist (name, surname, date_of_birth) values ('Randall', 'Fennick', '1999-05-27');
+insert into cyclist (name, surname, date_of_birth) values ('Ellerey', 'Curman', '1967-01-19');
+insert into cyclist (name, surname, date_of_birth) values ('Saloma', 'Sommerscales', '1975-01-08');
+insert into cyclist (name, surname, date_of_birth) values ('Tirrell', 'Dunstall', '1997-11-21');
+insert into cyclist (name, surname, date_of_birth) values ('Osgood', 'Lingard', '1978-09-17');
+insert into cyclist (name, surname, date_of_birth) values ('Judd', 'Merryfield', '1962-05-05');
+insert into cyclist (name, surname, date_of_birth) values ('Karl', 'Hamfleet', '1969-12-01');
+insert into cyclist (name, surname, date_of_birth) values ('Earl', 'Anstiss', '1993-10-04');
+insert into cyclist (name, surname, date_of_birth) values ('Garrick', 'Grassin', '1992-03-12');
+insert into cyclist (name, surname, date_of_birth) values ('Agnese', 'Kelmere', '1988-11-17');
+insert into cyclist (name, surname, date_of_birth) values ('Bendicty', 'Dickons', '1980-10-24');
+insert into cyclist (name, surname, date_of_birth) values ('Vic', 'Tolan', '1989-10-31');
+insert into cyclist (name, surname, date_of_birth) values ('Walker', 'Parham', '2001-03-15');
+insert into cyclist (name, surname, date_of_birth) values ('Bruis', 'Jamme', '2006-05-06');
+insert into cyclist (name, surname, date_of_birth) values ('Iormina', 'Gyngell', '1992-10-31');
+insert into cyclist (name, surname, date_of_birth) values ('Annissa', 'Henfre', '1981-04-02');
+insert into cyclist (name, surname, date_of_birth) values ('Charlena', 'Greenroa', '1964-10-06');
+insert into cyclist (name, surname, date_of_birth) values ('Inessa', 'Heggie', '1974-02-18');
+insert into cyclist (name, surname, date_of_birth) values ('Yvon', 'Georgescu', '1990-06-10');
+insert into cyclist (name, surname, date_of_birth) values ('Reilly', 'Costa', '1978-06-04');
+insert into cyclist (name, surname, date_of_birth) values ('Daile', 'Wakeford', '1980-09-11');
+insert into cyclist (name, surname, date_of_birth) values ('Wilie', 'Penbarthy', '1955-09-03');
+insert into cyclist (name, surname, date_of_birth) values ('Chryste', 'Repp', '1950-07-27');
+insert into cyclist (name, surname, date_of_birth) values ('Tomasine', 'Dickson', '1996-01-06');
+insert into cyclist (name, surname, date_of_birth) values ('Ezechiel', 'Habbijam', '1956-06-16');
+insert into cyclist (name, surname, date_of_birth) values ('Hope', 'Monte', '2007-01-30');
+insert into cyclist (name, surname, date_of_birth) values ('Ashlee', 'Hyndes', '1998-09-30');
+insert into cyclist (name, surname, date_of_birth) values ('Darrick', 'Bassham', '2004-03-21');
+insert into cyclist (name, surname, date_of_birth) values ('Tucker', 'Pinckstone', '2006-04-20');
+insert into cyclist (name, surname, date_of_birth) values ('Horatio', 'Bettridge', '1971-01-01');
+insert into cyclist (name, surname, date_of_birth) values ('Vallie', 'Penas', '1988-11-17');
+insert into cyclist (name, surname, date_of_birth) values ('Korey', 'Braddon', '2004-08-27');
+insert into cyclist (name, surname, date_of_birth) values ('Cherlyn', 'Skyme', '2009-04-14');
+insert into cyclist (name, surname, date_of_birth) values ('Zollie', 'Sculpher', '1968-05-01');
+insert into cyclist (name, surname, date_of_birth) values ('Adolphus', 'Meader', '2005-05-11');
+insert into cyclist (name, surname, date_of_birth) values ('Sophie', 'Boyes', '1992-08-31');
+insert into cyclist (name, surname, date_of_birth) values ('Steve', 'Lawlan', '1989-11-09');
+insert into cyclist (name, surname, date_of_birth) values ('Haley', 'Apedaile', '1978-10-05');
+insert into cyclist (name, surname, date_of_birth) values ('Brannon', 'Aleso', '2003-03-02');
+insert into cyclist (name, surname, date_of_birth) values ('Marcelo', 'Holgan', '1999-09-07');
+insert into cyclist (name, surname, date_of_birth) values ('Colas', 'Sherel', '1960-09-09');
+insert into cyclist (name, surname, date_of_birth) values ('Bernice', 'Balazot', '1997-08-17');
+insert into cyclist (name, surname, date_of_birth) values ('Eleni', 'McFadyen', '1997-09-30');
+insert into cyclist (name, surname, date_of_birth) values ('Blayne', 'Pressey', '1989-11-15');
+insert into cyclist (name, surname, date_of_birth) values ('Gilly', 'Childes', '1995-03-30');
+insert into cyclist (name, surname, date_of_birth) values ('Elias', 'Leal', '1991-03-12');
+insert into cyclist (name, surname, date_of_birth) values ('Joleen', 'Lampl', '1959-11-10');
+insert into cyclist (name, surname, date_of_birth) values ('Cleopatra', 'Espino', '2010-02-12');
+insert into cyclist (name, surname, date_of_birth) values ('Ardith', 'Dadswell', '1959-06-27');
+insert into cyclist (name, surname, date_of_birth) values ('Georgeta', 'Shepperd', '1957-10-04');
+insert into cyclist (name, surname, date_of_birth) values ('Eduino', 'Samudio', '1979-04-16');
+insert into cyclist (name, surname, date_of_birth) values ('Giulia', 'Balcers', '1966-06-04');
+insert into cyclist (name, surname, date_of_birth) values ('Barbara-anne', 'Rama', '1972-06-18');
+insert into cyclist (name, surname, date_of_birth) values ('Ruperto', 'Cork', '2001-06-14');
+insert into cyclist (name, surname, date_of_birth) values ('Tobie', 'Francino', '1981-09-27');
+insert into cyclist (name, surname, date_of_birth) values ('Diane-marie', 'Quested', '1958-10-29');
+insert into cyclist (name, surname, date_of_birth) values ('Ardyce', 'Hakonsen', '2002-08-02');
+insert into cyclist (name, surname, date_of_birth) values ('Torre', 'Binne', '1982-11-28');
+insert into cyclist (name, surname, date_of_birth) values ('Torry', 'Bentote', '1979-07-12');
+insert into cyclist (name, surname, date_of_birth) values ('Nahum', 'Nutkin', '2001-06-13');
+insert into cyclist (name, surname, date_of_birth) values ('Windham', 'Ovanesian', '1999-11-22');
+insert into cyclist (name, surname, date_of_birth) values ('Hannie', 'Tipple', '1956-06-14');
+insert into cyclist (name, surname, date_of_birth) values ('Jeni', 'Rosendale', '2007-02-19');
+insert into cyclist (name, surname, date_of_birth) values ('Brandy', 'Mardell', '2000-01-29');
+insert into cyclist (name, surname, date_of_birth) values ('Beilul', 'Gueste', '1983-03-09');
+
+
+insert into trip (name, author_id, date) values ('Llusco', 22, '2016-04-30');
+insert into trip (name, author_id, date) values ('Tonkino', 97, '2000-12-20');
+insert into trip (name, author_id, date) values ('Yahotyn', 37, '2001-06-06');
+insert into trip (name, author_id, date) values ('Gayamdesa', 50, '2006-05-09');
+insert into trip (name, author_id, date) values ('Vargön', 45, '2018-07-07');
+insert into trip (name, author_id, date) values ('Hacı Zeynalabdin', 89, '2007-08-25');
+insert into trip (name, author_id, date) values ('Carvalheira', 32, '2001-04-30');
+insert into trip (name, author_id, date) values ('Limeiras', 32, '2000-05-08');
+insert into trip (name, author_id, date) values ('Pulo', 25, '2001-04-14');
+insert into trip (name, author_id, date) values ('Altamira', 41, '2018-03-06');
+insert into trip (name, author_id, date) values ('Revelstoke', 55, '2009-02-22');
+insert into trip (name, author_id, date) values ('Pingtan', 9, '2020-04-01');
+insert into trip (name, author_id, date) values ('Shuitian', 56, '2007-01-04');
+insert into trip (name, author_id, date) values ('Fangcun', 88, '2001-07-17');
+insert into trip (name, author_id, date) values ('Oemollo', 71, '2017-09-18');
+insert into trip (name, author_id, date) values ('Caacupé', 73, '2007-07-22');
+insert into trip (name, author_id, date) values ('Rancharia', 38, '2008-09-25');
+insert into trip (name, author_id, date) values ('Buarcos', 52, '2000-10-20');
+insert into trip (name, author_id, date) values ('Capela', 97, '2006-08-22');
+insert into trip (name, author_id, date) values ('Sjöbo', 98, '2008-02-05');
+insert into trip (name, author_id, date) values ('Wanfang', 44, '2000-06-07');
+insert into trip (name, author_id, date) values ('Mocupe', 25, '2017-05-23');
+insert into trip (name, author_id, date) values ('Strašice', 42, '2019-05-30');
+insert into trip (name, author_id, date) values ('Öldziyt', 94, '2008-05-29');
+insert into trip (name, author_id, date) values ('Tubajon', 98, '2015-09-05');
+insert into trip (name, author_id, date) values ('Ashkāsham', 36, '2016-05-15');
+insert into trip (name, author_id, date) values ('Cigedang', 27, '2001-11-06');
+insert into trip (name, author_id, date) values ('Baoxing', 43, '2012-05-16');
+insert into trip (name, author_id, date) values ('Baiquesi', 34, '2006-07-31');
+insert into trip (name, author_id, date) values ('Linxihe', 25, '2015-03-16');
+insert into trip (name, author_id, date) values ('Caucagüito', 8, '2017-01-27');
+insert into trip (name, author_id, date) values ('Machalí', 90, '2002-10-10');
+insert into trip (name, author_id, date) values ('Pasarnangka', 61, '2005-08-16');
+insert into trip (name, author_id, date) values ('Corrientes', 42, '2004-11-29');
+insert into trip (name, author_id, date) values ('Imaichi', 92, '2013-10-28');
+insert into trip (name, author_id, date) values ('Itum-Kali', 1, '2000-12-31');
+insert into trip (name, author_id, date) values ('Pilchowice', 83, '2006-11-06');
+insert into trip (name, author_id, date) values ('San Clemente', 99, '2007-10-05');
+insert into trip (name, author_id, date) values ('Kalimati', 55, '2010-01-01');
+insert into trip (name, author_id, date) values ('Tatebal', 55, '2001-06-19');
+insert into trip (name, author_id, date) values ('Duwe', 76, '2008-10-29');
+insert into trip (name, author_id, date) values ('Liliongan', 63, '2006-09-27');
+insert into trip (name, author_id, date) values ('Ghāt', 47, '2006-08-15');
+insert into trip (name, author_id, date) values ('San Lorenzo', 8, '2013-10-01');
+insert into trip (name, author_id, date) values ('Kaliro', 43, '2001-01-03');
+insert into trip (name, author_id, date) values ('Daohe', 55, '2006-02-15');
+insert into trip (name, author_id, date) values ('Ponta do Sol', 89, '2008-04-18');
+insert into trip (name, author_id, date) values ('Villa Elisa', 46, '2016-08-22');
+insert into trip (name, author_id, date) values ('Dankunku', 84, '2009-10-16');
+insert into trip (name, author_id, date) values ('Villaba', 91, '2016-12-17');
+
+
+insert into participant (cyclist_id, trip_id) values (68, 2);
+insert into participant (cyclist_id, trip_id) values (87, 50);
+insert into participant (cyclist_id, trip_id) values (22, 5);
+insert into participant (cyclist_id, trip_id) values (40, 29);
+insert into participant (cyclist_id, trip_id) values (28, 43);
+insert into participant (cyclist_id, trip_id) values (86, 41);
+insert into participant (cyclist_id, trip_id) values (45, 39);
+insert into participant (cyclist_id, trip_id) values (68, 43);
+insert into participant (cyclist_id, trip_id) values (48, 42);
+insert into participant (cyclist_id, trip_id) values (81, 19);
+insert into participant (cyclist_id, trip_id) values (22, 39);
+insert into participant (cyclist_id, trip_id) values (85, 11);
+insert into participant (cyclist_id, trip_id) values (6, 48);
+insert into participant (cyclist_id, trip_id) values (9, 21);
+insert into participant (cyclist_id, trip_id) values (5, 39);
+insert into participant (cyclist_id, trip_id) values (19, 9);
+insert into participant (cyclist_id, trip_id) values (47, 33);
+insert into participant (cyclist_id, trip_id) values (71, 38);
+insert into participant (cyclist_id, trip_id) values (92, 47);
+insert into participant (cyclist_id, trip_id) values (67, 15);
+insert into participant (cyclist_id, trip_id) values (4, 37);
+insert into participant (cyclist_id, trip_id) values (24, 24);
+insert into participant (cyclist_id, trip_id) values (2, 34);
+insert into participant (cyclist_id, trip_id) values (59, 24);
+insert into participant (cyclist_id, trip_id) values (52, 26);
+insert into participant (cyclist_id, trip_id) values (34, 36);
+insert into participant (cyclist_id, trip_id) values (26, 1);
+insert into participant (cyclist_id, trip_id) values (21, 48);
+insert into participant (cyclist_id, trip_id) values (64, 49);
+insert into participant (cyclist_id, trip_id) values (45, 30);
+insert into participant (cyclist_id, trip_id) values (38, 23);
+insert into participant (cyclist_id, trip_id) values (90, 40);
+insert into participant (cyclist_id, trip_id) values (39, 19);
+insert into participant (cyclist_id, trip_id) values (85, 2);
+insert into participant (cyclist_id, trip_id) values (3, 28);
+insert into participant (cyclist_id, trip_id) values (92, 42);
+insert into participant (cyclist_id, trip_id) values (43, 3);
+insert into participant (cyclist_id, trip_id) values (69, 13);
+insert into participant (cyclist_id, trip_id) values (22, 31);
+insert into participant (cyclist_id, trip_id) values (36, 29);
+insert into participant (cyclist_id, trip_id) values (53, 50);
+insert into participant (cyclist_id, trip_id) values (79, 32);
+insert into participant (cyclist_id, trip_id) values (48, 1);
+insert into participant (cyclist_id, trip_id) values (22, 47);
+insert into participant (cyclist_id, trip_id) values (79, 25);
+insert into participant (cyclist_id, trip_id) values (81, 15);
+insert into participant (cyclist_id, trip_id) values (16, 49);
+insert into participant (cyclist_id, trip_id) values (70, 19);
+insert into participant (cyclist_id, trip_id) values (84, 39);
+insert into participant (cyclist_id, trip_id) values (73, 24);
+insert into participant (cyclist_id, trip_id) values (27, 45);
+insert into participant (cyclist_id, trip_id) values (88, 46);
+insert into participant (cyclist_id, trip_id) values (93, 14);
+insert into participant (cyclist_id, trip_id) values (58, 4);
+insert into participant (cyclist_id, trip_id) values (97, 16);
+insert into participant (cyclist_id, trip_id) values (23, 26);
+insert into participant (cyclist_id, trip_id) values (21, 1);
+insert into participant (cyclist_id, trip_id) values (93, 18);
+insert into participant (cyclist_id, trip_id) values (35, 29);
+insert into participant (cyclist_id, trip_id) values (32, 35);
+insert into participant (cyclist_id, trip_id) values (89, 48);
+insert into participant (cyclist_id, trip_id) values (49, 25);
+insert into participant (cyclist_id, trip_id) values (77, 22);
+insert into participant (cyclist_id, trip_id) values (65, 2);
+insert into participant (cyclist_id, trip_id) values (31, 18);
+insert into participant (cyclist_id, trip_id) values (58, 40);
+insert into participant (cyclist_id, trip_id) values (57, 29);
+insert into participant (cyclist_id, trip_id) values (44, 50);
+insert into participant (cyclist_id, trip_id) values (72, 32);
+insert into participant (cyclist_id, trip_id) values (88, 4);
+insert into participant (cyclist_id, trip_id) values (59, 42);
+insert into participant (cyclist_id, trip_id) values (39, 27);
+insert into participant (cyclist_id, trip_id) values (26, 42);
+insert into participant (cyclist_id, trip_id) values (62, 18);
+insert into participant (cyclist_id, trip_id) values (40, 42);
+insert into participant (cyclist_id, trip_id) values (53, 5);
+insert into participant (cyclist_id, trip_id) values (97, 17);
+insert into participant (cyclist_id, trip_id) values (55, 6);
+insert into participant (cyclist_id, trip_id) values (31, 47);
+insert into participant (cyclist_id, trip_id) values (61, 47);
+insert into participant (cyclist_id, trip_id) values (83, 27);
+insert into participant (cyclist_id, trip_id) values (76, 45);
+insert into participant (cyclist_id, trip_id) values (81, 19);
+insert into participant (cyclist_id, trip_id) values (4, 32);
+insert into participant (cyclist_id, trip_id) values (58, 37);
+insert into participant (cyclist_id, trip_id) values (28, 12);
+insert into participant (cyclist_id, trip_id) values (45, 34);
+insert into participant (cyclist_id, trip_id) values (75, 4);
+insert into participant (cyclist_id, trip_id) values (10, 44);
+insert into participant (cyclist_id, trip_id) values (20, 15);
+insert into participant (cyclist_id, trip_id) values (99, 40);
+insert into participant (cyclist_id, trip_id) values (99, 26);
+insert into participant (cyclist_id, trip_id) values (76, 49);
+insert into participant (cyclist_id, trip_id) values (76, 43);
+insert into participant (cyclist_id, trip_id) values (58, 10);
+insert into participant (cyclist_id, trip_id) values (91, 11);
+insert into participant (cyclist_id, trip_id) values (65, 13);
+insert into participant (cyclist_id, trip_id) values (93, 1);
+insert into participant (cyclist_id, trip_id) values (87, 23);
+insert into participant (cyclist_id, trip_id) values (31, 37);
+
+drop procedure if exists load_foo_test_data;
+
+delimiter #
+create procedure load_foo_test_data()
+begin
+
+declare v_max int unsigned default 51;
+declare v_counter int unsigned default 1;
+
+  start transaction;
+  while v_counter < v_max do
+	SELECT * FROM trip WHERE id=v_counter;
+    INSERT INTO participant (cyclist_id, trip_id) values ((SELECT author_id FROM trip where id=v_counter),v_counter);
+    set v_counter=v_counter+1;
+  end while;
+  commit;
+end #
+
+delimiter ;
+
+call load_foo_test_data();

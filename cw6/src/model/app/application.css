@@ -1,0 +1,15 @@
+.root {
+    -fx-background-color : rgb(255, 237, 199);
+}
+
+.button{
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-color : rgb(42, 43, 66);
+    -fx-text-fill: rgb(255,240,229);
+    -fx-font-weight: bolder;
+}
+
+.table-column{
+    -fx-alignment: CENTER;
+}
