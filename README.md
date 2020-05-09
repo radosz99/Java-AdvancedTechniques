@@ -251,4 +251,13 @@ Exception in thread "WindowsNativeRunloopThread" java.lang.NoSuchMethodError:
 Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
 ```
 
-In the enviroment variable JAVA_HOME set the folder on Java 11 JDK (*C:\Program Files\Java\jdk-11.0.6*)
+In the enviroment variable JAVA_HOME set the folder on Java 11 JDK (*C:\Program Files\Java\jdk-11.0.6*).  
+
+If any of this:
+```
+java.lang.IllegalAccessError: class com.sun.javafx.fxml.FXMLLoaderHelper (in unnamed module @0x552f46e4) cannot access class com.sun.javafx.util.Utils (in module javafx.graphics) because module javafx.graphics does not export com.sun.javafx.util to unnamed module
+```
+```
+Error: JavaFX runtime components are missing, and are required to run this application
+```
+Configure VM argument as it is described [here](#jav) in 3rd point.
