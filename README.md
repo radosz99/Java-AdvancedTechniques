@@ -207,8 +207,8 @@ The order in which clients and servers are started doesn't matter. If you want t
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw6/screen.png" width=70% />
 </p>
 
-<a name="cw6"></a>
-## cw6
+<a name="cw7"></a>
+## cw7
 
 ### Technologies 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
