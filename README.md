@@ -223,7 +223,7 @@ The order in which clients and servers are started doesn't matter. If you want t
 ### Screenshot
 
 <p align="center">
-<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw7/screen.png" width=70% />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw7/screen.png" width=100% />
 </p>
 
 
