@@ -179,7 +179,7 @@ To test distributed applications:
 4. Choose algorithm and run *cw5/src/rmi/ServerApplication.java* as many as you want - it is the Server 
 5. Generate data, sort it by using one of registered servers, whatever you want to do
 
-The order in which clients and servers are started doesn't matter. If you want to run more than one instance of Client or Server you must choose *Allow run in parallel* in *Edit Configurations* in IntelliJ.
+The order in which clients and servers are started doesn't matter. If you want to run more than one instance of Client or Server you must choose *Allow parallel run* in *Edit Configurations* in IntelliJ.
 
 ### Screenshot
 
@@ -197,9 +197,10 @@ The order in which clients and servers are started doesn't matter. If you want t
 - [JAXB](https://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding)
 
 ### Description
-
+Basic JDBC desktop application in JavaFX for managing bike trips. By using JAXB it allows serializing and unserializing object to write it in XML files.
 
 ### Running
+Create MySQL database and run script from *cw6/skrypt.txt* for some data to test the application.
 
 ### Screenshot
 
@@ -216,10 +217,15 @@ The order in which clients and servers are started doesn't matter. If you want t
 - [Sockets](https://docs.oracle.com/javase/tutorial/networking/sockets/index.html)
 
 ### Description
-
+Application simulates working of ring network topology. There is a finite number of working applications that can send and receive messages from others running aplications.  
+Ring topology works at follows:
+<p align="center">
+A -> B -> C -> D -> A
+</p>
+Messages are sending by SOAP and can be send as Unicast or Broadcast. 
 
 ### Running
-
+Choose *Allow parallel run* in *Edit Configurations* in IntelliJ and run as many apps as you want. To close the ring you must click *Zamknij pierścień* in ultimately last application.
 ### Screenshot
 
 <p align="center">
