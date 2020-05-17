@@ -10,6 +10,23 @@ import java.security.spec.*;
 
 public class Encryptor {
     private PublicKey publicKey;
+
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    public PrivateKey getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(PrivateKey privateKey) {
+        this.privateKey = privateKey;
+    }
+
     private PrivateKey privateKey;
     private Cipher cipher;
     private KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -36,12 +53,12 @@ public class Encryptor {
     }
 
     public byte[] encrypt(byte[] plaintext) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
         return cipher.doFinal(plaintext);
     }
 
     public byte[] decrypt(String filename) throws IOException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        cipher.init(Cipher.DECRYPT_MODE, publicKey);
         return cipher.doFinal(readFileBytes(filename));
     }
 
