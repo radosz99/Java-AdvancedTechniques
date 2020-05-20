@@ -7,4 +7,4 @@ keytool -genkey -alias signJar -keystore my-store
 jarsigner -keystore my-store -signedjar HelloSigned.jar cw9-1.0-SNAPSHOT.jar signJar
 przekopiuj do C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\ROOT
 odpal C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin startup
-javaws -verbose http://localhost:8080/JNLPExampleSigned.jnlp
+javaws -verbose http://localhost:8080/HelloSigned.jnlp
