@@ -26,7 +26,7 @@
                     <manifest>
                         <addClasspath>true</addClasspath>
                         <classpathPrefix>lib/</classpathPrefix>
-                        <mainClass>Hello</mainClass>
+                        <mainClass>astrobleme.gui.Main</mainClass>
                     </manifest>
                 </archive>
             </configuration>
