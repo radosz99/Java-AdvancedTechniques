@@ -35,7 +35,7 @@ ______________________________
 [cw5](#cw5) - 4.25 - RMI application - clients who want to sort their data by available sorting servers  
 [cw6](#cw6) - 5.0 - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB  
 [cw7](#cw7) - 4.5 - Simulation of ring network by using SOAP technology and TCP/IP Sockets  
-[cw8](#cw8) - 4.5 - Java Security - policytool, Cipher, digital signature etc  
+[cw8](#cw8) - 4.5 - Java Security app - policytool, Cipher, digital signature etc.  
 [cw9](#cw9) - ? - Swing application deployed by using JavaWS, JNLP and Apache Tomcat 
 
 <a name="pre"></a>
@@ -245,8 +245,23 @@ Choose *Allow parallel run* in *Edit Configurations* in IntelliJ and run as many
 ### Description
 
 
-### Running
-
+### Generating keys for encryption
+```
+$ openssl genrsa -out keypair.pem 2048
+$ openssl rsa -in keypair.pem -outform DER -pubout -out public.der
+$ openssl pkcs8 -topk8 -nocrypt -in keypair.pem -outform DER -out private.der
+```
+### Jar signing
+```
+keytool -genkey -alias signJar -keystore my-store
+jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar 
+```
+### Other stuff
+- Exporting public key - `keytool -export -keystore my-store -alias signJar -file PublicKey.cer`
+- Importing public key - `keytool -import -alias foreign -file PublicKey.cer -keystore receiver-store`
+- Displaying  certificate - `keytool -printcert -file PublicKey.cer`
+- Displaying key from store - `keytool -list -keystore my-store -alias signJar`
+- Verifying jar - `jarsigner -verify cw1signed.jar`
 ### Screenshot
 
 
