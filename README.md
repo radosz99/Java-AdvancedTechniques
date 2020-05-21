@@ -253,8 +253,8 @@ $ openssl pkcs8 -topk8 -nocrypt -in keypair.pem -outform DER -out private.der
 ```
 ### Jar signing
 ```
-keytool -genkey -alias signJar -keystore my-store
-jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar 
+$ keytool -genkey -alias signJar -keystore my-store
+$ jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar 
 ```
 ### Other stuff
 - Exporting public key - `keytool -export -keystore my-store -alias signJar -file PublicKey.cer`
@@ -262,6 +262,13 @@ jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar
 - Displaying  certificate - `keytool -printcert -file PublicKey.cer`
 - Displaying key from store - `keytool -list -keystore my-store -alias signJar`
 - Verifying jar - `jarsigner -verify cw1signed.jar`
+
+### Running
+In project main folder
+```
+$ mvn install
+$ java -Djava.security.manager -Djava.security.policy=mypolicy -jar target/cw8-1.0-SNAPSHOT.jar
+
 ### Screenshot
 
 
@@ -276,7 +283,7 @@ jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar
 
 
 ### Running
-From project main folder:
+In project main folder:
 ```
 $ mvn install 
 $ cd target
