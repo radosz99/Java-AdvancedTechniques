@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        Scene scene = new Scene(root,900,600);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("application.css").toExternalForm());
         primaryStage.show();
     }
 
@@ -21,3 +23,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+
