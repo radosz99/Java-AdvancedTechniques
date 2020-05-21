@@ -268,6 +268,7 @@ In project main folder
 ```
 $ mvn install
 $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar target/cw8-1.0-SNAPSHOT.jar
+```
 
 ### Screenshot
 
