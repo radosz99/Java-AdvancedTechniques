@@ -46,8 +46,7 @@ public class Encryptor {
         privateKey = keyFactory.generatePrivate(keySpec);
     }
 
-    public byte[] readFileBytes(String filename) throws IOException
-    {
+    public byte[] readFileBytes(String filename) throws IOException {
         Path path = Paths.get(filename);
         return Files.readAllBytes(path);
     }

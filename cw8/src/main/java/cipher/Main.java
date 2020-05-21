@@ -18,6 +18,7 @@ import java.sql.SQLOutput;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.zip.ZipException;
 
 public class Main {
     private static String MENU = "1. Zaszyfruj tekst\n2. Zapisz zaszyfrowany tekst do pliku\n3. Odszyfruj tekst z pliku\n4. Wczytaj plik JAR z klasami\n5. Wygeneruj dane zmiennoprzecinkowe" +
@@ -79,6 +80,8 @@ public class Main {
                         }
                     } catch (FileNotFoundException f){
                         System.err.println(f.getMessage());
+                    } catch (ZipException z){
+                        System.err.println(z.getMessage());
                     }
                     break;
                 case 5:
@@ -141,7 +144,7 @@ public class Main {
     }
 
     public static void sort(int id) throws IllegalAccessException, InstantiationException, InvocationTargetException {
-        Method algorithm = null;
+        Method algorithm;
         try {
             algorithm = methods.get(id);
         } catch (IllegalArgumentException i) {
