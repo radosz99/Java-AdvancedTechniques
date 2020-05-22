@@ -1,4 +1,4 @@
-**<p align="center"> Programming in Java - advanced techniques </p>**
+﻿**<p align="center"> Programming in Java - advanced techniques </p>**
 _________________________________
 **<p align="center"> Wrocław University of Science and Technology </p>**
 **<p align="center"> Computer Science, Faculty of Electronics, 6 semester </p>**
@@ -289,13 +289,13 @@ In project main folder:
 $ mvn install 
 $ cd target
 $ keytool -genkey -alias signJar -keystore my-store (once)
-$ jarsigner -keystore my-store -signedjar HelloSigned.jar cw9-1.0-SNAPSHOT.jar signJar
+$ jarsigner -keystore my-store -signedjar game.jar game-1.0-SNAPSHOT.jar signJar
 ```
-Then copy *HelloSigned.jar* to *C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\ROOT* and:
+Then copy *game.jar* to *C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\ROOT* and:
 ```
 $ cd C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin
 $ startup
-$ javaws -verbose http://localhost:8080/HelloSigned.jnlp
+$ javaws -verbose http://localhost:8080/Game.jnlp
 ```
 ### Screenshot
 
