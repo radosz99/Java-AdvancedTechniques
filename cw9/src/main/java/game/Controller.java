@@ -1,81 +1,165 @@
 package game;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import kotlin.reflect.jvm.internal.impl.util.collectionUtils.ScopeUtilsKt;
+import org.omg.CORBA.INTERNAL;
+import sun.plugin2.message.Message;
 
 import java.net.URL;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ExecutionException;
 
 public class Controller implements Initializable {
     @FXML TilePane mainPanel = new TilePane();
-    @FXML Button btn = new Button();
+    @FXML Button clearBtn = new Button();
     @FXML public TextArea log;
+    @FXML CheckBox modeCheck = new CheckBox();
+    @FXML ComboBox<String> strategyCmb = new ComboBox<>();
+    @FXML ProgressBar compBar = new ProgressBar();
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     final private short tilesToWin = 4;
+    final private short boardSize = 5;
     private static String logsString="";
-    private int turn = 0;  // X
-    private static List<List<TilesValue>> tilesValue = new ArrayList<List<TilesValue>>(5);
+    private int turn = 0;  // X starts
+    private List<List<TilesValue>> tilesValue = new ArrayList<>(boardSize);
     private Image imgEmpty = new Image(getClass().getResourceAsStream("/empty.png"));
     private Image imgX = new Image(getClass().getResourceAsStream("/x.png"));
     private Image imgO = new Image(getClass().getResourceAsStream("/o.png"));
     private Image winImg = new Image(getClass().getResourceAsStream("/win.png"));
-    private List<ImageView> tiles = new ArrayList<>();
+    private List<List<ImageView>> tiles = new ArrayList<>(boardSize);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for(int i = 0; i < 5; i++){
+        strategyCmb.getItems().addAll("Minimax", "Alphabeta", "Random", "Simply");
+        log.setEditable(false);
+        for(int i = 0; i < boardSize; i++){
             List<TilesValue> singleList = new ArrayList<>();
-            for (int j = 0; j < 5; j++){
+            List<ImageView> singleListImg = new ArrayList<>();
+            for (int j = 0; j < boardSize; j++){
                 singleList.add(TilesValue.EMPTY);
+                singleListImg.add(new ImageView(imgEmpty));
+                singleListImg.get(j).setFitWidth(90);
+                singleListImg.get(j).setFitHeight(90);
+                singleListImg.get(j).setPreserveRatio(true);
+                mainPanel.getChildren().add(singleListImg.get(j));
             }
+            tiles.add(singleListImg);
             tilesValue.add(singleList);
         }
-        btn.setText("HEJKA");
-        for(int i = 0; i < 25; i++){
-            tiles.add(new ImageView());
-            tiles.get(i).setFitWidth(90);
-            tiles.get(i).setFitHeight(90);
-            tiles.get(i).setPreserveRatio(true);
-            tiles.get(i).setImage(imgEmpty);
-            mainPanel.getChildren().add((tiles.get(i)));
-            int finalI = i;
-            tiles.get(i).setOnMouseClicked( e-> {
-                if(e.getButton()== MouseButton.PRIMARY) {
-                    if (tilesValue.get(finalI/5).get(finalI%5)==TilesValue.EMPTY && turn==0) {
-                        tiles.get(finalI).setImage(imgX);
-                        tilesValue.get(finalI/5).set(finalI%5, TilesValue.X);
-                        turn = 1;
-                        showMessage("Player A put X on [" + finalI/5 + "][" + finalI%5 + "]");
-                        checkIfWin(finalI/5, finalI%5, TilesValue.X);
+
+        for(int i = 0; i < boardSize; i++){
+            for (int j = 0; j < boardSize; j++) {
+                int finalI = i;
+                int finalJ = j;
+                tiles.get(i).get(j).setOnMouseClicked(e -> {
+                    if (e.getButton() == MouseButton.PRIMARY && tilesValue.get(finalI).get(finalJ) == TilesValue.EMPTY ) {
+                        if (turn == 0) {
+                            tiles.get(finalI).get(finalJ).setImage(imgX);
+                            tilesValue.get(finalI).set(finalJ, TilesValue.X);
+                            turn = 1;
+                            showMessage("Player A put X on [" + finalI + "][" + finalJ + "]");
+                            if (checkIfWin(finalI, finalJ, TilesValue.X)) {
+                                winAlert(TilesValue.X);
+                            }
+                        }
+                        if (modeCheck.isSelected()) {
+                            Task task = new Task<Pair<Integer, Integer>>() {
+                                @Override public Pair<Integer, Integer> call() {
+                                    try {
+                                        for(int l = 0; l < 100; l++) {
+                                            Thread.sleep(10);
+                                            updateProgress(l, 100);
+                                        }
+
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                    String strategy = strategyCmb.getSelectionModel().getSelectedItem();
+                                    SecureRandom random = new SecureRandom();
+                                    int randX = 0, randY = 0;
+                                    while (true) {
+                                        boolean founded = false;
+                                        for (List<TilesValue> lis : tilesValue) {
+                                            if (lis.contains(TilesValue.EMPTY)) {
+                                                founded = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!founded) {
+                                            randX =  Integer.MAX_VALUE;
+                                            randY =  Integer.MAX_VALUE;
+                                            break;
+                                        }
+
+                                        randX = random.nextInt(5);
+                                        randY = random.nextInt(5);
+                                        if (tilesValue.get(randX).get(randY) == TilesValue.EMPTY) {
+                                            tiles.get(randX).get(randY).setImage(imgO);
+                                            tilesValue.get(randX).set(randY, TilesValue.O);
+                                            turn = 0;
+                                            break;
+                                        }
+                                    }
+                                    return new Pair<>(randX, randY);
+                                }
+                            };
+                            compBar.progressProperty().bind(task.progressProperty());
+                            new Thread(task).start();
+                            task.setOnSucceeded(s -> {
+                                Pair<Integer, Integer> result = null;
+                                try {
+                                    result = (Pair<Integer, Integer>) task.get();
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                } catch (ExecutionException ex) {
+                                    ex.printStackTrace();
+                                }
+                                if (checkIfWin(result.getKey(), result.getValue(), TilesValue.O)) {
+                                    winAlert(TilesValue.O);
+                                }
+                            });
+                        }
+                    } else if (e.getButton() == MouseButton.SECONDARY && !modeCheck.isSelected()) {
+                        if (tilesValue.get(finalI).get(finalJ) == TilesValue.EMPTY && turn == 1) {
+                            tiles.get(finalI).get(finalJ).setImage(imgO);
+                            tilesValue.get(finalI).set(finalJ, TilesValue.O);
+                            turn = 0;
+                            showMessage("Player B put O on [" + finalI + "][" + finalJ + "]");
+                            if (checkIfWin(finalI, finalJ, TilesValue.O)) {
+                                winAlert(TilesValue.O);
+                            }
+                        }
                     }
-                }
-                else if(e.getButton()== MouseButton.SECONDARY) {
-                    if (tilesValue.get(finalI/5).get(finalI%5)==TilesValue.EMPTY && turn==1) {
-                        tiles.get(finalI).setImage(imgO);
-                        tilesValue.get(finalI/5).set(finalI%5, TilesValue.O);
-                        turn = 0;
-                        showMessage("Player B put O on [" + finalI/5 + "][" + finalI%5 + "]");
-                        checkIfWin(finalI/5, finalI%5, TilesValue.O);
-                    }
-                }
-            });
+                });
+            }
         }
         //mainPanel.setTileAlignment(Pos.TOP_LEFT);
         mainPanel.setHgap(9);
         mainPanel.setVgap(9);
+
+        clearBtn.setOnMouseClicked( e -> {
+            for(int i = 0; i < boardSize; i++){
+                for (int j = 0; j < boardSize; j++){
+                    tilesValue.get(i).set(j, TilesValue.EMPTY);
+                    tiles.get(i).get(j).setImage(imgEmpty);
+                    log.clear();
+                    logsString = "";
+                }
+            }
+        });
     }
 
     private void showMessage(String message){
@@ -90,7 +174,6 @@ public class Controller implements Initializable {
         if (tilesValue.get(x).get(y) == value) {
             return true;
         }
-
         return false;
     }
 
@@ -98,28 +181,28 @@ public class Controller implements Initializable {
         // right or left
         if (checkIfTileFilled(x, y + 1, value) || checkIfTileFilled(x, y - 1, value)) {
             if(checkHowManyTiles(x, y, value, Course.HORIZONTAL) >= tilesToWin - 1) {
-                winAlert(value);
+                return true;
             }
         }
         // up or down
         if (checkIfTileFilled(x - 1, y, value) || checkIfTileFilled(x + 1, y, value)) {
             if(checkHowManyTiles(x, y, value, Course.VERTICAL) >= tilesToWin - 1) {
-                winAlert(value);
+                return true;
             }
         }
         // up right or down left
         if (checkIfTileFilled(x - 1, y + 1, value) || checkIfTileFilled(x + 1, y - 1, value)) {
             if(checkHowManyTiles(x, y, value, Course.DIAGONAL_DOWN) >= tilesToWin - 1) {
-                winAlert(value);
+                return true;
             }
         }
         // up left or down right
         if (checkIfTileFilled(x - 1, y - 1, value) || checkIfTileFilled(x + 1, y + 1, value)) {
             if(checkHowManyTiles(x, y, value, Course.DIAGONAL_UP) >= tilesToWin - 1) {
-                winAlert(value);
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private int checkHowManyTiles(int x, int y, TilesValue value, Course course){
@@ -193,9 +276,9 @@ public class Controller implements Initializable {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/tik.png")));
         if(tilesValue == TilesValue.O){
-            alert.setHeaderText("Player B has won");
+            alert.setHeaderText("Player B has won!");
         } else if(tilesValue == TilesValue.X){
-            alert.setHeaderText("Player A has won");
+            alert.setHeaderText("Player A has won!");
         }
         alert.getButtonTypes().setAll(buttonTypeOne);
         alert.showAndWait();
