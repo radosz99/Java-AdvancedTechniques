@@ -1,4 +1,8 @@
-﻿**<p align="center"> Programming in Java - advanced techniques </p>**
+﻿﻿**<p align="center"> Programming in Java - advanced techniques </p>**
+=======
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4915729429104b9b8ae5f4267049206b)](https://www.codacy.com/manual/radosz99/Programming-in-Java-Advanced-Techniques?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=radosz99/Programming-in-Java-Advanced-Techniques&amp;utm_campaign=Badge_Grade)
+
+**<p align="center"> Programming in Java - advanced techniques </p>**
 _________________________________
 **<p align="center"> Wrocław University of Science and Technology </p>**
 **<p align="center"> Computer Science, Faculty of Electronics, 6 semester </p>**
