@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://localhost:8080/" href="game.jnlp">
+ 
+     <information>
+          <title>Hello in JNLP</title>
+          <vendor>Radek Lis</vendor>
+          <homepage href="http://localhost:8080/" />
+          <description>Simple hello world </description>
+     </information>
+ 
+     <security>
+          <all-permissions/>
+     </security>
+ 
+     <resources>
+          <j2se version="1.8*" />
+          <jar href="game.jar" />
+     </resources>
+ 
+     <application-desc>
+	<main-class="game.Main" />
+	<type="JavaFX" />
+	</application-desc>
+</jnlp>
