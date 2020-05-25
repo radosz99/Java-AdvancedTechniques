@@ -118,6 +118,7 @@ public class Controller implements Initializable {
                                 Pair<Integer, Integer> result = null;
                                 try {
                                     result = (Pair<Integer, Integer>) task.get();
+                                    showMessage("Computer put O on [" + result.getKey() + "][" + result.getValue() + "]");
                                 } catch (InterruptedException ex) {
                                     ex.printStackTrace();
                                 } catch (ExecutionException ex) {
