@@ -245,7 +245,7 @@ Choose `Allow parallel run` in `Edit Configurations` in IntelliJ and run as many
 - [Maven](https://maven.apache.org/download.cgi)
 
 ### Description
-
+Fun with Java Security.
 
 ### Generating keys for encryption
 ```
@@ -273,7 +273,9 @@ $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar target/cw8-1
 ```
 
 ### Screenshot
-
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw8/screen.png" width=100% />
+</p>
 
 
 <a name="cw9"></a>
