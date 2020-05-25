@@ -1,6 +1,5 @@
 package game;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,9 +10,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import kotlin.reflect.jvm.internal.impl.util.collectionUtils.ScopeUtilsKt;
-import org.omg.CORBA.INTERNAL;
-import sun.plugin2.message.Message;
 
 import java.net.URL;
 import java.security.SecureRandom;
