@@ -283,7 +283,9 @@ $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar target/cw8-1
 - [Maven](https://maven.apache.org/download.cgi)
 
 ### Description
+*Application as a foundation for cw10*    
 
+[5,5,4-game](https://en.wikipedia.org/wiki/M,n,k-game) in JavaFX. You can play with computer or with other person on the same app (left and right clicks).
 
 ### Running
 In project main folder:
@@ -293,14 +295,16 @@ $ cd target
 $ keytool -genkey -alias signJar -keystore my-store (once)
 $ jarsigner -keystore my-store -signedjar game.jar game-1.0-SNAPSHOT.jar signJar
 ```
-Then copy `game.jar` to `C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\ROOT` and:
+Then move `game.jar` and `Game.jnlp` to `C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\ROOT` and:
 ```
 $ cd C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin
 $ startup
-$ javaws -verbose http://localhost:8080/Game.jnlp
+$ javaws http://localhost:8080/Game.jnlp
 ```
 ### Screenshot
-
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw9/screen.png" width=100% />
+</p>
 
 
 
