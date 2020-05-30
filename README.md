@@ -38,7 +38,7 @@ ______________________________
 [cw6](#cw6) - 5.0 - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB  
 [cw7](#cw7) - 4.5 - Simulation of ring network by using SOAP technology and TCP/IP Sockets  
 [cw8](#cw8) - 4.5 - Java Security app - policytool, Cipher, digital signature etc.  
-[cw9](#cw9) - ? - Swing application deployed by using JavaWS, JNLP and Apache Tomcat 
+[cw9](#cw9) - 5.0 - Desktop application deployed by using JavaWS, JNLP and Apache Tomcat for playing in 5,5,4-game
 
 <a name="pre"></a>
 # Prerequisites
@@ -245,7 +245,7 @@ Choose `Allow parallel run` in `Edit Configurations` in IntelliJ and run as many
 - [Maven](https://maven.apache.org/download.cgi)
 
 ### Description
-
+Fun with Java Security.
 
 ### Generating keys for encryption
 ```
@@ -266,14 +266,17 @@ $ jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar
 - Verifying jar - `jarsigner -verify cw1signed.jar`
 
 ### Running
-In project main folder
+In project main folder (create keys in TARGET folder) before running it):
 ```
 $ mvn install
-$ java -Djava.security.manager -Djava.security.policy=mypolicy -jar target/cw8-1.0-SNAPSHOT.jar
+$ cd target
+$ java -Djava.security.manager -Djava.security.policy=mypolicy -jar cw8-1.0-SNAPSHOT.jar
 ```
 
 ### Screenshot
-
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw8/screen.png" width=100% />
+</p>
 
 
 <a name="cw9"></a>
