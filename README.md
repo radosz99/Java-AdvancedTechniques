@@ -258,6 +258,22 @@ $ openssl pkcs8 -topk8 -nocrypt -in keypair.pem -outform DER -out private.der
 $ keytool -genkey -alias signJar -keystore my-store
 $ jarsigner -keystore my-store -signedjar cw1signed.jar cw1.jar signJar 
 ```
+### Creating policy
+By using `policytool` add grants and save it in `mypolicy` file.
+```
+grant {
+  permission java.lang.RuntimePermission "createClassLoader";
+};
+
+grant {
+  permission java.io.FilePermission "<<ALL FILES>>", "write";
+};
+
+grant {
+  permission java.io.FilePermission "<<ALL FILES>>", "read";
+};
+```
+
 ### Other stuff
 - Exporting public key - `keytool -export -keystore my-store -alias signJar -file PublicKey.cer`
 - Importing public key - `keytool -import -alias foreign -file PublicKey.cer -keystore receiver-store`
