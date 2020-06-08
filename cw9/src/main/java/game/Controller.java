@@ -42,6 +42,7 @@ public class Controller implements Initializable {
     private Image imgO = new Image(getClass().getResourceAsStream("/o.png"));
     private Image winImg = new Image(getClass().getResourceAsStream("/win.png"));
     private List<List<ImageView>> tiles = new ArrayList<>(boardSize);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         langCmb.getItems().addAll("Javascript", "C++");
@@ -165,6 +166,10 @@ public class Controller implements Initializable {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
+
+    private native int getBestMove(int[] board);
+
+    private native int getGoodMove(int[] board);
 
     private void showMessage(String message){
         logsString += dtf.format(LocalDateTime.now()) + "\t" + message + "\n";

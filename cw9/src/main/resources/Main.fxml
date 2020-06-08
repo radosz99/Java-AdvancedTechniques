@@ -42,16 +42,16 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="81.0" layoutY="14.0" text="0                  1                  2                  3                  4" textFill="WHITE">
+      <Label layoutX="81.0" layoutY="14.0" text="0               1               2                3               4" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="clearBtn" layoutX="591.0" layoutY="27.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="113.0" text="Clear board" />
+      <Button fx:id="clearBtn" layoutX="572.0" layoutY="27.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="113.0" text="Clear board" />
       <ComboBox fx:id="strategyCmb" layoutX="733.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" />
       <ComboBox fx:id="langCmb" layoutX="572.0" layoutY="136.0" prefWidth="150.0" />
       <Label alignment="CENTER" layoutX="572.0" layoutY="119.0" prefHeight="17.0" prefWidth="150.0" text="Language:" />
       <Label alignment="CENTER" layoutX="733.0" layoutY="119.0" prefHeight="17.0" prefWidth="139.0" text="Strategy:" />
-      <Label fx:id="timeLbl" alignment="CENTER_RIGHT" layoutX="728.0" layoutY="28.0" prefHeight="27.0" prefWidth="150.0" />
+      <Label fx:id="timeLbl" alignment="CENTER_RIGHT" layoutX="695.0" layoutY="28.0" prefHeight="27.0" prefWidth="183.0" />
    </children>
 </AnchorPane>
