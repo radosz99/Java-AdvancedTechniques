@@ -19,6 +19,7 @@ _________________________________
   *  [cw7](#cw7)
   *  [cw8](#cw8)
   *  [cw9](#cw9)
+  *  [cw10](#cw10)
 - [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
@@ -38,7 +39,8 @@ ______________________________
 [cw6](#cw6) - 5.0 - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB  
 [cw7](#cw7) - 4.5 - Simulation of ring network by using SOAP technology and TCP/IP Sockets  
 [cw8](#cw8) - 4.5 - Java Security app - policytool, Cipher, digital signature etc.  
-[cw9](#cw9) - 5.0 - Desktop application deployed by using JavaWS, JNLP and Apache Tomcat for playing in 5,5,4-game
+[cw9](#cw9) - 5.0 - Desktop application deployed by using JavaWS, JNLP and Apache Tomcat for playing in 5,5,4-game  
+[cw10](#cw10) - 5.0 - Minimax algorithm with alpha-beta prunings in 5,5,4-game using Javascript (Nashorn) and C++ (JNI)
 
 <a name="pre"></a>
 # Prerequisites
@@ -302,9 +304,10 @@ $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar cw8-1.0-SNAP
 - [Maven](https://maven.apache.org/download.cgi)
 
 ### Description
-*Application as a foundation for cw10*    
+*Application as a foundation for cw10*.    
+To use you must go back to commit `b186556`.
 
-[5,5,4-game](https://en.wikipedia.org/wiki/M,n,k-game) in JavaFX. You can play with computer or with other person on the same app (left and right clicks).
+[5,5,4-game](https://en.wikipedia.org/wiki/M,n,k-game) in JavaFX. You can play with computer (random algorithm) or with other person on the same app (left and right clicks).
 
 ### Running
 In project main folder:
@@ -324,6 +327,30 @@ $ javaws http://localhost:8080/Game.jnlp
 <p align="center">
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw9/screen.png" width=100% />
 </p>
+
+<a name="cw10"></a>
+## cw10
+
+### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
+
+### Description
+**Currently all files are in cw9/ folder.** 
+
+[5,5,4-game](https://en.wikipedia.org/wiki/M,n,k-game) in JavaFX using Javascript Script Engine and JNI. You (X) play with AI (O).
+
+### Running
+Build JNI library in `resources` folder by typing:
+```
+$ ./build_library.sh
+
+```
+Then open project in IntelliJ, import JavaFX libs and in `Edit configurations` in `VM options` type (`xyz` are appriopriate system paths):
+```
+$ -Djava.library.path=...xyz/resources/ --module-path "...xyz/javafx-sdk-11.0.2/lib" --add-modules=javafx.controls,javafx.fxml
+```
+Then simply run `Main.java`.
+
 
 
 
