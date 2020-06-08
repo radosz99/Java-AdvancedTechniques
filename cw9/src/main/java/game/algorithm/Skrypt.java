@@ -1,22 +1,49 @@
 package game.algorithm;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import jdk.nashorn.api.scripting.JSObject;
+import org.json.JSONObject;
+
+import javax.script.*;
+import java.io.*;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Skrypt {
-    public static void main(String[] args) throws ScriptException, FileNotFoundException, NoSuchMethodException {
+    public static void main(String[] args) throws ScriptException, IOException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval(new FileReader("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw9\\src\\main\\java\\game\\script.js"));
+        List<List<Integer>> board = new ArrayList<>();
+        SecureRandom random = new SecureRandom();
+        for(int i = 0; i<5; i++) {
+            List<Integer> row = new ArrayList<>();
+            for(int j=0; j<5; j++){
+                //int val = random.nextInt(3);
+//                val -= 1;
+//                if(j%2==1){
+//                    val=0;
+//                }
+                int val = 0;
+                row.add(val);
+            }
+            board.add(row);
+        }
+        board.get(2).set(1,1);
 
-        Invocable invocable = (Invocable) engine;
+        MinimaxAlg minimaxAlg = new MinimaxAlg();
+        ArrayList<Integer> xd = minimaxAlg.execute(board);
 
-        Object result = invocable.invokeFunction("fun1", "Peter Parker");
-        System.out.println(result);
-        System.out.println(result.getClass());
+        for(List<Integer> r : board){
+            for(int i=0; i<r.size();i++){
+                System.out.print(r.get(i) + "\t");
+            }
+            System.out.println("");
+        }
+
+//        Bindings bind = engine.getBindings(ScriptContext.ENGINE_SCOPE);
+//        bind.put("board", board);
+//        JSObject xd = (JSObject) engine.eval(new FileReader("src/main/java/game/algorithm/random.js"));
+//        System.out.println(xd.getMember("x"));
+
 
     }
 }

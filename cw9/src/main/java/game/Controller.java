@@ -1,6 +1,6 @@
 package game;
 
-import javafx.concurrent.Task;
+import game.algorithm.Handler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,36 +10,30 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-
 import java.net.URL;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class Controller implements Initializable {
     @FXML TilePane mainPanel = new TilePane();
     @FXML Button clearBtn = new Button();
     @FXML public TextArea log;
-    @FXML CheckBox modeCheck = new CheckBox();
     @FXML ComboBox<String> strategyCmb = new ComboBox<>();
-    @FXML ProgressBar compBar = new ProgressBar();
+    @FXML ComboBox<String> langCmb = new ComboBox<>();
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     final private short tilesToWin = 4;
     final private short boardSize = 5;
     private static String logsString="";
-    private int turn = 0;  // X starts
     private List<List<TilesValue>> tilesValue = new ArrayList<>(boardSize);
     private Image imgEmpty = new Image(getClass().getResourceAsStream("/empty.png"));
     private Image imgX = new Image(getClass().getResourceAsStream("/x.png"));
     private Image imgO = new Image(getClass().getResourceAsStream("/o.png"));
     private Image winImg = new Image(getClass().getResourceAsStream("/win.png"));
     private List<List<ImageView>> tiles = new ArrayList<>(boardSize);
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        strategyCmb.getItems().addAll("Minimax", "Alphabeta", "Random", "Simply");
+        langCmb.getItems().addAll("Javascript", "C++");
         log.setEditable(false);
         for(int i = 0; i < boardSize; i++){
             List<TilesValue> singleList = new ArrayList<>();
@@ -56,94 +50,53 @@ public class Controller implements Initializable {
             tilesValue.add(singleList);
         }
 
+        strategyCmb.setOnMouseClicked(e->{
+            String lang = langCmb.getSelectionModel().getSelectedItem();
+            if(lang==null){
+                return;
+            }
+            if(lang.equals("Javascript")){
+                strategyCmb.getItems().clear();
+                strategyCmb.getItems().addAll("Random", "Simply", "Minimax");
+            }
+            else {
+                strategyCmb.getItems().clear();
+                strategyCmb.getItems().addAll("Random", "Simply");
+            }
+        });
+
         for(int i = 0; i < boardSize; i++){
             for (int j = 0; j < boardSize; j++) {
                 int finalI = i;
                 int finalJ = j;
                 tiles.get(i).get(j).setOnMouseClicked(e -> {
                     if (e.getButton() == MouseButton.PRIMARY && tilesValue.get(finalI).get(finalJ) == TilesValue.EMPTY ) {
-                        if (turn == 0) {
-                            tiles.get(finalI).get(finalJ).setImage(imgX);
-                            tilesValue.get(finalI).set(finalJ, TilesValue.X);
-                            turn = 1;
-                            showMessage("Player A put X on [" + finalI + "][" + finalJ + "]");
-                            if (checkIfWin(finalI, finalJ, TilesValue.X)) {
-                                winAlert(TilesValue.X);
-                            }
+                        tiles.get(finalI).get(finalJ).setImage(imgX);
+                        tilesValue.get(finalI).set(finalJ, TilesValue.X);
+                        showMessage("Player A put X on [" + finalI + "][" + finalJ + "]");
+                        if (checkIfWin(finalI, finalJ, TilesValue.X)) {
+                            winAlert(TilesValue.X);
                         }
-                        if (modeCheck.isSelected()) {
-                            Task task = new Task<Pair<Integer, Integer>>() {
-                                @Override public Pair<Integer, Integer> call() {
-                                    try {
-                                        for(int l = 0; l < 100; l++) {
-                                            Thread.sleep(10);
-                                            updateProgress(l, 100);
-                                        }
+                        String strategy = strategyCmb.getSelectionModel().getSelectedItem();
+                        String lang = langCmb.getSelectionModel().getSelectedItem();
+                        Pair<Integer, Integer> coords = Handler.makeMove(strategy, lang, tilesValue);
+                        int x = coords.getKey();
+                        int y = coords.getValue();
 
-                                    } catch (InterruptedException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                    String strategy = strategyCmb.getSelectionModel().getSelectedItem();
-                                    SecureRandom random = new SecureRandom();
-                                    int randX = 0, randY = 0;
-                                    while (true) {
-                                        boolean founded = false;
-                                        for (List<TilesValue> lis : tilesValue) {
-                                            if (lis.contains(TilesValue.EMPTY)) {
-                                                founded = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!founded) {
-                                            randX =  Integer.MAX_VALUE;
-                                            randY =  Integer.MAX_VALUE;
-                                            break;
-                                        }
-
-                                        randX = random.nextInt(5);
-                                        randY = random.nextInt(5);
-                                        if (tilesValue.get(randX).get(randY) == TilesValue.EMPTY) {
-                                            tiles.get(randX).get(randY).setImage(imgO);
-                                            tilesValue.get(randX).set(randY, TilesValue.O);
-                                            turn = 0;
-                                            break;
-                                        }
-                                    }
-                                    return new Pair<>(randX, randY);
-                                }
-                            };
-                            compBar.progressProperty().bind(task.progressProperty());
-                            new Thread(task).start();
-                            task.setOnSucceeded(s -> {
-                                Pair<Integer, Integer> result = null;
-                                try {
-                                    result = (Pair<Integer, Integer>) task.get();
-                                    showMessage("Computer put O on [" + result.getKey() + "][" + result.getValue() + "]");
-                                } catch (InterruptedException ex) {
-                                    ex.printStackTrace();
-                                } catch (ExecutionException ex) {
-                                    ex.printStackTrace();
-                                }
-                                if (checkIfWin(result.getKey(), result.getValue(), TilesValue.O)) {
-                                    winAlert(TilesValue.O);
-                                }
-                            });
+                        if(x >= boardSize || y >= boardSize){
+                            return;
                         }
-                    } else if (e.getButton() == MouseButton.SECONDARY && !modeCheck.isSelected()) {
-                        if (tilesValue.get(finalI).get(finalJ) == TilesValue.EMPTY && turn == 1) {
-                            tiles.get(finalI).get(finalJ).setImage(imgO);
-                            tilesValue.get(finalI).set(finalJ, TilesValue.O);
-                            turn = 0;
-                            showMessage("Player B put O on [" + finalI + "][" + finalJ + "]");
-                            if (checkIfWin(finalI, finalJ, TilesValue.O)) {
-                                winAlert(TilesValue.O);
-                            }
+                        System.out.println("X = " + x + ", y = " + y);
+                        tiles.get(x).get(y).setImage(imgO);
+                        tilesValue.get(x).set(y, TilesValue.O);
+                        showMessage("Computer put O on [" + x + "][" + y + "]");
+                        if (checkIfWin(x, y, TilesValue.O)) {
+                            winAlert(TilesValue.O);
                         }
                     }
                 });
             }
         }
-        //mainPanel.setTileAlignment(Pos.TOP_LEFT);
         mainPanel.setHgap(9);
         mainPanel.setVgap(9);
 
@@ -165,7 +118,7 @@ public class Controller implements Initializable {
     }
 
     private boolean checkIfTileFilled(int x, int y, TilesValue value){
-        if(x > 4 || y > 4 || x < 0 || y < 0){
+        if(x >= boardSize || y >= boardSize || x < 0 || y < 0){
             return false;
         }
         if (tilesValue.get(x).get(y) == value) {
@@ -280,4 +233,5 @@ public class Controller implements Initializable {
         alert.getButtonTypes().setAll(buttonTypeOne);
         alert.showAndWait();
     }
+
 }

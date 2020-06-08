@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.TilePane?>
@@ -51,7 +49,6 @@
       </Label>
       <Button fx:id="clearBtn" layoutX="829.0" layoutY="15.0" mnemonicParsing="false" text="Clear" />
       <ComboBox fx:id="strategyCmb" layoutX="733.0" layoutY="78.0" prefHeight="25.0" prefWidth="139.0" />
-      <CheckBox fx:id="modeCheck" layoutX="597.0" layoutY="82.0" mnemonicParsing="false" text="Computer" textFill="WHITE" />
-      <ProgressBar fx:id="compBar" layoutX="339.0" layoutY="562.0" prefWidth="200.0" progress="0.0" />
+      <ComboBox fx:id="langCmb" layoutX="572.0" layoutY="78.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
