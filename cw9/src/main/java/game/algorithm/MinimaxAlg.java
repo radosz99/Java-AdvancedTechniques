@@ -3,6 +3,7 @@ package game.algorithm;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class MinimaxAlg implements Algorithm {
     final private short boardSize = 5;
@@ -12,14 +13,13 @@ public class MinimaxAlg implements Algorithm {
         int player = -1; // O
         int bestValue = Integer.MIN_VALUE;
         ArrayList<Integer> result = new ArrayList<>(2);
-
         for(int j = 0; j < boardSize; j++){
             for (int i = 0; i < boardSize; i++){
                 if(tilesValue.get(j).get(i)==0){
-                    System.err.println("Kolejne puste pole mordo!");
                     tilesValue.get(j).set(i, player);
                     // dla 1 minimalizacja, dla -1 maksymalizacja
                     int moveValue = minimax(1, tilesValue, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                    System.err.println("X = " + j + ", y = " + i + ", value = " + moveValue);
                     tilesValue.get(j).set(i, 0);
                     if(moveValue > bestValue){
                         result.clear();
@@ -232,7 +232,7 @@ public class MinimaxAlg implements Algorithm {
                 break;
         }
         if(lineOwner!=-1){
-            score *= -1.5;
+            score *= -2;
         }
         //System.err.println(score);
         return score;
