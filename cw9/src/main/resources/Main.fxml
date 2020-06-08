@@ -11,8 +11,8 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.Controller">
    <children>
       <TilePane fx:id="mainPanel" layoutX="39.0" layoutY="44.0" prefHeight="500.0" prefWidth="500.0" />
-      <TextArea fx:id="log" layoutX="572.0" layoutY="297.0" prefHeight="234.0" prefWidth="300.0" />
-      <Label alignment="CENTER" layoutX="572.0" layoutY="270.0" prefHeight="17.0" prefWidth="300.0" text="Gamelog:" textFill="WHITE">
+      <TextArea fx:id="log" layoutX="572.0" layoutY="231.0" prefHeight="300.0" prefWidth="300.0" />
+      <Label alignment="CENTER" layoutX="572.0" layoutY="204.0" prefHeight="17.0" prefWidth="300.0" text="Gamelog:" textFill="WHITE">
          <font>
             <Font name="Garamond" size="18.0" />
          </font>
@@ -47,8 +47,11 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="clearBtn" layoutX="829.0" layoutY="15.0" mnemonicParsing="false" text="Clear" />
-      <ComboBox fx:id="strategyCmb" layoutX="733.0" layoutY="78.0" prefHeight="25.0" prefWidth="139.0" />
-      <ComboBox fx:id="langCmb" layoutX="572.0" layoutY="78.0" prefWidth="150.0" />
+      <Button fx:id="clearBtn" layoutX="591.0" layoutY="27.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="113.0" text="Clear board" />
+      <ComboBox fx:id="strategyCmb" layoutX="733.0" layoutY="136.0" prefHeight="25.0" prefWidth="139.0" />
+      <ComboBox fx:id="langCmb" layoutX="572.0" layoutY="136.0" prefWidth="150.0" />
+      <Label alignment="CENTER" layoutX="572.0" layoutY="119.0" prefHeight="17.0" prefWidth="150.0" text="Language:" />
+      <Label alignment="CENTER" layoutX="733.0" layoutY="119.0" prefHeight="17.0" prefWidth="139.0" text="Strategy:" />
+      <Label fx:id="timeLbl" alignment="CENTER_RIGHT" layoutX="728.0" layoutY="28.0" prefHeight="27.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -8,9 +8,15 @@ import java.util.PriorityQueue;
 public class MinimaxAlg implements Algorithm {
     final private short boardSize = 5;
     final private short tilesToWin = 4;
+    private int depth;
+    int minPlayer = 1;
+    int maxPlayer = -1;
+    public MinimaxAlg(int depth) {
+        this.depth = depth;
+    }
 
     public ArrayList<Integer> execute(List<List<Integer>> tilesValue) {
-        int player = -1; // O
+        int player = maxPlayer; // O
         int bestValue = Integer.MIN_VALUE;
         ArrayList<Integer> result = new ArrayList<>(2);
         for(int j = 0; j < boardSize; j++){
@@ -18,8 +24,7 @@ public class MinimaxAlg implements Algorithm {
                 if(tilesValue.get(j).get(i)==0){
                     tilesValue.get(j).set(i, player);
                     // dla 1 minimalizacja, dla -1 maksymalizacja
-                    int moveValue = minimax(1, tilesValue, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                    System.err.println("X = " + j + ", y = " + i + ", value = " + moveValue);
+                    int moveValue = minimax(minPlayer, tilesValue, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
                     tilesValue.get(j).set(i, 0);
                     if(moveValue > bestValue){
                         result.clear();
@@ -31,7 +36,6 @@ public class MinimaxAlg implements Algorithm {
             }
         }
 
-        System.err.println("Najlepszy: " + result.toString() + ", wynik = " + bestValue);
         return result;
     }
 
@@ -44,32 +48,23 @@ public class MinimaxAlg implements Algorithm {
         return false;
     }
 
-    public int minimax(int playerId, List<List<Integer>> board, int depth, int alpha, int beta) {
+    public int minimax(int playerId, List<List<Integer>> board, int currentDepth, int alpha, int beta) {
         int score = evaluateMove(playerId, board);
-        //System.err.println("Głębokość: " + depth);
 
-
-        if(score >= 10000 && score != Integer.MAX_VALUE){
-            return 10000 - depth; // prefer min depth
+        if(score >= 1000 && score != Integer.MAX_VALUE){
+            return 1000 - currentDepth; // prefer min depth
         }
-        if (score <= -10000 && score != Integer.MIN_VALUE) {
-            return -10000 + depth; // prefer min depth
+        if (score <= -1000 && score != Integer.MIN_VALUE) {
+            return -1000 + currentDepth; // prefer min depth
         }
 
         if(!checkIfMovesLeft(board)) {
             return 0;
         }
 
-        int zeroAmount = 0;
-        for(List<Integer> row:board){
-            zeroAmount += Collections.frequency(row, 0);
-        }
-
-
-
-        if(playerId==-1){ //maksymalizacja
+        if(playerId == maxPlayer){ //maksymalizacja
             int best = Integer.MIN_VALUE;
-            if(depth>6){
+            if(currentDepth >= depth){
                 return best;
             }
             for(int j = 0; j < boardSize; j++){
@@ -77,7 +72,7 @@ public class MinimaxAlg implements Algorithm {
                     if(board.get(j).get(i)==0){
                         board.get(j).set(i, playerId);
                         // dla 1 minimalizacja, dla -1 maksymalizacja
-                        best = Math.max(best, minimax(1, board, depth+1,alpha,beta));
+                        best = Math.max(best, minimax(minPlayer, board, currentDepth + 1, alpha, beta));
                         board.get(j).set(i, 0);
                         if(best > alpha){
                             alpha = best;
@@ -88,9 +83,9 @@ public class MinimaxAlg implements Algorithm {
                     }
                 }
             }
-        } else if (playerId==1){ //minimalizacja
+        } else if (playerId == minPlayer){ //minimalizacja
             int best = Integer.MAX_VALUE;
-            if(depth>6){
+            if(currentDepth >= depth){
                 return best;
             }
             for(int j = 0; j < boardSize; j++){
@@ -98,7 +93,7 @@ public class MinimaxAlg implements Algorithm {
                     if(board.get(j).get(i)==0){
                         board.get(j).set(i, playerId);
                         // dla 1 minimalizacja, dla -1 maksymalizacja
-                        best = Math.min(best, minimax(-1, board, depth+1, alpha, beta));
+                        best = Math.min(best, minimax(maxPlayer, board, currentDepth + 1, alpha, beta));
                         board.get(j).set(i, 0);
                         if(best < beta){
                             beta = best;
@@ -117,13 +112,14 @@ public class MinimaxAlg implements Algorithm {
 
     public int evaluateMove(int playerId, List<List<Integer>> board){
         int score = 0;
+        int repetitions = 2;
         // diagonals 8
         // ((1|0 2|1 3|2 4|3 (I NA ODWROT))) + ((0|0 1|1 2|2 3|3 + 1|1 2|2 3|3 4|4)) (GÓRA -> DÓł)
         // ((3|0 2|1 1|2 0|3 + 4|1 3|2 2|3 1|4)) + ((4|0 3|1 2|2 1|3 + 3|1 2|2 1|3 0|4)) (DÓł -> GÓRA)
 
         // GÓRA -> DÓł
-        for(int i = 0; i < 2; i++){
-           List<Integer> line = new ArrayList<>(4);
+        for(int i = 0; i < repetitions; i++){
+           List<Integer> line = new ArrayList<>(tilesToWin);
            for (int j = 0; j < tilesToWin; j++){
                if(i==0) {
                    line.add(board.get(j + 1).get(j));
@@ -135,8 +131,8 @@ public class MinimaxAlg implements Algorithm {
             score += evaluateLine(line);
         }
 
-        for(int i = 0; i < 2; i++){
-            List<Integer> line = new ArrayList<>(4);
+        for(int i = 0; i < repetitions; i++){
+            List<Integer> line = new ArrayList<>(tilesToWin);
             for(int j = 0; j < tilesToWin; j++){
                 line.add(board.get(j + i).get(j + i));
             }
@@ -144,16 +140,16 @@ public class MinimaxAlg implements Algorithm {
         }
 
         // DÓł -> GÓRA
-        for(int i = 0; i < 2; i++){
-            List<Integer> line = new ArrayList<>(4);
+        for(int i = 0; i < repetitions; i++){
+            List<Integer> line = new ArrayList<>(tilesToWin);
             for(int j = 0; j < tilesToWin; j++){
                 line.add(board.get(boardSize - 2 - j + i).get(j + i));
             }
             score += evaluateLine(line);
         }
 
-        for (int i = 0; i < 2; i++){
-            List<Integer> line = new ArrayList<>(4);
+        for (int i = 0; i < repetitions; i++){
+            List<Integer> line = new ArrayList<>(tilesToWin);
             for(int j = 0; j < tilesToWin; j++){
                 line.add(board.get(boardSize - 1 - j - i).get(j + i));
             }
@@ -163,8 +159,8 @@ public class MinimaxAlg implements Algorithm {
         // 0|0 0|1 0|2 0|3 + 0|1 0|2 0|3 0|4
 
         for(int h = 0; h < boardSize; h++) {
-            for (int i = 0; i < 2; i++) {
-                List<Integer> line = new ArrayList<>(4);
+            for (int i = 0; i < repetitions; i++) {
+                List<Integer> line = new ArrayList<>(tilesToWin);
                 for (int j = 0; j < tilesToWin; j++) {
                     line.add(board.get(h).get(j + i));
                 }
@@ -174,35 +170,29 @@ public class MinimaxAlg implements Algorithm {
 
         // vertical 10
         for(int h = 0; h < boardSize; h++) {
-            for (int i = 0; i < 2; i++) {
-                List<Integer> line = new ArrayList<>(4);
+            for (int i = 0; i < repetitions; i++) {
+                List<Integer> line = new ArrayList<>(tilesToWin);
                 for (int j = 0; j < tilesToWin; j++) {
                     line.add(board.get(j + i).get(h));
                 }
                 score += evaluateLine(line);
             }
         }
-        //System.err.println(score);
         return score;
     }
+
     public int evaluateLine(List<Integer> cells){
-        /*
-        +1000 for EACH 4-in-a-line
-        +100 for EACH 3-in-a-line
-        +10 for EACH 2-in-a-line
-        +1 for EACH 1-in-a-line
-         */
-        //System.err.println(cells.toString());
         int occurrences = 0;
-        int score = 0;
+        int score;
         int lineOwner = 0;
+
         // jesli to i to to 0
         if(cells.contains(1) && cells.contains(-1)){
-            score = 0;
+            return 0;
         }
         // jesli nie zawiera ani 1 ani -1 to 0
         else if(!cells.contains(1) && !cells.contains(-1)){
-            score = 0;
+            return 0;
         }
         else {
             // jesli zawiera 1 i nie zawiera -1 to zwroc
@@ -217,24 +207,17 @@ public class MinimaxAlg implements Algorithm {
             }
         }
 
-        switch(occurrences){
-            case 1:
-                score = 1;
-                break;
-            case 2:
-                score = 10;
-                break;
-            case 3:
-                score = 100;
-                break;
-            case 4:
-                score = 1000;
-                break;
-        }
-        if(lineOwner!=-1){
+        /*
+        +1000 for EACH 4-in-a-line
+        +100 for EACH 3-in-a-line
+        +10 for EACH 2-in-a-line
+        +1 for EACH 1-in-a-line
+         */
+        score = (int) Math.pow(10, occurrences - 1);
+
+        if(lineOwner != maxPlayer){
             score *= -2;
         }
-        //System.err.println(score);
         return score;
     }
 }

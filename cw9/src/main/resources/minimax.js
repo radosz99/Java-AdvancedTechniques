@@ -1,6 +1,6 @@
 var solve = function(board){
     var Solver = Java.type('game.algorithm.MinimaxAlg');
-    var solver = new Solver();
+    var solver = new Solver(6);
     var coords = solver.execute(board);
     var d = {
         "x" : coords[0],

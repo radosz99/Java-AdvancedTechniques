@@ -1,6 +1,10 @@
 package game;
 
 import game.algorithm.Handler;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,11 +13,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Controller implements Initializable {
     @FXML TilePane mainPanel = new TilePane();
@@ -21,9 +29,12 @@ public class Controller implements Initializable {
     @FXML public TextArea log;
     @FXML ComboBox<String> strategyCmb = new ComboBox<>();
     @FXML ComboBox<String> langCmb = new ComboBox<>();
+    @FXML Label timeLbl = new Label();
+    Timeline clock = new Timeline();
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     final private short tilesToWin = 4;
     final private short boardSize = 5;
+    final private short tilesShift = 9;
     private static String logsString="";
     private List<List<TilesValue>> tilesValue = new ArrayList<>(boardSize);
     private Image imgEmpty = new Image(getClass().getResourceAsStream("/empty.png"));
@@ -57,11 +68,11 @@ public class Controller implements Initializable {
             }
             if(lang.equals("Javascript")){
                 strategyCmb.getItems().clear();
-                strategyCmb.getItems().addAll("Random", "Simply", "Minimax");
+                strategyCmb.getItems().addAll("Random", "Greedy", "Minimax");
             }
             else {
                 strategyCmb.getItems().clear();
-                strategyCmb.getItems().addAll("Random", "Simply");
+                strategyCmb.getItems().addAll("Random", "Greedy");
             }
         });
 
@@ -76,40 +87,83 @@ public class Controller implements Initializable {
                         showMessage("Player A put X on [" + finalI + "][" + finalJ + "]");
                         if (checkIfWin(finalI, finalJ, TilesValue.X)) {
                             winAlert(TilesValue.X);
-                        }
-                        String strategy = strategyCmb.getSelectionModel().getSelectedItem();
-                        String lang = langCmb.getSelectionModel().getSelectedItem();
-                        Pair<Integer, Integer> coords = Handler.makeMove(strategy, lang, tilesValue);
-                        int x = coords.getKey();
-                        int y = coords.getValue();
-
-                        if(x >= boardSize || y >= boardSize){
                             return;
                         }
-                        System.out.println("X = " + x + ", y = " + y);
-                        tiles.get(x).get(y).setImage(imgO);
-                        tilesValue.get(x).set(y, TilesValue.O);
+                        boolean emptyFieldExists = false;
+                        for(List<TilesValue> row : tilesValue) {
+                            if (row.contains(TilesValue.EMPTY)) {
+                                emptyFieldExists = true;
+                                break;
+                            }
+                        }
+                        if(!emptyFieldExists){
+                            drawAlert();
+                            return;
+                        }
+
+                        String strategy = strategyCmb.getSelectionModel().getSelectedItem();
+                        String lang = langCmb.getSelectionModel().getSelectedItem();
+                        Task task = new Task<Pair<Integer, Integer>>() {
+                            @Override public Pair<Integer, Integer> call() {
+                                Pair<Integer, Integer> coords = null;
+                                try{
+                                    Handler handler = new Handler();
+                                    coords = handler.makeMove(strategy, lang, tilesValue);
+                                } catch (IndexOutOfBoundsException e){
+                                    e.printStackTrace();
+                                }
+                                return coords;
+                            }
+                        };
+
+                        new Thread(task).start();
+
+                        AtomicInteger x = new AtomicInteger();
+                        AtomicInteger y = new AtomicInteger();
+                        task.setOnSucceeded(s -> {
+                            Pair<Integer, Integer> coords = null;
+                            try {
+                                coords = (Pair<Integer, Integer>) task.get();
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            } catch (ExecutionException ex) {
+                                ex.printStackTrace();
+                            }
+                            x.set(coords.getKey());
+                            y.set(coords.getValue());
+
+
+                        if(x.get() >= boardSize || y.get() >= boardSize){
+                            return;
+                        }
+
+                        tiles.get(x.get()).get(y.get()).setImage(imgO);
+                        tilesValue.get(x.get()).set(y.get(), TilesValue.O);
                         showMessage("Computer put O on [" + x + "][" + y + "]");
-                        if (checkIfWin(x, y, TilesValue.O)) {
+                        if (checkIfWin(x.get(), y.get(), TilesValue.O)) {
                             winAlert(TilesValue.O);
                         }
+                        });
                     }
                 });
             }
         }
-        mainPanel.setHgap(9);
-        mainPanel.setVgap(9);
+        mainPanel.setHgap(tilesShift);
+        mainPanel.setVgap(tilesShift);
 
         clearBtn.setOnMouseClicked( e -> {
             for(int i = 0; i < boardSize; i++){
-                for (int j = 0; j < boardSize; j++){
-                    tilesValue.get(i).set(j, TilesValue.EMPTY);
-                    tiles.get(i).get(j).setImage(imgEmpty);
-                    log.clear();
-                    logsString = "";
-                }
+                clearBoard();
             }
         });
+
+        DateTimeFormatter localeFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        clock.stop();
+        clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            timeLbl.setText(LocalDateTime.now().format(localeFormat));
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Animation.INDEFINITE);
+        clock.play();
     }
 
     private void showMessage(String message){
@@ -117,6 +171,16 @@ public class Controller implements Initializable {
         log.setText(logsString);
     }
 
+    private void clearBoard(){
+        for(int i = 0; i < boardSize; i++){
+            for (int j = 0; j < boardSize; j++){
+                tilesValue.get(i).set(j, TilesValue.EMPTY);
+                tiles.get(i).get(j).setImage(imgEmpty);
+                log.clear();
+                logsString = "";
+            }
+        }
+    }
     private boolean checkIfTileFilled(int x, int y, TilesValue value){
         if(x >= boardSize || y >= boardSize || x < 0 || y < 0){
             return false;
@@ -232,6 +296,18 @@ public class Controller implements Initializable {
         }
         alert.getButtonTypes().setAll(buttonTypeOne);
         alert.showAndWait();
+        clearBoard();
+    }
+
+    private void drawAlert() {
+        ButtonType buttonTypeOne = new ButtonType("Ok");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("End of the game");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        alert.setHeaderText("Draw!");
+        alert.getButtonTypes().setAll(buttonTypeOne);
+        alert.showAndWait();
+        clearBoard();
     }
 
 }

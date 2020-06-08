@@ -29,7 +29,7 @@ public class Skrypt {
         }
         board.get(2).set(1,1);
 
-        MinimaxAlg minimaxAlg = new MinimaxAlg();
+        MinimaxAlg minimaxAlg = new MinimaxAlg(6);
         ArrayList<Integer> xd = minimaxAlg.execute(board);
 
         for(List<Integer> r : board){

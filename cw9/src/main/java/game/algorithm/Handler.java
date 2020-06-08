@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Handler {
-    final static String scriptsPath = "src/main/java/game/algorithm/";
+    final static String scriptsPath = "src/main/resources/";
     final static String engineName = "nashorn";
 
-    public static Pair<Integer,Integer> makeMove(String strategy, String lang, List<List<TilesValue>> tilesValue) {
+    public Pair<Integer,Integer> makeMove(String strategy, String lang, List<List<TilesValue>> tilesValue) {
         switch(lang){
             case "Javascript": {
                 return runJSAlgorithm(strategy, tilesValue);
@@ -26,7 +26,7 @@ public class Handler {
         return null;
     }
 
-    private static Pair<Integer, Integer> runJSAlgorithm(String strategy, List<List<TilesValue>> tilesValue){
+    private Pair<Integer, Integer> runJSAlgorithm(String strategy, List<List<TilesValue>> tilesValue){
         Pair<Integer, Integer> coords = null;
         ScriptEngine engine = new ScriptEngineManager().getEngineByName(engineName);
         Bindings bind = engine.getBindings(ScriptContext.ENGINE_SCOPE);
@@ -34,10 +34,8 @@ public class Handler {
         try {
             JSObject result = (JSObject) engine.eval(new FileReader(scriptsPath + strategy.toLowerCase() +".js"));
             coords = new Pair<>((Integer) result.getMember("x"), (Integer) result.getMember("y"));
-        } catch (ScriptException ex) {
+        } catch (ScriptException | FileNotFoundException ex) {
             System.err.println("Błąd w skrypcie");
-        } catch (FileNotFoundException ex) {
-            System.err.println("Nie ma takiego skryptu");
         }
         return coords;
     }
