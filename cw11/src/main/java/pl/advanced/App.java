@@ -8,7 +8,6 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.rmi.ServerError;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -35,15 +34,15 @@ public class App {
     public static Map<Long, List<IElement>> cache = new HashMap<>();
 
     @ManagedAttribute(description = "Change amount of sorting threads")
-    public void setThreadsNumber(int threadsNumber) throws InterruptedException {
-        synchronized (REPORT_LOCK) {
-            synchronized (THREADS_LOCK) {
-                try {
+    public void setThreadsNumber(int threadsNumber){
+        if(threadsNumber >= 0) {
+            synchronized (REPORT_LOCK) {
+                synchronized (THREADS_LOCK) {
                     if (threadsNumber > THREADS_NUMBER) {
                         initializeThreadSeedsList(threadsNumber - THREADS_NUMBER);
                         for (int i = THREADS_NUMBER; i < threadsNumber; i++) {
                             threads.add(new Thread(new SortThread(i)));
-                            System.err.println("Dodaje nowy wątek " + i);
+                            System.err.println("Adding new thread no " + i);
                             threads.get(i).start();
                         }
                         THREADS_NUMBER = threadsNumber;
@@ -55,21 +54,19 @@ public class App {
                         }
                     }
                     THREADS_NUMBER = threadsNumber;
-                } catch (IllegalThreadStateException i){
-                    i.printStackTrace();
                 }
             }
         }
     }
 
-    @ManagedAttribute
+    @ManagedAttribute(description = "Get amount of currently working threads")
     public int getThreadsNumber(){
         synchronized (REPORT_LOCK) {
             return THREADS_NUMBER;
         }
     }
 
-    @ManagedOperation
+    @ManagedOperation(description = "Show on error stream currently stored keys in cache")
     public void showSet(){
         List<Long> list = new ArrayList<>();
         for (Map.Entry<Long, List<IElement>> entry : cache.entrySet()) {
@@ -78,8 +75,10 @@ public class App {
         System.err.println(list);
     }
 
-    @ManagedAttribute
+    @ManagedAttribute(description = "Change maximal size of cache")
     public void setCacheSize(int cacheSize){
+        // moze byc sytuacja ze CACHE_SIZE = 10 i obecne klucze to 0,1,2,4,6,7,8, czyli jest ich razem 7/10
+        // chcemy zmienic na CACHE_SIZE = 5 i zostaje tylko 0,1,2,4, czyli 4/10
         if(cacheSize >= 1) {
             synchronized (REPORT_LOCK) {
                 synchronized (cache) {
@@ -103,14 +102,22 @@ public class App {
         }
     }
 
-    @ManagedAttribute
+    @ManagedAttribute(description = "Get size of cache (number of slots for seeds)")
     public int getCacheSize(){
         synchronized (REPORT_LOCK) {
             return CACHE_SIZE;
         }
     }
 
-    @ManagedOperation
+    @ManagedOperation(description = "Clear all seeds stored in cache")
+    public void clearCache(){
+        synchronized (REPORT_LOCK) {
+            synchronized (cache) {
+                cache.clear();
+            }
+        }
+    }
+    @ManagedOperation(description = "Get report about memory, threads and misses")
     public String getReport(){
         return missesReport();
     }
