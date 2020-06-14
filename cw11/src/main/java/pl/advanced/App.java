@@ -8,6 +8,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.rmi.ServerError;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -15,64 +16,130 @@ import java.util.*;
 public class App {
     public static List<Method> methods = new ArrayList<>();
     public static List<Thread> threads = new ArrayList<>();
-    public static List<Long> currentSeeds;
-    private static int RANGE = 500;
+    public static List<Long> currentSeeds = new ArrayList<>();
+    private static int CACHE_SIZE = 500;
     private static int THREADS_NUMBER = 10;
     public static long SORT_COUNTER = 0;
     public static long g1 = 0, g2 = 0, m1 = 0, m2 = 0;
 
     // mutexes
-    public static final Object COUNTER_LOCK = new Object();
+    public static final Object REPORT_LOCK = new Object();
     public static final Object USE_LOCK = new Object();
     public static final Object METHOD_LOCK = new Object();
+    public static final Object THREADS_LOCK = new Object();
+
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
 
     // cache
     public static Map<Long, List<IElement>> cache = new HashMap<>();
 
-    @ManagedAttribute
-    public void setThreadsNumber(int threadsNumber) {
-        THREADS_NUMBER = threadsNumber;
+    @ManagedAttribute(description = "Change amount of sorting threads")
+    public void setThreadsNumber(int threadsNumber) throws InterruptedException {
+        synchronized (REPORT_LOCK) {
+            synchronized (THREADS_LOCK) {
+                try {
+                    if (threadsNumber > THREADS_NUMBER) {
+                        initializeThreadSeedsList(threadsNumber - THREADS_NUMBER);
+                        for (int i = THREADS_NUMBER; i < threadsNumber; i++) {
+                            threads.add(new Thread(new SortThread(i)));
+                            System.err.println("Dodaje nowy wątek " + i);
+                            threads.get(i).start();
+                        }
+                        THREADS_NUMBER = threadsNumber;
+                    } else if (threadsNumber < THREADS_NUMBER) {
+                        for (int i = THREADS_NUMBER - 1; i >= threadsNumber; i--) {
+                            threads.get(i).interrupt();
+                            threads.remove(i);
+                            currentSeeds.remove(i);
+                        }
+                    }
+                    THREADS_NUMBER = threadsNumber;
+                } catch (IllegalThreadStateException i){
+                    i.printStackTrace();
+                }
+            }
+        }
     }
 
     @ManagedAttribute
     public int getThreadsNumber(){
-        return THREADS_NUMBER;
+        synchronized (REPORT_LOCK) {
+            return THREADS_NUMBER;
+        }
+    }
+
+    @ManagedOperation
+    public void showSet(){
+        List<Long> list = new ArrayList<>();
+        for (Map.Entry<Long, List<IElement>> entry : cache.entrySet()) {
+            list.add(entry.getKey());
+        }
+        System.err.println(list);
     }
 
     @ManagedAttribute
     public void setCacheSize(int cacheSize){
-        RANGE = cacheSize;
+        if(cacheSize >= 1) {
+            synchronized (REPORT_LOCK) {
+                synchronized (cache) {
+                    if (cacheSize < CACHE_SIZE) {
+                        try {
+                            for (Iterator<Map.Entry<Long, List<IElement>>> it = cache.entrySet().iterator(); it.hasNext(); ) {
+                                Map.Entry<Long, List<IElement>> entry = it.next();
+                                Long key = entry.getKey();
+                                if (key >= cacheSize) {
+                                    it.remove();
+                                    cache.remove(key);
+                                }
+                            }
+                        } catch (ConcurrentModificationException e){
+                            e.printStackTrace();
+                        }
+                    }
+                    CACHE_SIZE = cacheSize;
+                }
+            }
+        }
     }
 
     @ManagedAttribute
     public int getCacheSize(){
-        return RANGE;
-    }
-
-    @ManagedOperation
-    public String getInfo(){
-        return missesReport();
-    }
-
-    @ManagedOperation(description = "Start application")
-    public void startApplication() throws Exception {
-        startThreads(THREADS_NUMBER);
-        loadAlgorithmClasses();
-        while (true) {
-            Thread.sleep(3000);
-            missesReport();
+        synchronized (REPORT_LOCK) {
+            return CACHE_SIZE;
         }
     }
 
-    public static List<IElement> getDataBySeed(long seed) {
-        synchronized (cache) {
-            if (cache.containsKey(seed)) {
-                return null;
-            } else {
-                return IntGenerator.getIntData(10000, 0, 1000, seed);
-            }
+    @ManagedOperation
+    public String getReport(){
+        return missesReport();
+    }
+
+    public void startApplication() {
+        startThreads(THREADS_NUMBER);
+        loadAlgorithmClasses();
+    }
+
+    public static void startThreads(int threadAmount) {
+        initializeThreadSeedsList(threadAmount);
+        for (int i = 0; i < threadAmount; i++) {
+            threads.add(new Thread(new SortThread(i)));
+            threads.get(i).start();
+        }
+    }
+
+    public static void loadAlgorithmClasses(){
+        List<Class> sortClasses;
+        try {
+            sortClasses = JavaClassLoader.getSortClasses("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw3\\src\\main\\resources\\cw1.jar");
+            loadMethods(sortClasses);
+            safePrintln("Classes had been loaded!");
+        } catch (ClassNotFoundException c){
+            System.err.println("Classes not found :" + c.getMessage());
+        } catch (NoSuchMethodException m){
+            System.err.println("Solving methods not found :" + m.getMessage());
+        } catch (IOException i){
+            System.err.println("Jar not found :" + i.getMessage());
         }
     }
 
@@ -93,18 +160,31 @@ public class App {
             while (!Thread.currentThread().isInterrupted() && running) {
                 try {
                     if (lifeThread()) {
-                        //safePrintln("Seed " + currentSeed + ", " + algorithmName + ", " + executionTime);
-                        synchronized (COUNTER_LOCK) {
+                        safePrintln("Thread " + THREAD_ID + ", seed " + currentSeed + ", " + algorithmName + ", " + executionTime);
+                        synchronized (REPORT_LOCK) { //TODO : think about another mutex, because one of threads will own REPORT_LOCK and we getn't the report
                             synchronized (cache) {
-                                cache.put(currentSeed, dataToSort);
+                                if(currentSeed < CACHE_SIZE) {
+                                    cache.put(currentSeed, dataToSort);
+                                }
                             }
                             SORT_COUNTER++;
                         }
-                        Thread.sleep(1000);
+                        try{
+                            Thread.sleep(1000);
+                        } catch(InterruptedException i){
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
                     } else {
-                        Thread.sleep(0);
+                        try {
+                            Thread.sleep(0);
+                        }
+                        catch(InterruptedException i){
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
                     }
-                } catch (IllegalAccessException | InterruptedException | InstantiationException | InvocationTargetException e) {
+                } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
@@ -112,28 +192,33 @@ public class App {
 
         public boolean lifeThread() throws IllegalAccessException, InstantiationException, InvocationTargetException {
             if (methodsAlive()) {
-                if (!seedIsCurrentlySorted()) {
-                    synchronized (cache) {
-                        dataToSort = getDataBySeed(currentSeed);
-                    }
-                    if (dataToSort == null) {
-                        // already sorted
-                        incrementCounters(false);
-                        return false;
+                synchronized (THREADS_LOCK){
+
+                }
+                if(!Thread.currentThread().isInterrupted() && running) {
+                    if (!seedIsCurrentlySorted()) {
+                        synchronized (cache) {
+                            dataToSort = getDataBySeed(currentSeed);
+                        }
+                        if (dataToSort == null) {
+                            // already sorted
+                            incrementCounters(false);
+                            return false;
+                        } else {
+                            incrementCounters(true);
+                            sort();
+                            return true;
+                        }
                     } else {
-                        incrementCounters(true);
-                        sort();
-                        return true;
+                        // currently sorting
+                        return false;
                     }
-                } else {
-                    // currently sorting
-                    return false;
                 }
             } else {
-                // no methods available
-                return false;
-            }
-
+                    // no methods available
+                    return false;
+                }
+            return false;
         }
 
         public void sort() throws IllegalAccessException, InstantiationException, InvocationTargetException {
@@ -150,22 +235,16 @@ public class App {
         }
 
         public boolean seedIsCurrentlySorted() {
-            Random rand = new Random();
-            currentSeed = rand.nextInt(RANGE);
-            if (!checkIfInUse(currentSeed)) {
-                currentSeeds.set(THREAD_ID, currentSeed);
-                return false;
-            } else {
-                return true;
+            synchronized (THREADS_LOCK) {
+                Random rand = new Random();
+                currentSeed = rand.nextInt(CACHE_SIZE);
+                if (!checkIfInUse(currentSeed) && currentSeeds.size() > THREAD_ID) {
+                    currentSeeds.set(THREAD_ID, currentSeed);
+                    return false;
+                } else {
+                    return true;
+                }
             }
-        }
-    }
-
-    public static void startThreads(int threadAmount) {
-        initializeThreadSeedsList(threadAmount);
-        for (int i = 0; i < threadAmount; i++) {
-            threads.add(new Thread(new SortThread(i)));
-            threads.get(i).start();
         }
     }
 
@@ -181,7 +260,6 @@ public class App {
 
     public static void initializeThreadSeedsList(int threadAmount) {
         synchronized (USE_LOCK) {
-            currentSeeds = new ArrayList<>(threadAmount);
             for (int i = 0; i < threadAmount; i++) {
                 currentSeeds.add((long) 0);
             }
@@ -198,6 +276,16 @@ public class App {
         }
     }
 
+    public static List<IElement> getDataBySeed(long seed) {
+        synchronized (cache) {
+            if (cache.containsKey(seed)) {
+                return null;
+            } else {
+                return IntGenerator.getIntData(10000, 0, 1000, seed);
+            }
+        }
+    }
+
     public static String getTime(long time) {
         if (time > 1000000000) {
             return time / 1000000000 + " s";
@@ -211,7 +299,7 @@ public class App {
     }
 
     public static void incrementCounters(Boolean miss) {
-        synchronized (COUNTER_LOCK) {
+        synchronized (REPORT_LOCK) {
             g1++;
             g2++;
             if (miss) {
@@ -227,14 +315,6 @@ public class App {
         return parts[parts.length - 1];
     }
 
-    public static void loadAlgorithmClasses() throws IOException, ClassNotFoundException, NoSuchMethodException, InterruptedException {
-        List<Class> sortClasses;
-        safePrintln("In 5 seconds classes with sorting methods will be load");
-        Thread.sleep(5000);
-        sortClasses = JavaClassLoader.getSortClasses("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw3\\src\\main\\resources\\cw1.jar");
-        loadMethods(sortClasses);
-        safePrintln("Classes had been loaded!");
-    }
 
     public static void loadMethods(List<Class> sortClasses) throws NoSuchMethodException {
         synchronized (METHOD_LOCK) {
@@ -245,7 +325,7 @@ public class App {
     }
 
     public static String missesReport() {
-        synchronized (COUNTER_LOCK) {
+        synchronized (REPORT_LOCK) {
             String info = "";
             if (g1 != 0 && g2 != 0) {
                 String missesSinceLast = DECIMAL_FORMAT.format((float) m2 / g2 * 100);
@@ -253,9 +333,8 @@ public class App {
                 info = "\nMisses overall: " + misses + "%." +
                         "\nMisses since last report: " + missesSinceLast + "%." +
                         "\nWorking threads: " + THREADS_NUMBER +
-                        "\nCurrent number of elements in cache: " + cache.size() + "/" + RANGE +
+                        "\nCurrent number of elements in cache: " + cache.size() + "/" + CACHE_SIZE +
                         "\nSorts overall: " + SORT_COUNTER + "\n";
-                safePrintln(info);
                 m2 = 0;
                 g2 = 0;
             }

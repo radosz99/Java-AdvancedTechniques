@@ -17,6 +17,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         App resource = context.getBean(App.class);
+        resource.startApplication();
         Thread.sleep(Long.MAX_VALUE);
     }
 }
