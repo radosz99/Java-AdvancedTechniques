@@ -42,7 +42,7 @@ public class App {
                         initializeThreadSeedsList(threadsNumber - THREADS_NUMBER);
                         for (int i = THREADS_NUMBER; i < threadsNumber; i++) {
                             threads.add(new Thread(new SortThread(i)));
-                            System.err.println("Adding new thread no " + i);
+                            safePrint("Adding new thread no " + i);
                             threads.get(i).start();
                         }
                         THREADS_NUMBER = threadsNumber;
@@ -67,12 +67,12 @@ public class App {
     }
 
     @ManagedOperation(description = "Show on error stream currently stored keys in cache")
-    public void showSet(){
+    public List<Long> getKeysStoredInCache(){
         List<Long> list = new ArrayList<>();
         for (Map.Entry<Long, List<IElement>> entry : cache.entrySet()) {
             list.add(entry.getKey());
         }
-        System.err.println(list);
+        return list;
     }
 
     @ManagedAttribute(description = "Change maximal size of cache")
@@ -140,13 +140,13 @@ public class App {
         try {
             sortClasses = JavaClassLoader.getSortClasses("C:\\Users\\Radek\\Desktop\\6semestr\\Java_Techniki_Zaawansowane\\cw3\\src\\main\\resources\\cw1.jar");
             loadMethods(sortClasses);
-            safePrintln("Classes had been loaded!");
+            safePrint("Classes had been loaded!");
         } catch (ClassNotFoundException c){
-            System.err.println("Classes not found :" + c.getMessage());
+            safePrint("Classes not found :" + c.getMessage());
         } catch (NoSuchMethodException m){
-            System.err.println("Solving methods not found :" + m.getMessage());
+            safePrint("Solving methods not found :" + m.getMessage());
         } catch (IOException i){
-            System.err.println("Jar not found :" + i.getMessage());
+            safePrint("Jar not found :" + i.getMessage());
         }
     }
 
@@ -165,39 +165,37 @@ public class App {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted() && running) {
-                try {
-                    if (lifeThread()) {
-                        safePrintln("Thread " + THREAD_ID + ", seed " + currentSeed + ", " + algorithmName + ", " + executionTime);
-                        synchronized (REPORT_LOCK) { //TODO : think about another mutex, because one of threads will own REPORT_LOCK and we getn't the report
-                            synchronized (cache) {
-                                if(currentSeed < CACHE_SIZE) {
-                                    cache.put(currentSeed, dataToSort);
-                                }
-                            }
-                            SORT_COUNTER++;
-                        }
-                        try{
-                            Thread.sleep(1000);
-                        } catch(InterruptedException i){
-                            Thread.currentThread().interrupt();
-                            break;
-                        }
-                    } else {
-                        try {
-                            Thread.sleep(0);
-                        }
-                        catch(InterruptedException i){
-                            Thread.currentThread().interrupt();
-                            break;
-                        }
+                if (retrieveData()) {
+                    safePrint("Thread no " + THREAD_ID + ", seed no " + currentSeed + ", " + algorithmName + " algorithm, execution time is " + executionTime);
+                    putDataInCache();
+                    try{
+                        Thread.sleep(1000);
+                    } catch(InterruptedException i){
+                        safePrint("Thread no " + THREAD_ID + " has been stopped");
                     }
-                } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                    e.printStackTrace();
+                } else {
+                    try {
+                        Thread.sleep(100);
+                    }
+                    catch(InterruptedException i){
+                        safePrint("Thread no " + THREAD_ID + " has been stopped");
+                    }
                 }
             }
         }
 
-        public boolean lifeThread() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        private void putDataInCache(){
+            synchronized (REPORT_LOCK) {
+                synchronized (cache) {
+                    if(currentSeed < CACHE_SIZE) {
+                        cache.put(currentSeed, dataToSort);
+                    }
+                }
+                SORT_COUNTER++;
+            }
+        }
+
+        public boolean retrieveData(){
             if (methodsAlive()) {
                 synchronized (THREADS_LOCK){
 
@@ -228,17 +226,21 @@ public class App {
             return false;
         }
 
-        public void sort() throws IllegalAccessException, InstantiationException, InvocationTargetException {
-            Random rand = new Random();
-            Method algorithm;
-            synchronized (METHOD_LOCK) {
-                algorithm = methods.get(rand.nextInt(methods.size()));
+        public void sort() {
+            try {
+                Random rand = new Random();
+                Method algorithm;
+                synchronized (METHOD_LOCK) {
+                    algorithm = methods.get(rand.nextInt(methods.size()));
+                }
+                long start = System.nanoTime();
+                algorithm.invoke(algorithm.getDeclaringClass().newInstance(), dataToSort);
+                long elapsedTime = System.nanoTime();
+                executionTime = getTime(elapsedTime - start);
+                algorithmName = getClassName(algorithm.getDeclaringClass().toString());
+            } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                e.printStackTrace();
             }
-            long start = System.nanoTime();
-            algorithm.invoke(algorithm.getDeclaringClass().newInstance(), dataToSort);
-            long elapsedTime = System.nanoTime();
-            executionTime = getTime(elapsedTime - start);
-            algorithmName = getClassName(algorithm.getDeclaringClass().toString());
         }
 
         public boolean seedIsCurrentlySorted() {
@@ -349,7 +351,7 @@ public class App {
         }
     }
 
-    public static void safePrintln(String string) {
+    public static void safePrint(String string) {
         synchronized (System.err) {
             System.err.println(string);
         }
