@@ -327,7 +327,7 @@ $ javaws http://localhost:8080/Game.jnlp
 ```
 ### Screenshot
 <p align="center">
-<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw9/screen.png" width=100% />
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw9/screens/screen_cw9.png" width=100% />
 </p>
 
 <a name="cw10"></a>
@@ -352,6 +352,11 @@ $ -Djava.library.path=...xyz/resources/ --module-path "...xyz/javafx-sdk-11.0.2/
 ```
 Then simply run `Main.java`.
 
+### Screenshot
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw9/screens/screen_cw10.png" width=70% />
+</p>
+
 <a name="cw11"></a>
 ## cw11
 
@@ -359,9 +364,10 @@ Then simply run `Main.java`.
 - [Maven](https://maven.apache.org/download.cgi)
 - [JMX](http://actimem.com/java/jmx-spring)
 - [Spring](https://spring.io/)
+- [MBean](https://docs.oracle.com/javase/tutorial/jmx/mbeans/index.html)
 
 ### Description
-
+Idea of the application is the same as in [cw3](#cw3), algorithms are loaded using Reflection API, but the app is configured as MBean by using Spring annotations and attributes of this bean (cache size and number of sorting threads) can be dynamically changed during the runtime in e.g. `jconsole` tool.
 
 ### Running
 Simply open project in IDE (e.g. IntelliJ) and run main function in `main/java/pl/advanced/Main.java`. Then open terminal, type `jconsole` and connect with the running process:
@@ -374,6 +380,18 @@ Then go to the `MBeans` section, expand `cw11` and test Bean methods by setting 
 <p align="center">
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw11/screens/2.png" width=75% />
 </p>
+
+You can observe flow of the application in the console logs:
+```
+Thread no 0, seed no 167, QuickSort algorithm, execution time is 1 ms
+Thread no 4, seed no 311, QuickSort algorithm, execution time is 2 ms
+Thread no 3, seed no 364, InsertSort algorithm, execution time is 139 ms
+Thread no 5, seed no 110, CountingSort algorithm, execution time is 77 ms
+Thread no 9, seed no 238, QuickSort algorithm, execution time is 1 ms
+Thread no 8, seed no 487, CountingSort algorithm, execution time is 69 ms
+Thread no 6, seed no 93, CountingSort algorithm, execution time is 71 ms
+Thread no 3, seed no 102, PigeonHoleSort algorithm, execution time is 379 us
+```
 
 <a name="conf"></a>
 # Eclipse configurations
