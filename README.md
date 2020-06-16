@@ -31,16 +31,17 @@ _________________________________
 # General info
 Applications made for university course `Programming in Java - advanced techniques`.
 ______________________________
-[cw1](#cw1) - 4.5 - Sorting algorithms  
-[cw2](#cw2) - 5.5 - Desktop sorting application using sorting methods from [cw1](#cw1)  
-[cw3](#cw3) - 4.5 - Console application for JVM research (different heap size, reference types) using ReflectionAPI  
-[cw4](#cw4) - 4.0 - Custom JavaBean component with all property types  
-[cw5](#cw5) - 4.25 - RMI application - clients who want to sort their data by available sorting servers  
-[cw6](#cw6) - 5.0 - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB  
-[cw7](#cw7) - 4.5 - Simulation of ring network by using SOAP technology and TCP/IP Sockets  
-[cw8](#cw8) - 4.5 - Java Security app - policytool, Cipher, digital signature etc.  
-[cw9](#cw9) - 5.0 - Desktop application deployed by using JavaWS, JNLP and Apache Tomcat for playing in 5,5,4-game  
-[cw10](#cw10) - 5.0 - Minimax algorithm with alpha-beta prunings in 5,5,4-game using Javascript (Nashorn) and C++ (JNI)
+[cw1](#cw1) - Sorting algorithms  
+[cw2](#cw2) - Desktop sorting application using sorting methods from [cw1](#cw1)  
+[cw3](#cw3) - Console application for JVM research (different heap size, reference types) using ReflectionAPI  
+[cw4](#cw4) - Custom JavaBean component with all property types  
+[cw5](#cw5) - RMI application - clients who want to sort their data by available sorting servers  
+[cw6](#cw6) - Desktop application for managing bike trips. Using JDBC, MySQL and JAXB  
+[cw7](#cw7) - Simulation of ring network by using SOAP technology and TCP/IP Sockets  
+[cw8](#cw8) - Java Security app - policytool, Cipher, digital signature etc.  
+[cw9](#cw9) - Desktop application deployed by using JavaWS, JNLP and Apache Tomcat for playing in 5,5,4-game  
+[cw10](#cw10) - Minimax algorithm with alpha-beta prunings in 5,5,4-game using Javascript (Nashorn) and C++ (JNI)  
+[cw11](#cw11) - Little transformation of `cw3` with Spring Beans and JMX  
 
 <a name="pre"></a>
 # Prerequisites
@@ -305,7 +306,7 @@ $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar cw8-1.0-SNAP
 
 ### Description
 *Application as a foundation for cw10*.    
-To use you must go back to commit `b186556`.
+Currently in `cw9` folder we have `cw10`. To see `cw9` you must go back to commit `b186556`.
 
 [5,5,4-game](https://en.wikipedia.org/wiki/M,n,k-game) in JavaFX. You can play with computer (random algorithm) or with other person on the same app (left and right clicks).
 
@@ -351,7 +352,19 @@ $ -Djava.library.path=...xyz/resources/ --module-path "...xyz/javafx-sdk-11.0.2/
 ```
 Then simply run `Main.java`.
 
+<a name="cw11"></a>
+## cw11
 
+### Technologies 
+- [Maven](https://maven.apache.org/download.cgi)
+- [JMX](http://actimem.com/java/jmx-spring)
+- [Spring](https://spring.io/)
+
+### Description
+
+
+### Running
+Simply open project in IDE (e.g. IntelliJ) and run main function in `pl/main/advanced/Main.java`. Then open terminal, type `jconsole`.
 
 
 <a name="conf"></a>
