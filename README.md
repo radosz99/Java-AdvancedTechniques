@@ -364,9 +364,15 @@ Then simply run `Main.java`.
 
 
 ### Running
-Simply open project in IDE (e.g. IntelliJ) and run main function in `pl/main/advanced/Main.java`. Then open terminal, type `jconsole`.
+Simply open project in IDE (e.g. IntelliJ) and run main function in `main/java/pl/advanced/Main.java`. Then open terminal, type `jconsole` and connect with the running process:
 
-
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw11/screens/1.png" width=40% />
+</p>
+Then go to the `MBeans` section, expand `cw11` and test Bean methods by setting size (1=<) of memory (amount of stored keys with dataset) and number (0=<) of sorting threads.
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw11/screens/2.png" width=75% />
+</p>
 <a name="conf"></a>
 # Eclipse configurations
 
