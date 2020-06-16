@@ -54,7 +54,7 @@ ______________________________
  <a name="cw1"></a>
 ## cw1
 
-### Technologies 
+### Tech stack and tools
 - Java
 
 ### Description
@@ -73,7 +73,7 @@ Create a list in *Test.java* and run by choose one of algorithm to sort it.
  <a name="cw2"></a>
 ## cw2
 
-### Technologies 
+### Tech stack and tools
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 
 ### Description
@@ -102,7 +102,7 @@ java -jar --module-path xyz\javafx-sdk-11.0.2\lib --add-modules=javafx.controls,
  <a name="cw3"></a>
 ## cw3
 
-### Technologies 
+### Tech stack and tools
 - [Maven](https://maven.apache.org/download.cgi)
 
 ### Running
@@ -139,7 +139,7 @@ $ java -Xms128m -Xmx256m -Djava.awt.headless=true -jar cw3-1.0-SNAPSHOT-jar-with
  <a name="cw4"></a>
 ## cw4
 
-### Technologies 
+### Tech stack and tools
 - [JavaBeans](https://pl.wikipedia.org/wiki/JavaBeans)
 - [WindowBuilder](https://www.eclipse.org/windowbuilder/)
 - [JFontChooser](https://osdn.net/projects/jfontchooser/)
@@ -171,7 +171,7 @@ Exemplary screenshot with stack trace of an error caused of an attempt to change
  <a name="cw5"></a>
 ## cw5
 
-### Technologies 
+### Tech stack and tools
 - [Maven](https://maven.apache.org/download.cgi)
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 - [RMI](https://docs.oracle.com/javase/7/docs/technotes/guides/rmi/hello/hello-world.html)
@@ -200,7 +200,7 @@ The order in which clients and servers are started doesn't matter. If you want t
 <a name="cw6"></a>
 ## cw6
 
-### Technologies 
+### Tech stack and tools
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 - [MySQL](https://dev.mysql.com/downloads/)
 - [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html)
@@ -221,7 +221,7 @@ Create MySQL database and run script from `cw6/skrypt.txt` for some data to test
 <a name="cw7"></a>
 ## cw7
 
-### Technologies 
+### Tech stack and tools 
 - [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 - [SOAP](https://www.w3schools.com/xml/xml_soap.asp)
 - [Sockets](https://docs.oracle.com/javase/tutorial/networking/sockets/index.html)
@@ -236,8 +236,8 @@ Messages are sending by SOAP and can be send as Unicast or Broadcast.
 
 ### Running
 Choose `Allow parallel run` in `Edit Configurations` in IntelliJ and run as many apps as you want. To close the ring you must click `Zamknij pierścień` button in ultimately last application.
-### Screenshot
 
+### Screenshot
 <p align="center">
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw7/screen.png" width=100% />
 </p>
@@ -245,11 +245,13 @@ Choose `Allow parallel run` in `Edit Configurations` in IntelliJ and run as many
 <a name="cw8"></a>
 ## cw8
 
-### Technologies 
+### Tech stack and tools
 - [Maven](https://maven.apache.org/download.cgi)
+- [policytool](https://docs.oracle.com/javase/tutorial/security/tour1/wstep1.html)
+- [jarsigner](https://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html)
 
 ### Description
-Fun with Java Security.
+Fun (XD) with Java Security.
 
 ### Generating keys for encryption
 ```
@@ -298,12 +300,13 @@ $ java -Djava.security.manager -Djava.security.policy=mypolicy -jar cw8-1.0-SNAP
 <img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw8/screen.png" width=100% />
 </p>
 
-
 <a name="cw9"></a>
 ## cw9
 
-### Technologies 
+### Tech stack and tools 
+- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
 - [Maven](https://maven.apache.org/download.cgi)
+- [JavaWS](https://java.com/en/download/faq/java_webstart.xml)
 
 ### Description
 *Application as a foundation for cw10*.    
@@ -333,8 +336,12 @@ $ javaws http://localhost:8080/Game.jnlp
 <a name="cw10"></a>
 ## cw10
 
-### Technologies 
+### Tech stack and tools 
 - [Maven](https://maven.apache.org/download.cgi)
+- [JavaFX (SDK 11.0.2)](https://gluonhq.com/products/javafx/)
+- [Nashorn Java API](https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/nashorn/api.html)
+- [JNI API](https://docs.oracle.com/javase/8/docs/technotes/guides/jni/)
+- [Minimax algorithm](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/)
 
 ### Description
 **Currently all files are in cw9/ folder.** 
@@ -360,7 +367,7 @@ Then simply run `Main.java`.
 <a name="cw11"></a>
 ## cw11
 
-### Technologies 
+### Tech stack and tools 
 - [Maven](https://maven.apache.org/download.cgi)
 - [JMX](http://actimem.com/java/jmx-spring)
 - [Spring](https://spring.io/)
