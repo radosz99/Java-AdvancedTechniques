@@ -20,6 +20,7 @@ _________________________________
   *  [cw8](#cw8)
   *  [cw9](#cw9)
   *  [cw10](#cw10)
+  *  [cw11](#cw11)
 - [Eclipse configurations](#conf)
   *  [JavaFX](#jav)
   *  [e(fx)clipse](#fxc)
@@ -344,7 +345,6 @@ $ javaws http://localhost:8080/Game.jnlp
 Build JNI library in `resources` folder by typing:
 ```
 $ ./build_library.sh
-
 ```
 Then open project in IntelliJ, import JavaFX libs and in `Edit configurations` in `VM options` type (`xyz` are appriopriate system paths):
 ```
@@ -364,8 +364,16 @@ Then simply run `Main.java`.
 
 
 ### Running
-Simply open project in IDE (e.g. IntelliJ) and run main function in `pl/main/advanced/Main.java`. Then open terminal, type `jconsole`.
+Simply open project in IDE (e.g. IntelliJ) and run main function in `main/java/pl/advanced/Main.java`. Then open terminal, type `jconsole` and connect with the running process:
 
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw11/screens/1.png" width=40% />
+</p>
+
+Then go to the `MBeans` section, expand `cw11` and test Bean methods by setting size (`1=<`) of cache (amount of stored keys with datasets) and number (`0=<`) of sorting threads.
+<p align="center">
+<img src="https://github.com/radosz99/java-advanced-techniques/blob/master/cw11/screens/2.png" width=75% />
+</p>
 
 <a name="conf"></a>
 # Eclipse configurations
