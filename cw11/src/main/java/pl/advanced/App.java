@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.*;
 
-@ManagedResource(objectName = "cw1:type=JMX,name=App",
+@ManagedResource(objectName = "cw11:type=JMX,name=App",
                 description = "Simply sorting application using MBean and Spring")
 public class App {
     public static List<Method> methods = new ArrayList<>();
